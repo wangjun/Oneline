@@ -1,0 +1,89 @@
+/* Settings */
+.oneline {
+    position: absolute;
+    left: 40%;
+    top: 0%;
+    width: 20%;
+    height: 100%;
+    background-color: #000;
+
+    @media #{$phone-portrait}{
+        min-width: 0px;
+        left: 25%;
+        width: 50%;
+    }
+}
+
+.menu {
+    display: table;
+    position: absolute;
+    top: 0;
+    width: 40%;
+    height: 100%;
+
+    &--left {
+        left: 0%;
+
+        @media #{$phone-portrait}{
+            width: 25%;
+        }
+    }
+    &--right {
+        left: 60%;
+
+        @media #{$phone-portrait}{
+            left: 75%;
+            width: 25%;
+        }
+    }
+    &:hover .button {
+        @include opacity(1);
+    }
+}
+
+.button {
+    display: block;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    cursor: pointer;
+
+    @include opacity(0);
+    @include filter(grayscale(100%));
+
+    @media #{$all-mobile-devices}{
+        @include opacity(1);
+        @include filter(grayscale(0%));
+    }
+
+    &:hover {
+        @include filter(grayscale(0%));
+    }
+}
+
+
+
+/* Timeline */
+.timeline {
+    .oneline {
+        left: 33.3%;
+        width: 33.3%;
+        background-color: #F1F1F1;
+
+        @media #{$phone-portrait}{
+            left: 0%;
+            width: 100%;
+        }        
+    }
+
+    .menu {
+        width: 33.3%;
+
+        &--left {
+            left: 0%;
+        }
+        &--right {
+            left: 66.7%;
+        }
+    }
+}

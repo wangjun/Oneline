@@ -1,0 +1,60 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='keywords', content='Oneline')
+        meta(
+            name='description'
+            content='A Social Network Aggregator'
+        )
+        meta(
+            name='viewport'
+            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui'
+        )
+        meta(
+            name='apple-mobile-web-app-capable'
+            content='yes'
+        )
+        meta(
+            name='mobile-web-app-capable'
+            content='yes'
+        )
+        meta(
+            name='apple-mobile-web-app-status-bar-style'
+            content='black'
+        )
+        meta(
+            name='apple-mobile-web-app-title'
+            content='Oneline'
+        )
+        link(ref='icon', type='image/x-icon', href='public/img/favicon.ico')
+        link(ref='shortcut icon', href='public/img/favicon.ico')
+        link(ref='apple-touch-icon', sizes='192x192', href='public/img/favicon.png')
+        title ｜&#10003;
+        link(rel='stylesheet', href='/public/dist/oneline.min.css')
+    body
+        div(class='oneline overflow--y')
+            div.social-list
+                div.vertically_center
+                    if socialIcon === 'twitter'
+                        svg(
+                            data-token=token
+                            class='social-icon animate--general'
+                            viewBox='0 0 400 400'
+                        )
+                            use(xlink:href='/public/img/icon-sprite.svg#twitter-icon')
+                    else if socialIcon === 'instagram'
+                        svg(
+                            data-token=token
+                            class='social-icon animate--general'
+                            viewBox='0 0 775 400'
+                        )
+                            use(xlink:href='/public/img/icon-sprite.svg#instagram-icon')
+                    else if socialIcon === 'weibo'
+                        svg(
+                            data-token=token
+                            class='social-icon animate--general'
+                            viewBox='0 0 401 400'
+                        )
+                            use(xlink:href='/public/img/icon-sprite.svg#weibo-icon')
+        script(type='text/javascript', src='/public/dist/authCallback.js')
