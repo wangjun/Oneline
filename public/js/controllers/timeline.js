@@ -21,8 +21,9 @@ angular.module('Oneline.timelineControllers', [])
         ? setTimelineProvider($stateParams.provider)
         : $state.go('timeline', { provider: store.get('timelineProvider') })
     // 4
-    Timeline.get({id: 100}, function (data){
-        console.log(data)
+    $scope.timelineData = []
+    Timeline.query(function (data){
+        $scope.timelineData = data
     })
 
     /**

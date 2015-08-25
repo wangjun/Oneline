@@ -1,11 +1,11 @@
-/* Settings */
+/* Status: Settings */
 .oneline {
     position: absolute;
     left: 40%;
     top: 0%;
     width: 20%;
     height: 100%;
-    background-color: #000;
+    background-color: $color-black;
 
     @media #{$phone-portrait}{
         min-width: 0px;
@@ -63,17 +63,21 @@
 
 
 
-/* Timeline */
-.timeline {
+/* Status: Timeline */
+.status--timeline {
     .oneline {
         left: 33.3%;
         width: 33.3%;
-        background-color: #F1F1F1;
+        background-color: $color-gray;
 
+        @media #{$all-mobile-devices}{
+            left: 25%;
+            width: 50%;
+        }
         @media #{$phone-portrait}{
             left: 0%;
             width: 100%;
-        }        
+        }
     }
 
     .menu {
@@ -84,6 +88,14 @@
         }
         &--right {
             left: 66.7%;
+        }
+
+        @media #{$all-mobile-devices}{
+            width: 25%;
+
+            &--right {
+                left: 75%;
+            }
         }
     }
 }

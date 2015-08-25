@@ -24,7 +24,7 @@ router.get('/twitter/callback', passport.authenticate('twitter', {
 router.get('/twitter/test', function (req, res){
     var token = jwt.sign({
         'provider' : 'twitter',
-        'userId'   : '123152646463'
+        'userId'   : '2373500364'
     }, process.env.KEY, {
         expiresInMinutes: 60 * 24 * 7
     })
@@ -46,7 +46,7 @@ router.get('/weibo/test', function (req, res){
         'provider' : 'weibo',
         'userId'   : 'sdasdad12424'
     }, process.env.KEY, {
-        expiresInMinutes: 60 * 24 * 7
+        expiresInMinutes: 1
     })
     res.render('authCallback', { socialIcon: 'weibo', token: token})
 })

@@ -91,12 +91,23 @@ app.use(function (req, res){
 })
 app.use(function (err, req, res, next){
     console.log(err)
+
     var statusCode = err.code || err.status;
-    statusCode === 400
-        ? res.status(statusCode).json({'status': 'error', 'msg': err.msg})
-        : statusCode === 401
-            ? res.status(statusCode).json({'status': 'error','msg': err.message})
-            : res.status(500).json({'status': 'error', 'msg': 'server error'})
+
+    switch (statusCode){
+        case 400:
+            res.status(statusCode).json({'status': 'error', 'msg': err.msg})
+            break;
+        case 401:
+            res.status(statusCode).json({'status': 'error','msg': err.message})
+            break;
+        case 500:
+            res.status(statusCode).json({'status': 'error', 'msg': err.msg})
+            break;
+        default:
+            res.status(500).json({'status': 'error', 'msg': 'server error'})
+
+    }
 })
 
 

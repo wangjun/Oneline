@@ -9,6 +9,7 @@ angular.module('Oneline', [
     'Oneline.settingsControllers',
     'Oneline.timelineControllers',
     'Oneline.timelineServices',
+    'Oneline.relativeDateServices',
     'Oneline.tokenHelperServices',
     'Oneline.UIServices'
 ])
@@ -39,7 +40,4 @@ angular.module('Oneline', [
             templateUrl: '/public/dist/timeline.min.html',
             controller: 'timelineCtrl'
         })
-}])
-.factory('feedCache', ['$cacheFactory', function($cacheFactory){
-    return $cacheFactory('feedCache')
 }])

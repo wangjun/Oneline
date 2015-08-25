@@ -184,17 +184,12 @@ html {
 }
 
 body {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Helvetica Neue", "Palatino", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-size: 14px;
   line-height: 1.4;
   text-rendering: optimizeLegibility;
-  cursor: default;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
@@ -286,7 +281,7 @@ ng\:form {
   display: block;
 }
 
-/* Settings */
+/* Status: Settings */
 .oneline {
   position: absolute;
   left: 40%;
@@ -356,26 +351,74 @@ ng\:form {
   filter: grayscale(0%);
 }
 
-/* Timeline */
-.timeline .oneline {
+/* Status: Timeline */
+.status--timeline .oneline {
   left: 33.3%;
   width: 33.3%;
   background-color: #F1F1F1;
 }
+@media (max-device-width: 1024px), (max-width: 1024px) {
+  .status--timeline .oneline {
+    left: 25%;
+    width: 50%;
+  }
+}
 @media (max-device-width: 767px) and (orientation: portrait) {
-  .timeline .oneline {
+  .status--timeline .oneline {
     left: 0%;
     width: 100%;
   }
 }
-.timeline .menu {
+.status--timeline .menu {
   width: 33.3%;
 }
-.timeline .menu--left {
+.status--timeline .menu--left {
   left: 0%;
 }
-.timeline .menu--right {
+.status--timeline .menu--right {
   left: 66.7%;
+}
+@media (max-device-width: 1024px), (max-width: 1024px) {
+  .status--timeline .menu {
+    width: 25%;
+  }
+  .status--timeline .menu--right {
+    left: 75%;
+  }
+}
+
+.timeline__item {
+  padding: 10px;
+}
+.timeline__item__profile {
+  position: relative;
+  text-align: center;
+}
+.timeline__item__profile__avatar {
+  width: 48px;
+  border: 1px solid;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+}
+.timeline__item__profile__avatar--twitter {
+  border-color: #2AA9E0;
+}
+.timeline__item__profile__avatar--instagram {
+  border-color: #3F5D87;
+}
+.timeline__item__profile__avatar--weibo {
+  border-color: #E6162D;
+}
+.timeline__item__profile__fullname {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.timeline__item__profile__time {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: #89A;
 }
 
 .social-list {

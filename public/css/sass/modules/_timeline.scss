@@ -1,0 +1,37 @@
+.timeline {
+
+    &__item {
+        padding: 10px;
+
+        &__profile {
+            position: relative;
+            text-align: center;
+
+            &__avatar {
+                width: 48px;
+                border: 1px solid;
+                @include border-radius(7px);
+
+                &--twitter {
+                    border-color: $color-twitter;
+                }
+                &--instagram {
+                    border-color: $color-instagram;
+                }
+                &--weibo {
+                    border-color: $color-weibo;
+                }
+            }
+            &__fullname {
+                margin-bottom: 10px;
+                font-weight: $font-weight-bold;
+            }
+            &__time {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                color: #89A;
+            }
+        }
+    }
+}

@@ -5,13 +5,13 @@ html {
     background-color: $color-white;
 }
 body {
-    @include user-select(none);
+    // @include user-select(none);
     @include font-smoothing;
     font-family: $font-family-base;
     font-size: $font-size-base;
     line-height: $line-height-base;
     text-rendering: optimizeLegibility;
-    cursor: default;
+    // cursor: default;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;}
 * {
