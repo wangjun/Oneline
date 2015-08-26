@@ -1,16 +1,23 @@
 .timeline {
 
     &__item {
-        padding: 10px;
+        position: relative;
+        margin: 36px 7px;
+        padding: 0 10px;
+        background-color: $color-white;
+
+        @include border-radius(3px);
 
         &__profile {
             position: relative;
+            top: -24px; // 48px/2 (avatar)
             text-align: center;
 
             &__avatar {
                 width: 48px;
-                border: 1px solid;
-                @include border-radius(7px);
+                border-width: 1px;
+                border-style: solid;
+                @include border-radius(50%);
 
                 &--twitter {
                     border-color: $color-twitter;
@@ -26,12 +33,19 @@
                 margin-bottom: 10px;
                 font-weight: $font-weight-bold;
             }
-            &__time {
-                position: absolute;
-                top: 0px;
-                right: 0px;
-                color: #89A;
-            }
+        }
+
+        &__time {
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            color: #89A;
+            font-size: $font-size-small;
+        }
+
+        &__text {
+            position: relative;
+            top: -24px;
         }
     }
 }

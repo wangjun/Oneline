@@ -388,18 +388,26 @@ ng\:form {
 }
 
 .timeline__item {
-  padding: 10px;
+  position: relative;
+  margin: 36px 7px;
+  padding: 0 10px;
+  background-color: #FFF;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
 }
 .timeline__item__profile {
   position: relative;
+  top: -24px;
   text-align: center;
 }
 .timeline__item__profile__avatar {
   width: 48px;
-  border: 1px solid;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  border-radius: 7px;
+  border-width: 1px;
+  border-style: solid;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
 }
 .timeline__item__profile__avatar--twitter {
   border-color: #2AA9E0;
@@ -414,11 +422,16 @@ ng\:form {
   margin-bottom: 10px;
   font-weight: 600;
 }
-.timeline__item__profile__time {
+.timeline__item__time {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  bottom: 3px;
+  right: 3px;
   color: #89A;
+  font-size: 12px;
+}
+.timeline__item__text {
+  position: relative;
+  top: -24px;
 }
 
 .social-list {
