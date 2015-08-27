@@ -1,17 +1,18 @@
 angular.module('Oneline', [
     'ngTouch',
-    'ngAnimate',
     'ngResource',
     'ui.router',
     'angular-jwt',
     'angular-storage',
+    'linkify',
     'Oneline.rootControllers',
     'Oneline.settingsControllers',
     'Oneline.timelineControllers',
     'Oneline.timelineServices',
     'Oneline.relativeDateServices',
     'Oneline.tokenHelperServices',
-    'Oneline.UIServices'
+    'Oneline.UIServices',
+    'Oneline.templateTwitterDirectives'
 ])
 .config(['$locationProvider', '$stateProvider', 
     '$urlRouterProvider', '$httpProvider', 'jwtInterceptorProvider',

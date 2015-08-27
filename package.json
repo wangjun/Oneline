@@ -1,6 +1,6 @@
 {
   "name": "Oneline",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A Social Network Aggregator",
   "main": "app.js",
   "repository": {
@@ -30,6 +30,7 @@
     "mongoose": "^4.1.3",
     "morgan": "^1.6.1",
     "passport": "^0.2.2",
+    "passport-instagram": "^0.1.2",
     "passport-twitter": "^1.0.3",
     "q": "^1.4.1",
     "response-time": "^2.3.1",

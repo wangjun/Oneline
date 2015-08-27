@@ -29,7 +29,7 @@ angular.module('Oneline.settingsControllers', [])
     // 添加／刪除「社交網站」授權
     $scope.toggleAuth = function (provider){
         if ($scope.providerList.indexOf(provider) < 0){
-            $window.open('/auth/' + provider + '/test', '_blank')
+            $window.open('/auth/' + provider, '_blank')
             // $window.open('/auth/' + provider, '_blank')
         } else {
             olTokenHelper.removeToken(provider)

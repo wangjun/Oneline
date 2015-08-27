@@ -45,12 +45,10 @@ router.get(['/', '/:id'], function (req, res, next){
         }
         // new Twit(config).get('statuses/home_timeline', function (err, data){
         //     if(err) console.log(err)
-        //     console.log(data)
-        //     res.json({data: data})
+        //     res.json(data)
         // })
-        var file = require('fs').readFileSync(process.env.PWD + '/ignore/data.json', 'utf-8')
+        var file = require('fs').readFileSync(process.env.PWD + '/ignore/data-instagram.json', 'utf-8')
         res.json(JSON.parse(file))
-
     })
     .fail(function (err){
         console.log(err)

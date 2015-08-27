@@ -1,51 +1,108 @@
 .timeline {
+    position: relative;
+    margin: 36px 7px;
+    padding: 0 10px;
+    background-color: $color-white;
 
-    &__item {
+    @include border-radius(3px);
+
+    
+    // 子
+    &__profile {
         position: relative;
-        margin: 36px 7px;
-        padding: 0 10px;
-        background-color: $color-white;
+        top: -24px; // 48px/2 (avatar)
+        text-align: center;
 
-        @include border-radius(3px);
-
-        &__profile {
-            position: relative;
-            top: -24px; // 48px/2 (avatar)
-            text-align: center;
-
-            &__avatar {
-                width: 48px;
-                border-width: 1px;
-                border-style: solid;
-                @include border-radius(50%);
-
-                &--twitter {
-                    border-color: $color-twitter;
-                }
-                &--instagram {
-                    border-color: $color-instagram;
-                }
-                &--weibo {
-                    border-color: $color-weibo;
-                }
-            }
-            &__fullname {
-                margin-bottom: 10px;
-                font-weight: $font-weight-bold;
-            }
+        &__avatar {
+            width: 48px;
+            border-width: 1px;
+            border-style: solid;
+            @include border-radius(50%);
         }
+        &__fullname {
+            margin-bottom: 17px;
+            font-weight: $font-weight-bold;
+        }
+    }
+    &__time {
+        position: absolute;
+        bottom: 3px;
+        right: 3px;
+        color: #89A;
+        font-size: $font-size-small;
+    }
+    &__content {
+        position: relative;
+        top: -24px;
+    }
+    &__text {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+    &__media {
+        width: 100%;
+        margin-bottom: 17px;
+    }
 
-        &__time {
+
+    // Type
+    &--quote {
+        top: -12px;
+        margin: 0;
+        border: 1px solid $color-gray;
+        background-color: $color-gray;
+        cursor: pointer;
+
+        @include transform(scale(.7));
+
+        &:hover {
+            border: 1px solid $color-twitter;
+        }
+    }
+    &--retweet__profile__avatar {
+        position: absolute;
+        top: -12px;
+        left: calc(50% - 72px);
+
+        img {
+            width: 24px;
+        }
+        &::after {
+            content: '';
             position: absolute;
-            bottom: 3px;
-            right: 3px;
-            color: #89A;
-            font-size: $font-size-small;
-        }
+            top: 4px;
+            right: -21px;
+            width: 19px;
+            height: 16px;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAQCAQAAABezYzpAAAAi0lEQVR4AbXRhQ0CMRiG4X8DdAAsijvEb5k3gkVx2xw5+3An9fapGy+F/7A2E0puLUafrR+WOIjRYcOWNRWMLlsUVmIa2FAjyegM+qx41rkhh/nhjBVYIba8x666XmdplmfXKN5mOffmCgUxhRFJqqzDdleb+tfQABUXbuhgYo4gA6JuX4kp7X98/R5EirGMu3H4lQAAAABJRU5ErkJggg==);
 
-        &__text {
-            position: relative;
-            top: -24px;
+            @include transform(scale(.7));
+        }
+    }
+    
+    // Provider
+    &--twitter {
+        .timeline__profile__avatar {
+            border-color: $color-twitter;
+        }
+        a, a:visited {
+            color: $color-twitter;
+        }
+    }
+    &--instagram {
+        .timeline__profile__avatar {
+            border-color: $color-instagram;
+        }
+        a, a:visited {
+            color: $color-instagram;
+        }
+    }
+    &--weibo {
+        .timeline__profile__avatar {
+            border-color: $color-weibo;
+        }
+        a, a:visited {
+            color: $color-weibo;
         }
     }
 }

@@ -43,25 +43,10 @@ h5 {
 h6 {
     font-size: .75em;
 }
-a {
+a, a:visited {
     color: inherit;
     text-decoration: none;
 }
-textarea:focus, input:focus, button:focus {
-    outline: none;
-}
-input {
-    @include border-radius(50%);
-    font-size: $font-size-regular;
-    text-align: center;
-    border: 1px solid #555;
-    background-color: transparent;
-    -webkit-appearance: none;
-    &[type=number]::-webkit-inner-spin-button, &[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-}
-::-webkit-scrollbar { 
-    display: none; 
-}
+
+@include scrollbars(1px, $color-steel, transparent);
+
