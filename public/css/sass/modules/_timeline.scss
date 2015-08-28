@@ -7,23 +7,26 @@
     @include border-radius(3px);
 
     
-    // 子
+    // 用戶信息
     &__profile {
         position: relative;
         top: -24px; // 48px/2 (avatar)
         text-align: center;
 
+        // 頭銜
         &__avatar {
             width: 48px;
             border-width: 1px;
             border-style: solid;
             @include border-radius(50%);
         }
+        // 用戶名
         &__fullname {
             margin-bottom: 17px;
             font-weight: $font-weight-bold;
         }
     }
+    // 發文時間
     &__time {
         position: absolute;
         bottom: 3px;
@@ -31,21 +34,46 @@
         color: #89A;
         font-size: $font-size-small;
     }
+    // 文章外盒
     &__content {
         position: relative;
         top: -24px;
     }
+    // 文章內容
     &__text {
         word-wrap: break-word;
         white-space: pre-wrap;
     }
+    // 圖片／視頻
     &__media {
-        width: 100%;
-        margin-bottom: 17px;
+        position: relative;
+        margin: 17px 0;
+
+        img, video {
+            width: 100%;
+            @include border-radius(3px);
+        }
+        video {
+            cursor: pointer;
+        }
+        // 播放按鈕
+        &__playButton {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 16.7%;
+            height: 16.7%;
+            cursor: pointer;
+            
+            // 正在播放
+            &--playing {
+                @include opacity(0);
+            }
+        }
     }
 
 
-    // Type
+    // 引用推文
     &--quote {
         top: -12px;
         margin: 0;
@@ -56,9 +84,14 @@
         @include transform(scale(.7));
 
         &:hover {
-            border: 1px solid $color-twitter;
+            background-color: $color-twitter-alpha;
+        }
+
+        strong, p {
+            color: $color-black;
         }
     }
+    // 轉推用戶頭像
     &--retweet__profile__avatar {
         position: absolute;
         top: -12px;
@@ -80,7 +113,7 @@
         }
     }
     
-    // Provider
+    // Twitter 樣式
     &--twitter {
         .timeline__profile__avatar {
             border-color: $color-twitter;
@@ -89,6 +122,7 @@
             color: $color-twitter;
         }
     }
+    // Instagram 樣式
     &--instagram {
         .timeline__profile__avatar {
             border-color: $color-instagram;
@@ -97,6 +131,7 @@
             color: $color-instagram;
         }
     }
+    // Weibo 樣式
     &--weibo {
         .timeline__profile__avatar {
             border-color: $color-weibo;

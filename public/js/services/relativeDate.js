@@ -31,35 +31,3 @@ angular.module('Oneline.relativeDateServices', ['relativeDate'])
     years_from_now: '+ {{time}}y',
     over_a_year_from_now: '++ 1y'
 })
-.directive('relativeDate', ['$timeout', '$filter', function ($timeout, $filter){
-
-    return function (scope, elem, attrs){
-        var time  = attrs.relativeDate,
-            delay = 1000,
-            timeoutPromise;
-
-        function updateTime(){
-            elem.text($filter('relativeDate')(time))
-
-            // 降低刷新速率
-            if (delay < 60000 && new Date() - Date.parse(time) > 60000){
-                delay = 60000
-            }
-        }
-
-        function updateLater (){
-            timeoutPromise = $timeout(function (){
-                updateTime()
-                updateLater()
-            }, delay)
-        }
-
-        elem.bind('$destroy', function() {
-            $timeout.cancel(timeoutPromise);
-        })
-
-        updateTime()
-        updateLater()
-    }
-
-}])

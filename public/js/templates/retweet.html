@@ -8,11 +8,22 @@
 </div>
 
 <div class="timeline__content">
-    <p class="timeline__text">{{item.retweet.text}}</p>    
+    <p class="timeline__text" trim-media-link="{{item.mediaLink}}" linkify="twitter">{{item.retweet.text}}</p>
+    <div ng-if="item.media" class="timeline__media">
+        <div ng-repeat="media in item.media">
+            <div ng-if="media.type === 'photo'">
+                <img ng-src="{{media.image_url}}" alt="tweet_photo">
+            </div>
+
+            <div ng-if="media.type !== 'photo'">
+                <ol-video ol-src="media.video_url" ol-poster="media.image_url"></ol-video>
+            </div>
+        </div>
+    </div>
 </div>
 
 <a class="timeline--retweet__profile__avatar" ng-href="//twitter.com/{{item.user.screen_name}}" target="_blank">
     <img class="timeline__profile__avatar" ng-src="{{item.user.profile_image_url_https}}" alt="avatar">
 </a>
 
-<span class="timeline__time" relative-date="{{item.retweet.created_at}}"></span>
+<span class="timeline__time" relative-date="{{item.created_at}}"></span>

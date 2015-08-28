@@ -346,8 +346,29 @@ ng\:form {
   white-space: pre-wrap;
 }
 .timeline__media {
+  position: relative;
+  margin: 17px 0;
+}
+.timeline__media img, .timeline__media video {
   width: 100%;
-  margin-bottom: 17px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.timeline__media video {
+  cursor: pointer;
+}
+.timeline__media__playButton {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 16.7%;
+  height: 16.7%;
+  cursor: pointer;
+}
+.timeline__media__playButton--playing {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
 }
 .timeline--quote {
   top: -12px;
@@ -361,7 +382,10 @@ ng\:form {
   transform: scale(0.7);
 }
 .timeline--quote:hover {
-  border: 1px solid #2AA9E0;
+  background-color: rgba(42, 169, 224, 0.3);
+}
+.timeline--quote strong, .timeline--quote p {
+  color: #000;
 }
 .timeline--retweet__profile__avatar {
   position: absolute;

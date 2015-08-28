@@ -2,7 +2,9 @@
 var Q      = require('Q'),
     jwt    = require('jsonwebtoken'),
     Twit   = require('Twit'),
-    router = require('express').Router();
+    Ig     = require('instagram-node').instagram(),
+    router = require('express').Router(),
+    filter = require('./helper/filter.js');
 
 var User            = require('../models/user').User,
     q_userFindOne   = Q.nbind(User.findOne, User);
@@ -34,21 +36,41 @@ router.use(function (req, res, next){
 //     next()
 // })
 router.get(['/', '/:id'], function (req, res, next){
-    console.log(req.olPassports)
-    q_userFindOne({id: 'twitter' + req.olPassports.twitter})
-    .then(function (found){
-        var config = {
-            consumer_key       : process.env.TWITTER_KEY,
-            consumer_secret    : process.env.TWITTER_SECRET,
-            access_token       : found.token,
-            access_token_secret: found.tokenSecret
-        }
-        // new Twit(config).get('statuses/home_timeline', function (err, data){
-        //     if(err) console.log(err)
-        //     res.json(data)
-        // })
-        var file = require('fs').readFileSync(process.env.PWD + '/ignore/data-instagram.json', 'utf-8')
-        res.json(JSON.parse(file))
+
+    Q.all([
+        q_userFindOne({id: 'twitter' + req.olPassports.twitter}),
+        q_userFindOne({id: 'instagram' + req.olPassports.instagram})
+    ])
+    .spread(function (twit, ig){
+        Ig.use({
+            access_token: ig.token,
+            client_id: process.env.INSTAGRAM_KEY,
+            client_secret: process.env.INSTAGRAM_SECRET
+        })
+        var T = new Twit({
+                consumer_key       : process.env.TWITTER_KEY,
+                consumer_secret    : process.env.TWITTER_SECRET,
+                access_token       : twit.token,
+                access_token_secret: twit.tokenSecret
+            }),
+            q_twit_timeline = Q.nbind(T.get, T),
+            q_ig_timeline   = Q.nbind(Ig.user_self_feed, Ig);
+
+        return Q.all([
+            q_twit_timeline('statuses/home_timeline', { include_entities: true }),
+            q_ig_timeline()
+        ])
+
+    })
+    .spread(function (tData, iData){
+        require('fs')
+        .writeFileSync(process.env.PWD + '/ignore/data-twitter.json', JSON.stringify(tData[0], null, 4))
+
+        require('fs')
+        .writeFileSync(process.env.PWD + '/ignore/data-instagram.json', JSON.stringify(iData[0], null, 4))
+
+        var combineData = filter.tweet(tData[0]).concat(filter.igPost(iData[0]))
+        res.json(combineData)
     })
     .fail(function (err){
         console.log(err)

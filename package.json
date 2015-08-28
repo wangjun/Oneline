@@ -1,6 +1,6 @@
 {
   "name": "Oneline",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Social Network Aggregator",
   "main": "app.js",
   "repository": {
@@ -24,7 +24,9 @@
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "extend": "^3.0.0",
     "helmet": "^0.10.0",
+    "instagram-node": "^0.5.7",
     "jade": "^1.11.0",
     "jsonwebtoken": "^5.0.4",
     "mongoose": "^4.1.3",

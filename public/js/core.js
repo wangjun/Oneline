@@ -12,7 +12,8 @@ angular.module('Oneline', [
     'Oneline.relativeDateServices',
     'Oneline.tokenHelperServices',
     'Oneline.UIServices',
-    'Oneline.templateTwitterDirectives'
+    'Oneline.olVideoDirectives',
+    'Oneline.trimMediaLinkDirectives'
 ])
 .config(['$locationProvider', '$stateProvider', 
     '$urlRouterProvider', '$httpProvider', 'jwtInterceptorProvider',

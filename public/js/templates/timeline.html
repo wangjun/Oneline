@@ -1,27 +1,19 @@
-<div class="timeline" ng-repeat="item in timelineData">
+<div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'">
 
 
     <div ng-if="item.provider === 'twitter'">
-        <div ng-if="item.type === 'tweet' || 'reply'">
-            <tweet class="timeline--twitter"></tweet>
-        </div>
-        <div ng-if="item.type === 'retweet'">
-            <tweet-retweet class="timeline--twitter"></tweet-retweet>
-        </div>
-        <div ng-if="item.type === 'quote'">
-            <tweet-quote class="timeline--twitter"></tweet-quote>
-        </div>
+        <ng-include class="timeline--twitter" src="'/public/dist/' + item.type + '.min.html'"></ng-include>
     </div>
 
 
     <div ng-if="item.provider === 'instagram'">
-        <ig-post class="timeline--instagram"></ig-post>
+        <ng-include class="timeline--instagram" src="'/public/dist/ig-post.min.html'"></ng-include>
     </div>
 
     
-    <div ng-if="item.provider === 'weibo'">
+<!--     <div ng-if="item.provider === 'weibo'">
         <weibo class="timeline--weibo"></weibo>
-    </div>
+    </div> -->
 
 
 </div>
