@@ -38,6 +38,7 @@
     &__content {
         position: relative;
         top: -24px;
+        @include user-select(text);
     }
     // 文章內容
     &__text {
@@ -118,8 +119,10 @@
         .timeline__profile__avatar {
             border-color: $color-twitter;
         }
-        a, a:visited {
-            color: $color-twitter;
+        .timeline__content {
+            a, a:visited {
+                color: $color-twitter;
+            }
         }
     }
     // Instagram 樣式
@@ -127,8 +130,10 @@
         .timeline__profile__avatar {
             border-color: $color-instagram;
         }
-        a, a:visited {
-            color: $color-instagram;
+        .timeline__content {
+            a, a:visited {
+                color: $color-instagram;
+            }
         }
     }
     // Weibo 樣式
@@ -136,8 +141,53 @@
         .timeline__profile__avatar {
             border-color: $color-weibo;
         }
-        a, a:visited {
-            color: $color-weibo;
+        .timeline__content {
+            a, a:visited {
+                color: $color-weibo;
+            }
         }
+    }
+}
+
+/* Load more button */
+.loadMore {
+    @extend .timeline;
+    position: relative;
+    height: 40px;
+    margin: 10px 7px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-gray-drak;
+    }
+    &--new {
+        z-index: 3;
+    }
+    &--old {
+        z-index: 2;
+    }
+    &--loading {
+        position: absolute;
+        top: calc(50% - 20px);
+        width: calc(100% - 14px);
+    }
+
+    &__loading {
+        position: relative;
+        top: 19px;
+        width: 2px;
+        height: 2px;
+        background-color: $color-black;
+        @include border-radius(1px);
+        @include animation(loadAnimate 7s infinite linear);
+    }
+}
+
+@include keyframes(loadAnimate) {
+    0% {
+        width: 2px;
+    }
+    100% {
+        width: 100%;
     }
 }

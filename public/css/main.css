@@ -103,6 +103,10 @@ html {
 }
 
 body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Helvetica Neue", "Palatino", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
@@ -304,7 +308,7 @@ ng\:form {
   }
 }
 
-.timeline {
+.timeline, .loadMore {
   position: relative;
   margin: 36px 7px;
   padding: 0 10px;
@@ -340,6 +344,10 @@ ng\:form {
 .timeline__content {
   position: relative;
   top: -24px;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 .timeline__text {
   word-wrap: break-word;
@@ -411,22 +419,81 @@ ng\:form {
 .timeline--twitter .timeline__profile__avatar {
   border-color: #2AA9E0;
 }
-.timeline--twitter a, .timeline--twitter a:visited {
+.timeline--twitter .timeline__content a, .timeline--twitter .timeline__content a:visited {
   color: #2AA9E0;
 }
 .timeline--instagram .timeline__profile__avatar {
   border-color: #3F5D87;
 }
-.timeline--instagram a, .timeline--instagram a:visited {
+.timeline--instagram .timeline__content a, .timeline--instagram .timeline__content a:visited {
   color: #3F5D87;
 }
 .timeline--weibo .timeline__profile__avatar {
   border-color: #E6162D;
 }
-.timeline--weibo a, .timeline--weibo a:visited {
+.timeline--weibo .timeline__content a, .timeline--weibo .timeline__content a:visited {
   color: #E6162D;
 }
 
+/* Load more button */
+.loadMore {
+  position: relative;
+  height: 40px;
+  margin: 10px 7px;
+  cursor: pointer;
+}
+.loadMore:hover {
+  background-color: #CECECF;
+}
+.loadMore--new {
+  z-index: 3;
+}
+.loadMore--old {
+  z-index: 2;
+}
+.loadMore--loading {
+  position: absolute;
+  top: calc(50% - 20px);
+  width: calc(100% - 14px);
+}
+.loadMore__loading {
+  position: relative;
+  top: 19px;
+  width: 2px;
+  height: 2px;
+  background-color: #000;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+  -moz-animation: loadAnimate 7s infinite linear;
+  -webkit-animation: loadAnimate 7s infinite linear;
+  animation: loadAnimate 7s infinite linear;
+}
+
+@-moz-keyframes loadAnimate {
+  0% {
+    width: 2px;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@-webkit-keyframes loadAnimate {
+  0% {
+    width: 2px;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes loadAnimate {
+  0% {
+    width: 2px;
+  }
+  100% {
+    width: 100%;
+  }
+}
 .social-list {
   display: table;
   width: 100%;

@@ -4,6 +4,7 @@ var passport = require('passport'),
     router   = require('express').Router();
 
 
+// Twitter
 router.get('/twitter', passport.authenticate('twitter', { session: false }))
 router.get('/twitter/callback', passport.authenticate('twitter', {
     session: false
@@ -19,6 +20,7 @@ router.get('/twitter/callback', passport.authenticate('twitter', {
     res.render('authCallback', { socialIcon: 'twitter', token: token })
 })
 
+// Instagram
 router.get('/instagram', passport.authenticate('instagram', { session: false }))
 router.get('/instagram/callback', passport.authenticate('instagram', {
     session: false

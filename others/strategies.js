@@ -44,7 +44,6 @@ passport.use(new InstagramStrategy({
 }, function (accessToken, refreshToken, profile, done){
 
     var id = profile.provider + profile.id;
-    console.log(profile)
     User.findOne({id: id}, function (err, found){
         if (err) return done(err)
         if (found){

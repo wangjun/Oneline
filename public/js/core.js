@@ -43,3 +43,6 @@ angular.module('Oneline', [
             controller: 'timelineCtrl'
         })
 }])
+.factory('timelineCache', ['$cacheFactory', function($cacheFactory){
+    return $cacheFactory('timelineCache')
+}])

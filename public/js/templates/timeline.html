@@ -1,3 +1,7 @@
+<div ng-click="loadOldPosts()" class="loadMore loadMore--new loadMore--loading animate--faster">
+    <div class="loadMore__loading"></div>
+</div>
+
 <div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'">
 
 
@@ -16,4 +20,8 @@
     </div> -->
 
 
+</div>
+
+<div ng-click="loadOldPosts()" class="loadMore loadMore--old loadMore--loading animate--faster">
+    <div></div>
 </div>
