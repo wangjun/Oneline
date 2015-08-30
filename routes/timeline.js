@@ -26,15 +26,37 @@ router.use(function (req, res, next){
         next({ status: 401, message: 'No authorization token was found' })
     } else {
         req.olPassports = validPassports
+        req.olId = {}
         next()
     }
 })
 
-// router.param('id', function (req, res, next, id){
-//     console.log('+++++++++++++++++++', id)
-//     next()
-// })
-router.get(['/', '/:id'], function (req, res, next){
+// Handing `id` Params
+router.param('id', function (req, res, next, id){
+    var olIdObj   = {},
+        arrayOfId = id.split(',');
+
+    arrayOfId.forEach(function (id_str){
+        var key   = id_str.split('-')[0],
+            value = id_str.split('-')[1];
+
+        olIdObj[key] = value
+    })
+
+    req.olId = olIdObj
+
+    next()
+})
+// Handing `count` Params
+router.param('count', function (req, res, next, count){
+
+    req.olCount = count
+
+    next()
+})
+
+// Init Load
+router.get('/', function (req, res, next){
 
     Q.all([
         q_userFindOne({id: 'twitter' + req.olPassports.twitter}),
@@ -44,39 +66,95 @@ router.get(['/', '/:id'], function (req, res, next){
         var feedPromises = [];
 
         if (twit){
-            feedPromises.push(feed.t(twit.token, twit.tokenSecret))
+            feedPromises.push(feed.t({
+                token      : twit.token,
+                tokenSecret: twit.tokenSecret
+            }))
         }
 
         if (ig){
-            feedPromises.push(feed.i(ig.token))
+            feedPromises.push(feed.i({
+                token : ig.token
+            }))
         }
 
-        return Q
-        .all(feedPromises)
-        .spread(function (tData, iData){
-            var combineData = [];
-
-            if (tData){
-                require('fs')
-                .writeFileSync(process.env.PWD + '/ignore/data-twitter.json', JSON.stringify(tData[0], null, 4))
-
-                combineData = combineData.concat(filter.tweet(tData[0]))
-            }
-
-            if (iData){
-                require('fs')
-                .writeFileSync(process.env.PWD + '/ignore/data-instagram.json', JSON.stringify(iData[0], null, 4))
-
-                combineData = combineData.concat(filter.igPost(iData[0]))
-            }
-
-            res.json(combineData)
-        })
+        return Q.all(feedPromises)
     })
+    .spread(handleData(req, res, next))
     .fail(function (err){
         console.log(err)
+        next({})
     })
 })
 
+// Load More
+router.get('/:id/:count', function (req, res, next){
+
+    Q.all([
+        q_userFindOne({id: 'twitter' + req.olPassports.twitter}),
+        q_userFindOne({id: 'instagram' + req.olPassports.instagram})
+    ])
+    .spread(function (twit, ig){
+        var feedPromises = [];
+
+        if (twit && (req.olId.twitter_minId || req.olId.twitter_maxId)){
+            feedPromises.push(feed.t({
+                token      : twit.token,
+                tokenSecret: twit.tokenSecret,
+                since_id   : req.olId.twitter_minId,
+                max_id     : req.olId.twitter_maxId,
+                count      : req.olCount
+            }))
+        }
+
+        if (ig && (req.olId.instagram_minId || req.olId.instagram_maxId)){
+            feedPromises.push(feed.i({
+                token : ig.token,
+                min_id: req.olId.instagram_minId,
+                max_id: req.olId.instagram_maxId,
+                count : req.olCount
+            }))
+        }
+
+        return Q.all(feedPromises)
+    })
+    .spread(handleData(req, res, next))
+    .fail(function (err){
+        console.log(err)
+        next({})
+    })
+})
+
+function handleData(req, res, next){
+    return function (tData, iData){
+        var combineData = {
+            data    : [],
+            min_id  : {},
+            min_date: {}
+        };
+
+        if (tData){
+
+            var tData = filter.tweet(tData[0]);
+
+            combineData.min_id.twitter = tData.min_id
+            combineData.min_date.twitter = tData.min_date
+
+            combineData.data = combineData.data.concat(tData.data)
+        }
+
+        if (iData){
+
+            var iData = filter.igPost(iData[0]);
+
+            combineData.min_id.instagram = iData.min_id
+            combineData.min_date.instagram = iData.min_date
+
+            combineData.data = combineData.data.concat(iData.data)
+        }
+
+        res.json(combineData)
+    }
+}
 
 module.exports = router

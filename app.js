@@ -112,4 +112,8 @@ app.use(function (err, req, res, next){
 })
 
 
+process.on('uncaughtException', function (err) {
+    console.log(err)
+});
+
 app.listen(process.env.PORT || 3000)

@@ -66,7 +66,17 @@ var filter = {
             cache.push(tweetObj)
         })
 
-        return cache;
+        var returnObj = { data: cache },
+            lastData  = data[data.length - 1];
+
+        if (lastData){
+            extend(lastData, {
+                min_id  : lastData.id_str,
+                min_date: Date.parse(lastData.created_at)
+            })
+        }
+
+        return returnObj;
     },
     igPost: function (data){
         var cache = [];
@@ -100,7 +110,18 @@ var filter = {
             cache.push(igPost)
         })
 
-        return cache;
+
+        var returnObj = { data: cache },
+            lastData  = data[data.length - 1];
+
+        if (lastData){
+            extend(returnObj, {
+                min_id  : lastData.id,
+                min_date: Date.parse(new Date(lastData.created_time * 1000))
+            })
+        }
+
+        return returnObj;
     }
 }
 

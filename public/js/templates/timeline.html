@@ -1,4 +1,4 @@
-<div ng-click="loadOldPosts()" class="loadMore loadMore--new loadMore--loading animate--faster">
+<div ng-click="loadMore(1)" class="loadMore loadMore--new loadMore--initLoad animate--faster">
     <div class="loadMore__loading"></div>
 </div>
 
@@ -6,12 +6,12 @@
 
 
     <div ng-if="item.provider === 'twitter'">
-        <ng-include class="timeline--twitter" src="'/public/dist/' + item.type + '.min.html'"></ng-include>
+        <ng-include data-id="{{item.id_str}}" class="timeline--twitter" src="'/public/dist/' + item.type + '.min.html'"></ng-include>
     </div>
 
 
     <div ng-if="item.provider === 'instagram'">
-        <ng-include class="timeline--instagram" src="'/public/dist/ig-post.min.html'"></ng-include>
+        <ng-include data-id="{{item.id_str}}" class="timeline--instagram" src="'/public/dist/ig-post.min.html'"></ng-include>
     </div>
 
     
@@ -22,6 +22,6 @@
 
 </div>
 
-<div ng-click="loadOldPosts()" class="loadMore loadMore--old loadMore--loading animate--faster">
+<div ng-click="loadMore(-1)" class="loadMore loadMore--old loadMore--initLoad animate--faster">
     <div></div>
 </div>

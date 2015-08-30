@@ -1,6 +1,10 @@
 angular.module('Oneline.timelineControllers', [])
-.controller('timelineCtrl', ['$scope', '$state', '$stateParams', 'store', 'Timeline', 'olUI', 'olTokenHelper', 'timelineCache',
-    function($scope, $state, $stateParams, store, Timeline, olUI, olTokenHelper, timelineCache){
+.controller('timelineCtrl', ['$scope', '$state', '$stateParams', 
+    'store', 'Timeline',
+    'olUI', 'olTokenHelper', 'olTimelineHelper', 'timelineCache',
+    function($scope, $state, $stateParams, 
+        store, Timeline, 
+        olUI, olTokenHelper, olTimelineHelper, timelineCache){
 
 
     /**
@@ -22,49 +26,71 @@ angular.module('Oneline.timelineControllers', [])
         : $state.go('timeline', { provider: store.get('timelineProvider') })
     // 4
     $scope.timelineData = []
-    Timeline.query(function (data){
-        $scope.timelineData = filterOldPost(data)
-
-        olUI.setLoading(false, true)
-        olUI.setLoading(false, false)
+    Timeline
+    .initLoad()
+    .$promise
+    .then(function (posts){
+        // 保存貼文與 min_id & min_date
+        olTimelineHelper.storeOldPosts(posts, $scope.providerList)
+        // 獲取 30 分鐘內貼文
+        $scope.timelineData = olTimelineHelper.extractOldPosts()
+        // 結束加載動畫
+        olUI.setLoading(false, 1)
+        olUI.setLoading(false, -1)
     })
 
 
     /**
      * 時間線操作
      *
-     *  `loadOldPosts` 加載先前隱藏（發表時間大於一小時）的貼文
-     *  `filterOldPost` 隱藏發表時間大於一小時的貼文
+     *  `scope.loadMore` 加載下一個「時間指針」範圍的貼文
      */
-    $scope.loadOldPosts = function (){
-        var oldPosts = timelineCache.get('oldPosts') || [];
+    $scope.loadMore = function (step){
+        if (olUI.isLoading(step)) return;
+        olUI.setLoading(true, step)
 
-        oldPosts.forEach(function (post){
-            $scope.timelineData.push(post)
-        })
+        if (step > 0){
 
-        timelineCache.remove('oldPosts')
+            Timeline
+            .load({
+                id: olTimelineHelper.getMaxId($scope.providerList),
+                count: 20
+            })
+            .$promise
+            .then(function (newPosts){
+                console.log(newPosts)
+                $scope.timelineData = $scope.timelineData.concat(newPosts)
+            })
+            .catch(function (err){
+                console.log(err)
+            })
+            .finally(function (){
+                olUI.setLoading(false, step)
+            })
+
+        } else {
+
+            olTimelineHelper
+            .checkOldPosts($scope.providerList)
+            .then(function (invalidList){
+                return olTimelineHelper.loadOldPosts(invalidList)
+                .then(function (posts){
+                    olTimelineHelper.storeOldPosts(posts, $scope.providerList)
+                    $scope.timelineData = $scope.timelineData.concat(olTimelineHelper.extractOldPosts())
+                })
+            }, function (){
+                $scope.timelineData = $scope.timelineData.concat(olTimelineHelper.extractOldPosts())
+            })
+            .catch(function (err){
+                // Oops...
+                console.log(err)
+            })
+            .finally(function (){
+                olUI.setLoading(false, step)
+            })
+        }
     }
-    function filterOldPost(data){
-        var oldPosts = [];
 
-        var newPosts = data.filter(function (item){
-            var isNewPost = Date.now() - item.created_at < 3600000
-
-            if (!isNewPost){
-                oldPosts.push(item)
-            }
-
-            return isNewPost
-        })
-
-        timelineCache.put('oldPosts', oldPosts)
-
-        return newPosts
-    }
-    // $scope.getTimeline = function (){
-    //     Timeline.get({id: store.get('')})
-    // }
 
     // 更改「當前時間線上聚合的社交網站」
     function setTimelineProvider(provider){
