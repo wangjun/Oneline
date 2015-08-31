@@ -16,5 +16,15 @@ angular.module('Oneline.UIServices', [])
         var loadingElem = angular.element(document.getElementsByClassName('loadMore')[step === 1 ? 0 : 1]);
 
         return loadingElem.children().hasClass('loadMore__loading')
+    },
+    // 設置上次閱讀位置提醒
+    this.setDivider = function (step){
+        var timelineElem = document.getElementsByClassName('timeline');
+
+        if (step === 1){
+            angular.element(timelineElem[0]).addClass('divider--top')
+        } else {
+            angular.element(timelineElem[timelineElem.length - 1]).addClass('divider--bottom')
+        }
     }
 })

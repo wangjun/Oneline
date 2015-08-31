@@ -50,8 +50,8 @@ angular.module('Oneline.timelineServices', [])
     }
     // 存儲「舊貼文」
     this.storeOldPosts = function (posts, providerList){
-        var data = posts.data,
-            oldPosts = timelineCache.get('oldPosts') || [];
+        var data         = posts.data,
+            oldPosts     = timelineCache.get('oldPosts') || [];
 
         // 保存 Instagram 和 Twitter 最舊的貼文 id 和 date
         providerList.forEach(function (provider){
@@ -60,12 +60,15 @@ angular.module('Oneline.timelineServices', [])
                 date_key   = provider + '_min_date',
                 date_value = posts.min_date[provider];
 
-            timelineCache.put(id_key, id_value)
-            timelineCache.put(date_key, date_value)
+            if (id_value){
+                timelineCache.put(id_key, id_value)
+            }
+            if (date_value){
+                timelineCache.put(date_key, date_value)
+            }
         })
-
+        // 保存「舊貼文」
         oldPosts = oldPosts.concat(data)
-
         timelineCache.put('oldPosts', oldPosts)
     }
     /**
@@ -75,7 +78,6 @@ angular.module('Oneline.timelineServices', [])
      *
      */
     this.checkOldPosts = function (providerList){
-
         return $q(function (resolve, reject){
             var invalidList =  providerList.filter(function (provider){
                 return time_pointer - timelineCache.get(provider + '_min_date') < TIME_RANGE
@@ -110,15 +112,60 @@ angular.module('Oneline.timelineServices', [])
         return extractOldPosts
     }
     // 向後端請求加載「舊貼文」
-    this.loadOldPosts = function(providerList){
-        var max_id_str = this.getMinId(providerList),
-            count      = retrieve_count;
+    this.loadOldPosts = function(invalidList, providerList){
+        var defer = $q.defer()
 
-        retrieve_count += 10
+        var _this = this;
 
-        return Timeline
-        .load({id: max_id_str, count: count})
-        .$promise
-        .then(function (oldPosts){ return oldPosts })
+        function fetchPosts(invalidList){
+            var defer = $q.defer()
+
+            var max_id_str = _this.getMinId(invalidList),
+                count      = retrieve_count;
+
+            Timeline
+            .load({id: max_id_str, count: count})
+            .$promise
+            .then(function (oldPosts){
+                // 過濾 Twitter 返回的「舊貼文」中包含 max_id 貼文
+                if (oldPosts.min_date.twitter){
+                    oldPosts.data.splice(0, 1)
+                }
+                _this.storeOldPosts(oldPosts, providerList)
+
+                // 若一次未能滿足，下次獲取時「加量」
+                count < 100 ? count += 10 : null
+
+                defer.resolve()
+            })
+
+            return defer.promise;
+        }
+        function isLoadFin(){
+            var defer = $q.defer()
+
+            _this.checkOldPosts(providerList)
+            .then(function (invalidList){
+                fetchPosts(invalidList)
+                .then(isLoadFin)
+                .then(function (){
+                    defer.resolve()
+                })
+            }, function (){
+                defer.resolve()
+            })
+
+            return defer.promise;
+        }
+
+        fetchPosts(invalidList).then(isLoadFin).then(function (){
+
+            retrieve_count < 100 ? retrieve_count += 10 : null
+
+            defer.resolve()
+        })
+
+        return defer.promise;
     }
+
 }])

@@ -2,12 +2,11 @@
     <a ng-href="//twitter.com/{{item.retweet.user.screen_name}}" target="_blank">
         <img class="timeline__profile__avatar" ng-src="{{item.retweet.user.profile_image_url_https.replace('normal', 'bigger')}}" alt="avatar">
     </a>
-    <a ng-href="//twitter.com/{{item.retweet.user.screen_name}}" target="_blank">
-        <div class="timeline__profile__fullname">
+    <div class="timeline__profile__fullname">
+        <a ng-href="//twitter.com/{{item.retweet.user.screen_name}}" target="_blank">
             <strong>{{item.retweet.user.name}}</strong>
-        </div>
-    </a>
-
+        </a>
+    </div>
 </div>
 
 <div class="timeline__content">

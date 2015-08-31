@@ -340,6 +340,7 @@ ng\:form {
   right: 3px;
   color: #89A;
   font-size: 12px;
+  cursor: pointer;
 }
 .timeline__content {
   position: relative;
@@ -495,6 +496,28 @@ ng\:form {
     width: 100%;
   }
 }
+.divider_line, .divider--top::before, .divider--bottom::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  height: 40px;
+  border-right: 1px dashed #000;
+}
+
+/* Divider */
+.divider--top {
+  margin-top: 100px;
+}
+.divider--top::before {
+  top: -82px;
+}
+.divider--bottom {
+  margin-bottom: 100px;
+}
+.divider--bottom::after {
+  bottom: -58px;
+}
+
 .social-list {
   display: table;
   width: 100%;

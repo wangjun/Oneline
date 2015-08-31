@@ -70,7 +70,7 @@ var filter = {
             lastData  = data[data.length - 1];
 
         if (lastData){
-            extend(lastData, {
+            extend(returnObj, {
                 min_id  : lastData.id_str,
                 min_date: Date.parse(lastData.created_at)
             })

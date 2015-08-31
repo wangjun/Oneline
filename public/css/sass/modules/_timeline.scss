@@ -33,6 +33,7 @@
         right: 3px;
         color: #89A;
         font-size: $font-size-small;
+        cursor: pointer;
     }
     // 文章外盒
     &__content {
@@ -192,3 +193,34 @@
         width: 100%;
     }
 }
+
+.divider_line {
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: 40px;
+    border-right: 1px dashed $color-black;
+}
+/* Divider */
+.divider {
+    &--top {
+        margin-top: 100px;
+
+        &::before {
+            @extend .divider_line;
+
+            top: -82px;
+        }
+    }
+
+    &--bottom {
+        margin-bottom: 100px;
+
+        &::after {
+            @extend .divider_line;
+
+            bottom: -58px;
+        }
+    }
+}
+

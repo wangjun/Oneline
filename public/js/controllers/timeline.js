@@ -58,8 +58,10 @@ angular.module('Oneline.timelineControllers', [])
             })
             .$promise
             .then(function (newPosts){
-                console.log(newPosts)
-                $scope.timelineData = $scope.timelineData.concat(newPosts)
+                if (newPosts.data.length > 0){
+                    olUI.setDivider(step)
+                    $scope.timelineData = $scope.timelineData.concat(newPosts.data)
+                }
             })
             .catch(function (err){
                 console.log(err)
@@ -70,23 +72,18 @@ angular.module('Oneline.timelineControllers', [])
 
         } else {
 
-            olTimelineHelper
-            .checkOldPosts($scope.providerList)
+            olTimelineHelper.checkOldPosts($scope.providerList)
             .then(function (invalidList){
-                return olTimelineHelper.loadOldPosts(invalidList)
-                .then(function (posts){
-                    olTimelineHelper.storeOldPosts(posts, $scope.providerList)
-                    $scope.timelineData = $scope.timelineData.concat(olTimelineHelper.extractOldPosts())
-                })
-            }, function (){
-                $scope.timelineData = $scope.timelineData.concat(olTimelineHelper.extractOldPosts())
-            })
+                return olTimelineHelper.loadOldPosts(invalidList, $scope.providerList)
+            }, function (){})
             .catch(function (err){
                 // Oops...
                 console.log(err)
             })
             .finally(function (){
+                olUI.setDivider(step)
                 olUI.setLoading(false, step)
+                $scope.timelineData = $scope.timelineData.concat(olTimelineHelper.extractOldPosts())
             })
         }
     }
