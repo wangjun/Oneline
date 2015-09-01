@@ -33,7 +33,7 @@ angular.module('Oneline', [
 
     $stateProvider
         .state('settings', {
-            url: '/?s',  
+            url: '/?s',
             templateUrl: '/public/dist/settings.min.html',
             controller: 'settingsCtrl'
         })

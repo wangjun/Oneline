@@ -8,9 +8,15 @@ angular.module('Oneline.settingsControllers', [])
      *     1. 判斷是否需要跳轉到「時間線頁面」
      *     2. 設置 `isTimeline` 為 `false`
      */
-    olTokenHelper.isValidToken() && $stateParams.s !== '1'
-        ? $state.go('timeline', { provider: store.get('timelineProvider') })
-        : null
+    if (olTokenHelper.isValidToken()){
+        if ($stateParams.s !== '1'){
+            $state.go('timeline', { provider: store.get('timelineProvider') })
+        }
+    } else {
+        olTokenHelper.clearToken()
+        $scope.updateProviderList()
+    }
+
     $scope.setTimeline(false)
 
     /**
@@ -30,7 +36,6 @@ angular.module('Oneline.settingsControllers', [])
     $scope.toggleAuth = function (provider){
         if ($scope.providerList.indexOf(provider) < 0){
             $window.open('/auth/' + provider, '_blank')
-            // $window.open('/auth/' + provider, '_blank')
         } else {
             olTokenHelper.removeToken(provider)
             $scope.updateProviderList()

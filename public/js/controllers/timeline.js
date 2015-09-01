@@ -1,8 +1,8 @@
 angular.module('Oneline.timelineControllers', [])
-.controller('timelineCtrl', ['$scope', '$state', '$stateParams', 
+.controller('timelineCtrl', ['$scope', '$interval', '$state', '$stateParams', 
     'store', 'Timeline',
     'olUI', 'olTokenHelper', 'olTimelineHelper', 'timelineCache',
-    function($scope, $state, $stateParams, 
+    function($scope, $interval, $state, $stateParams, 
         store, Timeline, 
         olUI, olTokenHelper, olTimelineHelper, timelineCache){
 
@@ -15,9 +15,11 @@ angular.module('Oneline.timelineControllers', [])
      *     4. 初始化時間線
      */
     // 1
-    olTokenHelper.isValidToken()
-        ? null
-        : $state.go('settings', { settings: 'settings' })
+    if (!olTokenHelper.isValidToken()){
+        olTokenHelper.clearToken()
+        $scope.updateProviderList()
+        $state.go('settings')
+    }
     // 2
     $scope.setTimeline(true)
     // 3
@@ -31,19 +33,31 @@ angular.module('Oneline.timelineControllers', [])
     .$promise
     .then(function (posts){
         // 保存貼文與 min_id & min_date
-        olTimelineHelper.storeOldPosts(posts, $scope.providerList)
+        olTimelineHelper.storePosts('oldPosts', posts, $scope.providerList)
+        // 保存 max_id & max_date
+        var fakeNewPosts = {
+            data    : [],
+            max_id  : posts.max_id,
+            max_date: posts.max_date
+        }
+        olTimelineHelper.storePosts('newPosts', fakeNewPosts, $scope.providerList)
         // 獲取 30 分鐘內貼文
         $scope.timelineData = olTimelineHelper.extractOldPosts()
         // 結束加載動畫
         olUI.setLoading(false, 1)
         olUI.setLoading(false, -1)
+    }, function (err){
+        if (err.status === 401){
+            $state.go('settings')
+        }
     })
 
 
     /**
      * 時間線操作
      *
-     *  `scope.loadMore` 加載下一個「時間指針」範圍的貼文
+     *  `scope.loadMore` 加載「新貼文」／「舊貼文」
+     *  `scope.resetCount` 重置未讀「新貼文」提醒
      */
     $scope.loadMore = function (step){
         if (olUI.isLoading(step)) return;
@@ -51,10 +65,23 @@ angular.module('Oneline.timelineControllers', [])
 
         if (step > 0){
 
+            // 從本地獲取
+            var newPostsFromCache = timelineCache.get('newPosts') || []
+            if (newPostsFromCache.length > 0){
+
+                olUI.setDivider(step)
+                $scope.timelineData = $scope.timelineData.concat(newPostsFromCache)
+                timelineCache.put('newPosts', [])
+                olUI.setLoading(false, step)
+
+                return;
+            }
+
+            // 從後端獲取
             Timeline
             .load({
-                id: olTimelineHelper.getMaxId($scope.providerList),
-                count: 20
+                id: olTimelineHelper.getId('newPosts', $scope.providerList),
+                count: 70
             })
             .$promise
             .then(function (newPosts){
@@ -64,7 +91,9 @@ angular.module('Oneline.timelineControllers', [])
                 }
             })
             .catch(function (err){
-                console.log(err)
+                if (err.status === 401){
+                    $state.go('settings')
+                }
             })
             .finally(function (){
                 olUI.setLoading(false, step)
@@ -77,7 +106,7 @@ angular.module('Oneline.timelineControllers', [])
                 return olTimelineHelper.loadOldPosts(invalidList, $scope.providerList)
             }, function (){})
             .catch(function (err){
-                // Oops...
+                // 此處 401 錯誤不跳轉到授權頁面
                 console.log(err)
             })
             .finally(function (){
@@ -87,6 +116,20 @@ angular.module('Oneline.timelineControllers', [])
             })
         }
     }
+
+    $scope.resetCount = function (){
+        olUI.setNewPostsCount('')
+    }
+
+    // 定時獲取「新貼文」
+    $interval(function (){
+        olTimelineHelper.loadNewPosts($scope.providerList)
+        .then(function (){
+            var newPostsLength = (timelineCache.get('newPosts') || []).length
+            // 設置提醒
+            olUI.setNewPostsCount(newPostsLength)
+        }, function (){})
+    }, 1000 * 60 * 5)
 
 
     // 更改「當前時間線上聚合的社交網站」

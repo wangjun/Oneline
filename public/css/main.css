@@ -471,6 +471,16 @@ ng\:form {
   -webkit-animation: loadAnimate 7s infinite linear;
   animation: loadAnimate 7s infinite linear;
 }
+.loadMore__count::before {
+  content: attr(data-count);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #CECECF;
+  text-align: center;
+  line-height: 40px;
+}
 
 @-moz-keyframes loadAnimate {
   0% {

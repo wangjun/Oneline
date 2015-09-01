@@ -22,7 +22,7 @@ router.use(function (req, res, next){
         } catch (e){}
     })
 
-    if (validPassports.length === 0){
+    if (Object.keys(validPassports).length === 0){
         next({ status: 401, message: 'No authorization token was found' })
     } else {
         req.olPassports = validPassports
@@ -66,16 +66,16 @@ router.get('/', function (req, res, next){
         var feedPromises = [];
 
         if (twit){
-            feedPromises.push(feed.t({
+            feedPromises[0] = feed.t({
                 token      : twit.token,
                 tokenSecret: twit.tokenSecret
-            }))
+            })
         }
 
         if (ig){
-            feedPromises.push(feed.i({
+            feedPromises[1] = feed.i({
                 token : ig.token
-            }))
+            })
         }
 
         return Q.all(feedPromises)
@@ -98,22 +98,22 @@ router.get('/:id/:count', function (req, res, next){
         var feedPromises = [];
 
         if (twit && (req.olId.twitter_minId || req.olId.twitter_maxId)){
-            feedPromises.push(feed.t({
+            feedPromises[0] = feed.t({
                 token      : twit.token,
                 tokenSecret: twit.tokenSecret,
                 since_id   : req.olId.twitter_minId,
                 max_id     : req.olId.twitter_maxId,
                 count      : req.olCount
-            }))
+            })
         }
 
         if (ig && (req.olId.instagram_minId || req.olId.instagram_maxId)){
-            feedPromises.push(feed.i({
+            feedPromises[1] = feed.i({
                 token : ig.token,
                 min_id: req.olId.instagram_minId,
                 max_id: req.olId.instagram_maxId,
                 count : req.olCount
-            }))
+            })
         }
 
         return Q.all(feedPromises)
@@ -127,10 +127,13 @@ router.get('/:id/:count', function (req, res, next){
 
 function handleData(req, res, next){
     return function (tData, iData){
+
         var combineData = {
             data    : [],
             min_id  : {},
-            min_date: {}
+            min_date: {},
+            max_id  : {},
+            max_date: {}
         };
 
         if (tData){
@@ -139,6 +142,8 @@ function handleData(req, res, next){
 
             combineData.min_id.twitter = tData.min_id
             combineData.min_date.twitter = tData.min_date
+            combineData.max_id.twitter = tData.max_id
+            combineData.max_date.twitter = tData.max_date
 
             combineData.data = combineData.data.concat(tData.data)
         }
@@ -149,6 +154,8 @@ function handleData(req, res, next){
 
             combineData.min_id.instagram = iData.min_id
             combineData.min_date.instagram = iData.min_date
+            combineData.max_id.instagram = iData.max_id
+            combineData.max_date.instagram = iData.max_date
 
             combineData.data = combineData.data.concat(iData.data)
         }

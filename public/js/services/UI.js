@@ -26,5 +26,10 @@ angular.module('Oneline.UIServices', [])
         } else {
             angular.element(timelineElem[timelineElem.length - 1]).addClass('divider--bottom')
         }
+    },
+    this.setNewPostsCount = function (count){
+        document
+        .getElementsByClassName('loadMore__count')[0]
+        .setAttribute('data-count', count)
     }
 })

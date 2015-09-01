@@ -67,12 +67,15 @@ var filter = {
         })
 
         var returnObj = { data: cache },
+            firstData = data[0],
             lastData  = data[data.length - 1];
 
         if (lastData){
             extend(returnObj, {
                 min_id  : lastData.id_str,
-                min_date: Date.parse(lastData.created_at)
+                min_date: Date.parse(lastData.created_at),
+                max_id  : firstData.id_str,
+                max_date: Date.parse(firstData.created_at)
             })
         }
 
@@ -112,12 +115,15 @@ var filter = {
 
 
         var returnObj = { data: cache },
+            firstData = data[0],
             lastData  = data[data.length - 1];
 
         if (lastData){
             extend(returnObj, {
                 min_id  : lastData.id,
-                min_date: Date.parse(new Date(lastData.created_time * 1000))
+                min_date: Date.parse(new Date(lastData.created_time * 1000)),
+                max_id  : firstData.id,
+                max_date: Date.parse(new Date(firstData.created_time * 1000))
             })
         }
 

@@ -183,6 +183,16 @@
         @include border-radius(1px);
         @include animation(loadAnimate 7s infinite linear);
     }
+    &__count::before {
+        content: attr(data-count);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        color: $color-gray-drak;
+        text-align: center;
+        line-height: 40px;
+    }
 }
 
 @include keyframes(loadAnimate) {

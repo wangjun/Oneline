@@ -40,10 +40,9 @@ angular.module('Oneline.tokenHelperServices', [])
     this.isValidToken = function (){
         var tokenList = store.get('tokenList') || [];
         
-        return tokenList.some(function (token){
+        return (tokenList.length > 0) && tokenList.every(function (token){
             return !jwtHelper.isTokenExpired(token)
         })
-
     }
 
 
