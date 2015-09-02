@@ -36,31 +36,30 @@
             width: 25%;
         }
     }
-    &:hover .button {
+    &:hover &__button {
         @include opacity(1);
     }
-}
 
-.button {
-    display: block;
-    width: 70px;
-    height: 70px;
-    margin: 0 auto;
-    cursor: pointer;
+    &__button {
+        display: block;
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        cursor: pointer;
 
-    @include opacity(0);
-    @include filter(grayscale(100%));
+        @include opacity(0);
+        @include filter(grayscale(100%));
 
-    @media #{$all-mobile-devices}{
-        @include opacity(1);
-        @include filter(grayscale(0%));
+        @media #{$all-mobile-devices}{
+            @include opacity(1);
+            @include filter(grayscale(0%));
+        }
+
+        &:hover {
+            @include filter(grayscale(0%));
+        }
     }
-
-    &:hover {
-        @include filter(grayscale(0%));
-    }
 }
-
 
 
 /* Status: Timeline */

@@ -9,6 +9,7 @@ angular.module('Oneline', [
     'Oneline.settingsControllers',
     'Oneline.timelineControllers',
     'Oneline.timelineServices',
+    'Oneline.actionServices',
     'Oneline.relativeDateServices',
     'Oneline.tokenHelperServices',
     'Oneline.UIServices',

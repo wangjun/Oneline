@@ -111,3 +111,10 @@ $tablet-landscape: '(min-device-width : 768px) and (max-device-width : 1024px) a
         -webkit-overflow-scrolling: touch;
     }
 }
+.tips {
+    @include opacity(.7);
+
+    &:hover {
+        @include opacity(1);
+    }
+}

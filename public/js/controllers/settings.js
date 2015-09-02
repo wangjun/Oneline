@@ -1,6 +1,10 @@
 angular.module('Oneline.settingsControllers', [])
-.controller('settingsCtrl', ['$scope', '$window', '$state', '$stateParams', 'store', 'olTokenHelper', 
-    function($scope, $window, $state, $stateParams, store, olTokenHelper){
+.controller('settingsCtrl', ['$scope', '$window', 
+    '$state', '$stateParams', 
+    'store', 'olTokenHelper', 'timelineCache',
+    function($scope, $window, 
+        $state, $stateParams, 
+        store, olTokenHelper, timelineCache){
 
 
     /**
@@ -18,6 +22,7 @@ angular.module('Oneline.settingsControllers', [])
     }
 
     $scope.setTimeline(false)
+    $scope.setActions({})
 
     /**
      * 跨標籤頁通信
@@ -39,6 +44,7 @@ angular.module('Oneline.settingsControllers', [])
         } else {
             olTokenHelper.removeToken(provider)
             $scope.updateProviderList()
+            timelineCache.removeAll()
         }
     }
 

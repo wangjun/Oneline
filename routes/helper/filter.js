@@ -15,7 +15,9 @@ var filter = {
                 created_at: Date.parse(item.created_at),
                 id_str: item.id_str,
                 user: trimTweetUser(item.user),
-                text: item.text
+                text: item.text,
+                favorite_count: item.favorite_count,
+                retweet_count: item.retweet_count
             }
 
             // Retweet
@@ -97,7 +99,9 @@ var filter = {
                 images: {
                     low_resolution: item.images.low_resolution.url,
                     standard_resolution: item.images.standard_resolution.url
-                }
+                },
+                favorite_count: item.likes.count,
+                reply_count: item.comments.count
             }
 
             if (item.type === 'image'){

@@ -21,8 +21,12 @@ router.get('/twitter/callback', passport.authenticate('twitter', {
 })
 
 // Instagram
-router.get('/instagram', passport.authenticate('instagram', { session: false }))
+router.get('/instagram', passport.authenticate('instagram', {
+    scope: ['comments', 'likes'],
+    session: false 
+}))
 router.get('/instagram/callback', passport.authenticate('instagram', {
+    scope: ['comments', 'likes'],
     session: false
 }), function (req, res){
 

@@ -11,7 +11,9 @@ angular.module('Oneline.timelineServices', [])
     })
 
 }])
-.service('olTimelineHelper', ['$q', 'Timeline', 'timelineCache', function($q, Timeline, timelineCache){
+.service('olTimelineHelper', ['$q', 'Timeline', 'timelineCache', 'olUI', 
+    function($q, Timeline, timelineCache, olUI){
+
     var time_pointer   = Date.now();
     var retrieve_count = 50;
     var TIME_RANGE     = 1800000;
@@ -81,7 +83,7 @@ angular.module('Oneline.timelineServices', [])
     /**
      * 檢查 Provider 最舊的的貼文是否在「時間指針」30 分鐘範圍內，判斷是否需要從後端獲取「舊貼文」
      * 
-     * @return 不需要獲取（貼文）的 Providers
+     * @return 需要獲取（貼文）的 Providers
      *
      */
     this.checkOldPosts = function (providerList){
@@ -153,6 +155,10 @@ angular.module('Oneline.timelineServices', [])
                 count < 100 ? count += 10 : null
 
                 defer.resolve()
+            }, function (err){
+                if (err.status === 404){
+                    olUI.setLoading(false, -1)
+                }
             })
 
             return defer.promise;

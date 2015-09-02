@@ -116,11 +116,9 @@ angular.module('Oneline.timelineControllers', [])
             })
         }
     }
-
     $scope.resetCount = function (){
         olUI.setNewPostsCount('')
     }
-
     // 定時獲取「新貼文」
     $interval(function (){
         olTimelineHelper.loadNewPosts($scope.providerList)
@@ -129,7 +127,7 @@ angular.module('Oneline.timelineControllers', [])
             // 設置提醒
             olUI.setNewPostsCount(newPostsLength)
         }, function (){})
-    }, 1000 * 60 * 5)
+    }, 1000 * 60 * 3)
 
 
     // 更改「當前時間線上聚合的社交網站」

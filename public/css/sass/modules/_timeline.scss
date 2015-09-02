@@ -148,6 +148,28 @@
             }
         }
     }
+
+
+    &__action {
+        display: none;
+        position: absolute;
+        top: 7px;
+        right: 5px;
+        width: 20px;
+        height: 6px;
+        cursor: pointer;
+        z-index: 3;
+
+        @media #{$all-mobile-devices}{
+            display: block;
+        }
+    }
+
+    &:hover {
+        .timeline__action {
+            display: block;
+        }
+    }
 }
 
 /* Load more button */
@@ -161,6 +183,9 @@
 
     &:hover {
         border: 1px solid $color-gray-drak;
+    }
+    &:active {
+        background-color: $color-gray-drak;
     }
     &--new {
         z-index: 3;
@@ -233,4 +258,3 @@
         }
     }
 }
-

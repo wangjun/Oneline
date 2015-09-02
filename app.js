@@ -80,6 +80,7 @@ app.set('view engine', 'jade')
 // Routing
 app.use('/auth', require('./routes/auth'))
 app.use('/timeline', require('./routes/timeline'))
+app.use('/actions', require('./routes/actions'))
 app.use('/public', express.static('public'))
 app.all('/*', function (req, res, next){
     res.sendFile(__dirname + '/views/index.min.html')

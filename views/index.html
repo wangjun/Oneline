@@ -18,34 +18,17 @@
 </head>
 <body ng-controller="rootController" ng-class="{'status--timeline': isTimeline}">
 
-    <div class="menu menu--left animate--faster">
-        <div ng-if="isTimeline" class="vertically_center">
-            <a ui-sref="settings({ s: '1' })">
-                <svg class="button animate--faster" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <g fill="none">
-                        <circle fill="#F1F1F1" cx="100" cy="100" r="100"/>
-                        <circle ng-attr-fill="{{ isAuth('twitter') ? '#2AA9E0' : '#FFF' }}" cx="100" cy="42.5" r="15"/>
-                        <circle ng-attr-fill="{{ isAuth('instagram') ? '#3F5D87' : '#FFF' }}" cx="100" cy="100" r="15"/>
-                        <circle ng-attr-fill="{{ isAuth('weibo') ? '#E6162D' : '#FFF' }}" cx="100" cy="157.5" r="15"/>
-                    </g>
-                </svg>
-            </a>
-        </div>
-    </div>
+
+    <ng-include src="'/public/dist/menu--left.min.html'"></ng-include>
+
 
     <div class="oneline overflow--y animate--general">
         <ui-view></ui-view>
     </div>
 
-    <div class="menu menu--right animate--faster">
-        <div ng-if="!isTimeline" class="vertically_center">
-            <a ui-sref="timeline({ provider: timelineProvider })">
-                <svg ng-show="providerList.length > 0" class="button animate--faster">
-                    <use xlink:href="/public/img/icon-sprite.svg#ok-icon"></use>
-                </svg>
-            </a>                
-        </div>
-    </div>
+
+    <ng-include src="'/public/dist/menu--right.min.html'"></ng-include>
+
 
     <script src="/public/dist/libs.min.js"></script>
     <script src="/public/dist/oneline.min.js"></script>
