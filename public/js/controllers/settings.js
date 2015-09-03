@@ -1,10 +1,10 @@
 angular.module('Oneline.settingsControllers', [])
 .controller('settingsCtrl', ['$scope', '$window', 
     '$state', '$stateParams', 
-    'store', 'olTokenHelper', 'timelineCache',
+    'store', 'olTokenHelper', 'timelineCache', 'Auth', 
     function($scope, $window, 
         $state, $stateParams, 
-        store, olTokenHelper, timelineCache){
+        store, olTokenHelper, timelineCache, Auth){
 
 
     /**
@@ -22,7 +22,6 @@ angular.module('Oneline.settingsControllers', [])
     }
 
     $scope.setTimeline(false)
-    $scope.setActions({})
 
     /**
      * 跨標籤頁通信
@@ -42,9 +41,15 @@ angular.module('Oneline.settingsControllers', [])
         if ($scope.providerList.indexOf(provider) < 0){
             $window.open('/auth/' + provider, '_blank')
         } else {
-            olTokenHelper.removeToken(provider)
-            $scope.updateProviderList()
-            timelineCache.removeAll()
+            // 刪除後端授權信息
+            Auth.revoke({provider: provider})
+            .$promise
+            .finally(function (){
+                // 刪除前端授權信息
+                olTokenHelper.removeToken(provider)
+                $scope.updateProviderList()
+                timelineCache.removeAll()
+            })
         }
     }
 

@@ -1,16 +1,4 @@
 angular.module('Oneline.timelineServices', [])
-.factory('Timeline', ['$resource', function($resource){
-
-    return $resource('/timeline/:id/:count', null, {
-        initLoad: {
-            method: 'GET'
-        },
-        load: {
-            method : 'GET'
-        }
-    })
-
-}])
 .service('olTimelineHelper', ['$q', 'Timeline', 'timelineCache', 'olUI', 
     function($q, Timeline, timelineCache, olUI){
 

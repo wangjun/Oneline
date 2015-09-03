@@ -1,10 +1,10 @@
 angular.module('Oneline.timelineControllers', [])
 .controller('timelineCtrl', ['$scope', '$interval', '$state', '$stateParams', 
     'store', 'Timeline',
-    'olUI', 'olTokenHelper', 'olTimelineHelper', 'timelineCache',
+    'olUI', 'olTokenHelper', 'olTimelineHelper', 'olActionsHelper', 'timelineCache',
     function($scope, $interval, $state, $stateParams, 
         store, Timeline, 
-        olUI, olTokenHelper, olTimelineHelper, timelineCache){
+        olUI, olTokenHelper, olTimelineHelper, olActionsHelper, timelineCache){
 
 
     /**
@@ -129,6 +129,29 @@ angular.module('Oneline.timelineControllers', [])
         }, function (){})
     }, 1000 * 60 * 3)
 
+    /**
+     * 其他操作
+     *
+     *
+     */
+    $scope.toggleLike = function (provider, id){
+        if (olUI.isActionWait('like', id)) return;
+
+        var isActive = olUI.isActionActive('like', id),
+            state    = isActive ? 'inactive' : 'active';
+
+        olUI.setActionState('like', id, 'wait')
+        olUI.setActionState('like', id, state)
+
+        olActionsHelper.toggleLike(provider, id, isActive)
+        .$promise
+        .catch(function (err){
+            olUI.setActionState('like', id, !state)
+        })
+        .finally(function (){
+            olUI.setActionState('like', id, 'done')
+        })
+    }
 
     // 更改「當前時間線上聚合的社交網站」
     function setTimelineProvider(provider){

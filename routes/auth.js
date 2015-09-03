@@ -21,12 +21,8 @@ router.get('/twitter/callback', passport.authenticate('twitter', {
 })
 
 // Instagram
-router.get('/instagram', passport.authenticate('instagram', {
-    scope: ['comments', 'likes'],
-    session: false 
-}))
+router.get('/instagram', passport.authenticate('instagram', { session: false }))
 router.get('/instagram/callback', passport.authenticate('instagram', {
-    scope: ['comments', 'likes'],
     session: false
 }), function (req, res){
 
@@ -41,5 +37,33 @@ router.get('/instagram/callback', passport.authenticate('instagram', {
 })
 
 
+/**
+ * Revoke
+ *
+ */
+var Q = require('q'),
+    User = require('../models/user').User,
+    q_findOneAndRemove = Q.nbind(User.findOneAndRemove, User);
+
+// Handing `provider` Params
+router.param('provider', function (req, res, next, provider){
+
+    req.olProvider = provider
+
+    next()
+})
+
+router.delete('/revoke/:provider', function (req, res, next){
+    var provider = req.olProvider,
+        id       = provider + req.olPassports[provider]
+
+    q_findOneAndRemove({id: id})
+    .then(function (data){
+        res.json({code: 200})
+    })
+    .fail(function (err){
+        next(err)
+    })
+})
 
 module.exports = router

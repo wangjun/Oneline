@@ -4,9 +4,6 @@
 
 <div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'">
 
-    <svg ng-click="showActions(item)" class="timeline__action tips">
-        <use xlink:href="/public/img/icon-sprite.svg#options-icon"></use>
-    </svg>
 
     <div ng-if="item.provider === 'twitter'">
         <ng-include data-id="{{item.id_str}}" class="timeline--twitter" src="'/public/dist/' + item.type + '.min.html'"></ng-include>

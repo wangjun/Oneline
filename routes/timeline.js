@@ -1,6 +1,5 @@
 /* /timeline */
 var Q      = require('Q'),
-    jwt    = require('jsonwebtoken'),
     router = require('express').Router(),
     filter = require('./helper/filter'),
     feed   = require('./helper/timeline');
@@ -8,28 +7,6 @@ var Q      = require('Q'),
 var User            = require('../models/user').User,
     q_userFindOne   = Q.nbind(User.findOne, User);
 
-
-// 保護 endpoints
-router.use(function (req, res, next){
-    var tokenList = req.headers.authorization && JSON.parse(req.headers.authorization.split(' ')[1]) || [],
-        validPassports = {};
-
-    // 提取有效 token 的 payload 到 req.olPassports
-    tokenList.forEach(function (token, index){
-        try {
-            var decoded = jwt.verify(token, process.env.KEY)
-            validPassports[decoded.provider] = decoded.userId
-        } catch (e){}
-    })
-
-    if (Object.keys(validPassports).length === 0){
-        next({ status: 401, message: 'No authorization token was found' })
-    } else {
-        req.olPassports = validPassports
-        req.olId = {}
-        next()
-    }
-})
 
 // Handing `id` Params
 router.param('id', function (req, res, next, id){
@@ -82,8 +59,8 @@ router.get('/', function (req, res, next){
     })
     .spread(handleData(req, res, next))
     .fail(function (err){
-        console.log(err)
-        next({})
+        console.log(err.stack)
+        next(err)
     })
 })
 
@@ -121,7 +98,7 @@ router.get('/:id/:count', function (req, res, next){
     .spread(handleData(req, res, next))
     .fail(function (err){
         console.log(err)
-        next({})
+        next(err)
     })
 })
 

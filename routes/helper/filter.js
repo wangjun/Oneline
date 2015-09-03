@@ -16,8 +16,9 @@ var filter = {
                 id_str: item.id_str,
                 user: trimTweetUser(item.user),
                 text: item.text,
-                favorite_count: item.favorite_count,
-                retweet_count: item.retweet_count
+                retweet_count: item.retweet_count,
+                retweeted: item.retweeted,
+                favorited: item.favorited
             }
 
             // Retweet
@@ -101,7 +102,9 @@ var filter = {
                     standard_resolution: item.images.standard_resolution.url
                 },
                 favorite_count: item.likes.count,
-                reply_count: item.comments.count
+                favorited: item.user_has_liked,
+                reply_count: item.comments.count,
+                link: item.link
             }
 
             if (item.type === 'image'){

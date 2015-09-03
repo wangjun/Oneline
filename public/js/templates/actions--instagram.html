@@ -1,0 +1,19 @@
+<div class="actions tips animate--faster">
+    <svg class="actions__button" ng-class="::{'actions__button--active': item.favorited}">
+        <use xlink:href="/public/img/icon-sprite.svg#like-icon"></use>
+    </svg>
+    <span ng-if="item.favorite_count > 0" class="actions__count">{{item.favorite_count}}</span>
+</div>
+<div class="actions tips animate--faster">
+    <svg class="actions__button">
+        <use xlink:href="/public/img/icon-sprite.svg#reply-icon"></use>
+    </svg>
+    <span ng-if="item.reply_count > 0" class="actions__count">{{item.reply_count}}</span>
+</div>
+<div class="actions tips animate--faster">
+    <a ng-href="{{item.link}}" target="_blank">
+        <svg class="actions__button">
+            <use xlink:href="/public/img/icon-sprite.svg#source-icon"></use>
+        </svg>
+    </a>
+</div>

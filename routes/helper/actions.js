@@ -17,19 +17,10 @@ module.exports = {
         var tOpts = {
             id: opts.id,
             include_entities: false
-        }
+        };
+        var action = opts.action === 'put' ? 'create' : 'destroy';
 
-        return q_twit_like('favorites/create', tOpts)
+        return q_twit_like('favorites/' + action, tOpts)
 
-    },
-    instagram_like: function (opts){
-        Ig.use({
-            client_id    : process.env.INSTAGRAM_KEY,
-            client_secret: process.env.INSTAGRAM_SECRET,
-            access_token : opts.token
-        })
-        var q_add_like  = Q.nbind(Ig.add_like, Ig);
-
-        return q_add_like(opts.id)
     }
 }

@@ -13,11 +13,16 @@ var express      = require('express'),
     compress     = require('compression');
 
 
+process.on('uncaughtException', function (err) {
+    console.log(err)
+});
+
+
 // load dotenv
 require('dotenv').load()
 
 // Authentication strategies
-require('./others/strategies')(passport)
+require('./strategies/strategies')(passport)
 
 
 // read database config form VCAP_SERVICES env
@@ -77,6 +82,29 @@ app.set('views', './views')
 app.set('view engine', 'jade')
 
 
+// 保護 endpoints
+var jwt = require('jsonwebtoken');
+app.use(['/timeline', '/actions', '/auth/revoke'], function (req, res, next){
+    var tokenList = req.headers.authorization && JSON.parse(req.headers.authorization.split(' ')[1]) || [],
+        validPassports = {};
+
+    // 提取有效 token 的 payload 到 req.olPassports
+    tokenList.forEach(function (token, index){
+        try {
+            var decoded = jwt.verify(token, process.env.KEY)
+            validPassports[decoded.provider] = decoded.userId
+        } catch (e){}
+    })
+
+    if (Object.keys(validPassports).length === 0){
+        next({ status: 401, message: 'No authorization token was found' })
+    } else {
+        req.olPassports = validPassports
+        req.olId = {}
+        next()
+    }
+})
+
 // Routing
 app.use('/auth', require('./routes/auth'))
 app.use('/timeline', require('./routes/timeline'))
@@ -92,7 +120,7 @@ app.use(function (req, res){
     res.status('404').sendFile(__dirname + '/views/404.min.html')
 })
 app.use(function (err, req, res, next){
-    console.log(err)
+    console.log(err, err.stack)
 
     var statusCode = err.code || err.status;
 
@@ -112,9 +140,5 @@ app.use(function (err, req, res, next){
     }
 })
 
-
-process.on('uncaughtException', function (err) {
-    console.log(err)
-});
 
 app.listen(process.env.PORT || 3000)

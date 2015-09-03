@@ -28,4 +28,6 @@
     <img class="timeline__profile__avatar" ng-src="{{item.user.profile_image_url_https}}" alt="avatar">
 </a>
 
+<ng-include src="'/public/dist/actions--tweet.min.html'"></ng-include>
+
 <span class="timeline__time tips" relative-date="{{item.created_at}}"></span>

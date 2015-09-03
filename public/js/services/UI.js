@@ -31,5 +31,37 @@ angular.module('Oneline.UIServices', [])
         document
         .getElementsByClassName('loadMore__count')[0]
         .setAttribute('data-count', count)
+    },
+    // 設置 Action 圖標狀態
+    this.setActionState = function (action, id, state){
+        var actionElem = angular.element(document
+        .querySelector('[data-id="' + id + '"]')
+        .querySelector('[data-' + action + ']'));
+
+        if (state === 'wait'){
+            actionElem.addClass('actions__button--wait')
+        } else if (state === 'done'){
+            actionElem.removeClass('actions__button--wait')
+        } else if (state === 'active'){
+            actionElem.addClass('actions__button--active')
+        } else if (state === 'inactive'){
+            actionElem.removeClass('actions__button--active')
+        }
+    },
+    // 判斷 Action 圖片是否為激活
+    this.isActionActive = function (action, id){
+        var actionElem = angular.element(document
+        .querySelector('[data-id="' + id + '"]')
+        .querySelector('[data-' + action + ']'));
+
+        return actionElem.hasClass('actions__button--active')
+    }
+    // 判斷 Action 是否正在處理中
+    this.isActionWait = function (action, id){
+        var actionElem = angular.element(document
+        .querySelector('[data-id="' + id + '"]')
+        .querySelector('[data-' + action + ']'));
+
+        return actionElem.hasClass('actions__button--wait')
     }
 })
