@@ -5,14 +5,17 @@ var gulp       = require('gulp'),
     uglify     = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
     minifyCSS  = require('gulp-minify-css'),
-    minifyHTML = require('gulp-minify-html');
+    minifyHTML = require('gulp-minify-html'),
+    ngTpCache  = require('gulp-angular-templatecache');
+
 
 var paths = {
     js_ol: [
         'public/js/core.js',
         'public/js/directives/*.js',
         'public/js/services/*.js',
-        'public/js/controllers/*.js'
+        'public/js/controllers/*.js',
+        'public/js/templates/*.js'
     ],
     js_libs: [
         'public/js/libs/angular.min.js',
@@ -24,10 +27,22 @@ var paths = {
         'views/*.html',
         '!views/*.min.html'
     ],
-    html_ol: [
-        'public/js/templates/*.html'
+    templates_ol: [
+        'public/js/templates/html/*.html'
     ]
 };
+
+
+// Concatenate the Oneline HTML template files in the $templateCache
+gulp.task('templates_ol', function (){
+
+    return gulp.src(paths.templates_ol)
+        .pipe(ngTpCache({
+            module: 'Oneline.templates',
+            standalone: true
+        }))
+        .pipe(gulp.dest('public/js/templates'))
+})
 
 // Minify all AngularJS libs
 gulp.task('js_libs', function() {
@@ -75,16 +90,6 @@ gulp.task('html_index', function (){
         .pipe(gulp.dest('views'))
 })
 
-// Minify all Oneline HTML template files
-gulp.task('html_ol', function (){
-
-    return gulp.src(paths.html_ol)
-        .pipe(minifyHTML())
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest('public/dist'))
-})
 
 // Rerun the task when a file changes 
 gulp.task('watch', function() {
@@ -94,8 +99,8 @@ gulp.task('watch', function() {
     gulp.watch(paths.css_ol, ['css_ol']);
     gulp.watch(paths.css_libs, ['css_libs']);
     gulp.watch(paths.html_index, ['html_index']);
-    gulp.watch(paths.html_ol, ['html_ol']);
+    gulp.watch(paths.templates_ol, ['templates_ol']);
 });
 
 // The default task (called when you run `gulp` from cli) 
-gulp.task('default', ['watch', 'js_ol', 'js_libs', 'css_ol', 'html_index', 'html_ol']);
+gulp.task('default', ['watch', 'templates_ol', 'js_ol', 'js_libs', 'css_ol', 'html_index']);

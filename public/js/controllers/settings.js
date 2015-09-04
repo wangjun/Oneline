@@ -10,8 +10,9 @@ angular.module('Oneline.settingsControllers', [])
     /**
      * 初始化
      *     1. 判斷是否需要跳轉到「時間線頁面」
-     *     2. 設置 `isTimeline` 為 `false`
+     *     2. 設置 `isTimeline` 為 `false`; 清空 `timelineCache`
      */
+    // 1
     if (olTokenHelper.isValidToken()){
         if ($stateParams.s !== '1'){
             $state.go('timeline', { provider: store.get('timelineProvider') })
@@ -20,8 +21,9 @@ angular.module('Oneline.settingsControllers', [])
         olTokenHelper.clearToken()
         $scope.updateProviderList()
     }
-
+    // 2
     $scope.setTimeline(false)
+    timelineCache.removeAll()
 
     /**
      * 跨標籤頁通信
@@ -48,7 +50,6 @@ angular.module('Oneline.settingsControllers', [])
                 // 刪除前端授權信息
                 olTokenHelper.removeToken(provider)
                 $scope.updateProviderList()
-                timelineCache.removeAll()
             })
         }
     }

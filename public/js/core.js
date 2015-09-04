@@ -1,19 +1,26 @@
 angular.module('Oneline', [
+    // ng
     'ngTouch',
     'ngResource',
+    // Vendors
     'ui.router',
     'angular-jwt',
     'angular-storage',
     'linkify',
+    // Templates
+    'Oneline.templates',
+    // Controllers
     'Oneline.rootControllers',
     'Oneline.settingsControllers',
     'Oneline.timelineControllers',
+    // Services
     'Oneline.timelineServices',
     'Oneline.actionsServices',
     'Oneline.RESTfulServices',
     'Oneline.relativeDateServices',
     'Oneline.tokenHelperServices',
     'Oneline.UIServices',
+    // Directives
     'Oneline.olVideoDirectives',
     'Oneline.trimMediaLinkDirectives'
 ])
@@ -36,12 +43,16 @@ angular.module('Oneline', [
     $stateProvider
         .state('settings', {
             url: '/?s',
-            templateUrl: '/public/dist/settings.min.html',
+            templateProvider: ['$templateCache', function ($templateCache){
+                return $templateCache.get('settings.html')
+            }],
             controller: 'settingsCtrl'
         })
         .state('timeline', {
             url: "/{provider:all|twitter|instagram|weibo}",
-            templateUrl: '/public/dist/timeline.min.html',
+            templateProvider: ['$templateCache', function ($templateCache){
+                return $templateCache.get('timeline.html')
+            }],
             controller: 'timelineCtrl'
         })
 }])

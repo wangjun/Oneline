@@ -103,6 +103,35 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;
 }
+.tips--deep {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  opacity: 0.3;
+}
+.tips--deep:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+}
+.tips--active {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+}
+.tips--active:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+.tips--frozen {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  opacity: 0.3;
+  cursor: default;
+}
+.tips--frozen:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  opacity: 0.3;
+}
+
+.cursor--pointer {
+  cursor: pointer;
+}
 
 /* sy-news-reset */
 html {
@@ -319,16 +348,15 @@ ng\:form {
 .actions {
   display: inline-block;
   position: relative;
-  margin-right: 7px;
+  padding-right: 7px;
   text-align: center;
 }
 .actions__button {
   display: inline-block;
   width: 17px;
-  height: 34px;
+  height: 28px;
   margin: 0 auto;
   vertical-align: middle;
-  cursor: pointer;
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
@@ -336,6 +364,7 @@ ng\:form {
   -moz-animation: waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
   -webkit-animation: waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
   animation: waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  cursor: default;
 }
 .actions__button--active {
   -webkit-filter: grayscale(0%);
@@ -346,10 +375,11 @@ ng\:form {
 }
 .actions__count {
   display: inline-block;
-  padding: 0 3px;
-  font-size: 12px;
+  font-size: 11px;
   color: #89A;
-  cursor: pointer;
+}
+.actions__count::after {
+  content: attr(data-count);
 }
 
 @-moz-keyframes waitAnimate {
@@ -417,7 +447,7 @@ ng\:form {
   bottom: 3px;
   right: 3px;
   color: #89A;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
 }
 .timeline__content {
@@ -489,7 +519,7 @@ ng\:form {
   right: -21px;
   width: 19px;
   height: 16px;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAQCAQAAABezYzpAAAAi0lEQVR4AbXRhQ0CMRiG4X8DdAAsijvEb5k3gkVx2xw5+3An9fapGy+F/7A2E0puLUafrR+WOIjRYcOWNRWMLlsUVmIa2FAjyegM+qx41rkhh/nhjBVYIba8x666XmdplmfXKN5mOffmCgUxhRFJqqzDdleb+tfQABUXbuhgYo4gA6JuX4kp7X98/R5EirGMu3H4lQAAAABJRU5ErkJggg==);
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg"><g fill="#B2B2B2"><path d="M10.84 10.653c-.053-.07-.127-.105-.221-.105h-5.092v-3.655h1.697c.153 0 .286-.06.398-.181.112-.121.168-.263.168-.428 0-.152-.044-.282-.133-.39l-2.829-3.655c-.112-.139-.256-.209-.433-.209s-.321.07-.433.209l-2.829 3.655c-.089.108-.133.238-.133.39 0 .165.056.308.168.428.112.121.245.181.398.181h1.697v5.711l.009.11.027.109.049.076.079.067.119.019h8.487c.077 0 .143-.03.199-.09.056-.06.084-.132.084-.214 0-.064-.021-.13-.062-.2l-1.415-1.827zM17.409 8.112h-1.697v-5.711l-.009-.11-.026-.109-.049-.076-.08-.067-.119-.019h-8.487c-.077 0-.143.03-.199.09-.056.06-.084.132-.084.214 0 .07.02.133.062.19l1.414 1.827c.053.076.127.114.221.114h5.092v3.654h-1.697c-.153 0-.286.06-.398.181-.112.121-.168.264-.168.428 0 .152.044.282.133.39l2.829 3.654c.118.146.262.219.433.219.171 0 .315-.073.433-.219l2.829-3.654c.088-.108.133-.238.133-.39 0-.165-.056-.308-.168-.428-.112-.12-.245-.181-.398-.181z"/></g></svg>');
   -moz-transform: scale(0.7);
   -ms-transform: scale(0.7);
   -webkit-transform: scale(0.7);

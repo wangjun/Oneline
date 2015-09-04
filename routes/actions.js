@@ -6,7 +6,13 @@ var Q       = require('Q'),
 var User          = require('../models/user').User,
     q_userFindOne = Q.nbind(User.findOne, User);
 
-// Handing `provider` & `id` Params
+// Handing `action` & `provider` & `id` Params
+router.param('action', function (req, res, next, action){
+
+    req.olAction = action
+
+    next()
+})
 router.param('provider', function (req, res, next, provider){
 
     req.olProvider = provider
@@ -20,22 +26,25 @@ router.param('id', function (req, res, next, id){
     next()
 })
 
-// Like
-router.all('/like/:provider/:id', function (req, res, next){
+router.all('/:action/:provider/:id', function (req, res, next){
     var provider = req.olProvider;
 
-    q_userFindOne({id: provider + req.olPassports[provider]})
+    q_userFindOne({ id: provider + req.olPassports[provider] })
     .then(function (found){
-        return actions[provider + '_like']({
+
+        return actions[provider](req.olAction, {
+
             token      : found.token,
             tokenSecret: found.tokenSecret,
             id         : req.olId,
-            action     : req.method.toLowerCase()
+            method     : req.method.toLowerCase()
+
         })
     })
     .then(function (data){
-        res.json({code: 200})
-    }, function (err){
+        res.json(data)
+    })
+    .fail(function (err){
         next(err)
     })
 })

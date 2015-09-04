@@ -134,22 +134,21 @@ angular.module('Oneline.timelineControllers', [])
      *
      *
      */
-    $scope.toggleLike = function (provider, id){
-        if (olUI.isActionWait('like', id)) return;
+    $scope.toggleAction = function (action, provider, id){
+        // 過濾重複（或凍結的）請求
+        if (olUI.isActionWait(action, id) || olUI.isActionFrozen(action, id)) return;
 
-        var isActive = olUI.isActionActive('like', id),
-            state    = isActive ? 'inactive' : 'active';
-
-        olUI.setActionState('like', id, 'wait')
-        olUI.setActionState('like', id, state)
-
-        olActionsHelper.toggleLike(provider, id, isActive)
-        .$promise
+        var isActive = olUI.isActionActive(action, id);
+        // 更改樣式
+        olUI.setActionState(action, id, 'wait')
+        olUI.setActionState(action, id, isActive ? 'inactive' : 'active')
+        // 發送請求
+        olActionsHelper.toggleAction(action, provider, id, isActive)
         .catch(function (err){
-            olUI.setActionState('like', id, !state)
+            olUI.setActionState(action, id, isActive ? 'active' : 'inactive')
         })
         .finally(function (){
-            olUI.setActionState('like', id, 'done')
+            olUI.setActionState(action, id, 'done')
         })
     }
 

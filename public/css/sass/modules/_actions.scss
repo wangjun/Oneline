@@ -1,21 +1,21 @@
 .actions {
     display: inline-block;
     position: relative;
-    margin-right: 7px;
+    padding-right: 7px;
     text-align: center;
 
     &__button {
         display: inline-block;
         width: 17px;
-        height: 34px;
+        height: 28px;
         margin: 0 auto;
         vertical-align: middle;
-        cursor: pointer;
 
         @include filter(grayscale(100%));
 
         &--wait {
             @include animation(waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55));
+            cursor: default;
         }
         &--active {
             @include filter(grayscale(0%));
@@ -26,10 +26,12 @@
     }
     &__count {
         display: inline-block;
-        padding: 0 3px;
-        font-size: 12px;
+        font-size: 11px;
         color: #89A;
-        cursor: pointer;
+
+        &::after {
+            content: attr(data-count)
+        }
     }
 }
 

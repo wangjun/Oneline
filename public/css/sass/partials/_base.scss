@@ -117,4 +117,32 @@ $tablet-landscape: '(min-device-width : 768px) and (max-device-width : 1024px) a
     &:hover {
         @include opacity(1);
     }
+
+    &--deep {
+        @include opacity(.3);
+
+        &:hover {
+            @include opacity(1);
+        }
+    }
+    &--active {
+        @include opacity(1);
+
+        &:hover {
+            @include opacity(.7);
+        }
+    }
+    &--frozen {
+        @include opacity(.3);
+        cursor: default;
+
+        &:hover {
+            @include opacity(.3);
+        }
+    }
+}
+.cursor {
+    &--pointer {
+        cursor: pointer;
+    }
 }
