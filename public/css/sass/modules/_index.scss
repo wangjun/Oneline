@@ -20,6 +20,7 @@
     top: 0;
     width: 40%;
     height: 100%;
+    text-align: center;
 
     &--left {
         left: 0%;
@@ -41,10 +42,8 @@
     }
 
     &__button {
-        display: block;
         width: 70px;
         height: 70px;
-        margin: 0 auto;
         cursor: pointer;
 
         @include opacity(0);

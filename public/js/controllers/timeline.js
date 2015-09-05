@@ -41,11 +41,18 @@ angular.module('Oneline.timelineControllers', [])
             max_date: posts.max_date
         }
         olTimelineHelper.storePosts('newPosts', fakeNewPosts, $scope.providerList)
+
         // 獲取 30 分鐘內貼文
-        $scope.timelineData = olTimelineHelper.extractOldPosts()
-        // 結束加載動畫
-        olUI.setLoading(false, 1)
-        olUI.setLoading(false, -1)
+        olTimelineHelper.checkOldPosts($scope.providerList)
+        .then(function (invalidList){
+            return olTimelineHelper.loadOldPosts(invalidList, $scope.providerList)
+        })
+        .finally(function (){
+            $scope.timelineData = olTimelineHelper.extractOldPosts()
+            // 結束加載動畫
+            olUI.setLoading(false, 1)
+            olUI.setLoading(false, -1)
+        })
     }, function (err){
         if (err.status === 401){
             $state.go('settings')

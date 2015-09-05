@@ -10,11 +10,6 @@
     <span class="actions__count" ng-attr-data-count="{{:: item.retweet_count > 0 ? item.retweet_count : ''}}"></span>
 </div>
 <div class="actions tips--deep animate--faster">
-    <svg class="actions__button" data-reply>
-        <use xlink:href="/public/img/icon-sprite.svg#reply-icon"></use>
-    </svg>
-</div>
-<div class="actions tips--deep animate--faster">
     <a ng-href="//twitter.com/{{item.user.screen_name}}/status/{{item.id_str}}" target="_blank">
         <svg class="actions__button">
             <use xlink:href="/public/img/icon-sprite.svg#source-icon"></use>

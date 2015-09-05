@@ -263,6 +263,7 @@ ng\:form {
   top: 0;
   width: 40%;
   height: 100%;
+  text-align: center;
 }
 .menu--left {
   left: 0%;
@@ -286,10 +287,8 @@ ng\:form {
   opacity: 1;
 }
 .menu__button {
-  display: block;
   width: 70px;
   height: 70px;
-  margin: 0 auto;
   cursor: pointer;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
