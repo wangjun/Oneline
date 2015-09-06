@@ -1,5 +1,4 @@
-var Q      = require('q'),
-    Twit   = require('Twit'),
+var Twit   = require('Twit'),
     Ig     = require('instagram-node').instagram();
 
 
@@ -28,11 +27,7 @@ module.exports = {
 
     },
     i: function (opts){
-        Ig.use({
-            client_id    : process.env.INSTAGRAM_KEY,
-            client_secret: process.env.INSTAGRAM_SECRET,
-            access_token : opts.token
-        })
+        Ig.use({ access_token : opts.token })
         var q_ig_timeline   = Q.nbind(Ig.user_self_feed, Ig);
 
         var iOpts = {

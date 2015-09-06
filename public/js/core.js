@@ -42,14 +42,14 @@ angular.module('Oneline', [
 
     $stateProvider
         .state('settings', {
-            url: '/?s',
+            url: '/settings',
             templateProvider: ['$templateCache', function ($templateCache){
                 return $templateCache.get('settings.html')
             }],
             controller: 'settingsCtrl'
         })
         .state('timeline', {
-            url: "/{provider:all|twitter|instagram|weibo}",
+            url: "/",
             templateProvider: ['$templateCache', function ($templateCache){
                 return $templateCache.get('timeline.html')
             }],

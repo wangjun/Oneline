@@ -1,23 +1,50 @@
-var User            = require('../models/user').User,
-    TwitterStrategy = require('passport-twitter').Strategy,
-    InstagramStrategy = require('passport-instagram').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy,
+    InstagramStrategy = require('passport-instagram').Strategy,
+    WeiboStrategy   = require('passport-weibo').Strategy;
 
 
 module.exports = function (passport){
+
 
 // Twitter
 passport.use(new TwitterStrategy({
     'consumerKey'   : process.env.TWITTER_KEY,
     'consumerSecret': process.env.TWITTER_SECRET,
     'callbackURL'   : process.env.TWITTER_CB_URL
-}, function (token, tokenSecret, profile, done){
+}, oauth1))
+
+// Instagram
+passport.use(new InstagramStrategy({
+    'clientID'    : process.env.INSTAGRAM_KEY,
+    'clientSecret': process.env.INSTAGRAM_SECRET,
+    'callbackURL' : process.env.INSTAGRAM_CB_URL
+}, oauth2))
+
+// Instagram
+passport.use(new WeiboStrategy({
+    'clientID'    : process.env.WEIBO_KEY,
+    'clientSecret': process.env.WEIBO_SECRET,
+    'callbackURL' : process.env.WEIBO_CB_URL
+}, oauth2))
+
+
+}
+
+
+
+function oauth1 (token, tokenSecret, profile, done){
 
     var id = profile.provider + profile.id;
 
-    User.findOne({id: id}, function (err, found){
-        if (err) return done(err)
+    q_userFindOne({ id: id })
+    .then(function (found){
         if (found){
-            done(null, found)
+            found.token = token
+            found.tokenSecret = tokenSecret
+            found.save(function (err){
+                if (err) return done(err)
+                done(null, found)
+            })
         } else {
             var user = new User({
                 'id'         : id,
@@ -32,22 +59,24 @@ passport.use(new TwitterStrategy({
                 done(null, user)
             })
         }
+    }, function (err){
+        return done(err) 
     })
+}
 
-}))
-
-// Instagram
-passport.use(new InstagramStrategy({
-    'clientID'    : process.env.INSTAGRAM_KEY,
-    'clientSecret': process.env.INSTAGRAM_SECRET,
-    'callbackURL' : process.env.INSTAGRAM_CB_URL
-}, function (accessToken, refreshToken, profile, done){
+function oauth2 (accessToken, refreshToken, profile, done){
 
     var id = profile.provider + profile.id;
-    User.findOne({id: id}, function (err, found){
-        if (err) return done(err)
+
+    q_userFindOne({ id: id })
+    .then(function (found){
         if (found){
-            done(null, found)
+            found.token = accessToken
+            found.refreshToken = refreshToken
+            found.save(function (err){
+                if (err) return done(err)
+                done(null, found)
+            })
         } else {
             var user = new User({
                 'id'         : id,
@@ -62,8 +91,7 @@ passport.use(new InstagramStrategy({
                 done(null, user)
             })
         }
+    }, function (err){
+        return done(err)
     })
-
-}))
-
 }

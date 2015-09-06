@@ -1,4 +1,4 @@
-//local variables
+// local variables
 var express      = require('express'),
     app          = express(),
     res_time     = require('response-time'),
@@ -12,10 +12,12 @@ var express      = require('express'),
     passport     = require('passport'),
     compress     = require('compression');
 
-
-process.on('uncaughtException', function (err) {
-    console.log(err)
-});
+// global variables
+global.Q = require('q')
+global.User = require('./models/user').User
+global.q_userFindOne = Q.nbind(User.findOne, User)
+global.q_userFindOneAndRemove = Q.nbind(User.findOneAndRemove, User)
+global.q_userFindOneAndUpdate = Q.nbind(User.findOneAndUpdate, User)
 
 
 // load dotenv

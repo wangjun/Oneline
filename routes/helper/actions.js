@@ -1,5 +1,4 @@
-var Q      = require('q'),
-    extend = require('extend'),
+var extend = require('extend'),
     Twit   = require('Twit'),
     Ig     = require('instagram-node').instagram();
 

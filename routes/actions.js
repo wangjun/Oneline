@@ -1,10 +1,6 @@
 /* /actions */
-var Q       = require('Q'),
-    router  = require('express').Router(),
+var router  = require('express').Router(),
     actions = require('./helper/actions');
-
-var User          = require('../models/user').User,
-    q_userFindOne = Q.nbind(User.findOne, User);
 
 // Handing `action` & `provider` & `id` Params
 router.param('action', function (req, res, next, action){

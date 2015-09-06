@@ -1,11 +1,7 @@
 /* /timeline */
-var Q      = require('Q'),
-    router = require('express').Router(),
+var router = require('express').Router(),
     filter = require('./helper/filter'),
     feed   = require('./helper/timeline');
-
-var User            = require('../models/user').User,
-    q_userFindOne   = Q.nbind(User.findOne, User);
 
 
 // Handing `id` Params

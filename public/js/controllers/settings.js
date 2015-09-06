@@ -1,29 +1,25 @@
 angular.module('Oneline.settingsControllers', [])
 .controller('settingsCtrl', ['$scope', '$window', 
     '$state', '$stateParams', 
-    'store', 'olTokenHelper', 'timelineCache', 'Auth', 
+    'olTokenHelper', 'timelineCache', 'Auth', 
     function($scope, $window, 
         $state, $stateParams, 
-        store, olTokenHelper, timelineCache, Auth){
+        olTokenHelper, timelineCache, Auth){
 
 
     /**
      * 初始化
      *     1. 判斷是否需要跳轉到「時間線頁面」
-     *     2. 設置 `isTimeline` 為 `false`; 清空 `timelineCache`
+     *     2. 設置 `isTimeline` 為 `false`
      */
     // 1
-    if (olTokenHelper.isValidToken()){
-        if ($stateParams.s !== '1'){
-            $state.go('timeline', { provider: store.get('timelineProvider') })
-        }
-    } else {
+    if (!olTokenHelper.isValidToken()){
         olTokenHelper.clearToken()
         $scope.updateProviderList()
     }
     // 2
     $scope.setTimeline(false)
-    timelineCache.removeAll()
+
 
     /**
      * 跨標籤頁通信

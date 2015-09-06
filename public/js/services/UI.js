@@ -19,7 +19,7 @@ angular.module('Oneline.UIServices', [])
     }
     // 設置上次閱讀位置提醒
     this.setDivider = function (step){
-        var timelineElem = document.getElementsByClassName('timeline');
+        var timelineElem = document.querySelectorAll('.timeline:not(.timeline--quote)');
 
         if (step === 1){
             angular.element(timelineElem[0]).addClass('divider--top')

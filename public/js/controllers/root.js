@@ -1,23 +1,18 @@
 angular.module('Oneline.rootControllers', [])
 .controller('rootController', [
-        '$scope', '$timeout', 'store', 'olTokenHelper',
-    function ($scope, $timeout, store, olTokenHelper){
+        '$scope', '$timeout', 'olTokenHelper',
+    function ($scope, $timeout, olTokenHelper){
 
 
     /**
      * 初始化
      *     1. 初始化「社交網站列表」
      *     2. 初始化 `isTimeline` 的值
-     *     3. 設置「當前時間線上聚合的社交網站」
      */
     // 1
     $scope.providerList = olTokenHelper.getProviderList()
     // 2
     $scope.isTimeline = false
-    // 3
-    $scope.timelineProvider = store.get('timelineProvider') || 'all'
-    store.set('timelineProvider', $scope.timelineProvider)
-
 
     // 刷新「社交網站列表」
     $scope.updateProviderList = function (){

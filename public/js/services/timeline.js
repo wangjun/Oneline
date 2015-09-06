@@ -196,5 +196,11 @@ angular.module('Oneline.timelineServices', [])
 
         return defer.promise;
     }
+    this.initTimelineSettings = function (){
+        time_pointer = Date.now()
+        retrieve_count = 50
+        // 清空 `timelineCache`
+        timelineCache.removeAll()
+    }
 
 }])
