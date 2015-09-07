@@ -1,0 +1,44 @@
+<div class="timeline__profile">
+    <a ng-href="//weibo.com/n/{{item.user.screen_name}}" target="_blank">
+        <img class="timeline__profile__avatar" ng-src="{{item.user.profile_image_url_https}}" alt="avatar">
+    </a>
+    <div class="timeline__profile__fullname">
+        <a ng-href="//weibo.com/n/{{item.user.screen_name}}" target="_blank">
+            <strong>{{item.user.name}}</strong>
+        </a>
+    </div>
+</div>
+
+<div class="timeline__content">
+    <p class="timeline__text" trim-media-link="{{item.mediaLink}}" linkify="weibo">{{item.text}}</p>    
+    <div ng-if="item.media" class="timeline__media">
+        <div ng-repeat="media in item.media">
+            <div ng-if="media.type === 'photo'">
+                <img ng-src="{{media.image_url}}" alt="weibo_photo">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="timeline timeline--quote timeline--quote--weibo">
+    <a ng-href="//weibo.com/{{item.quote.user.idstr}}/{{item.quote.mid}}" target="_blank">
+        <div class="timeline__profile">
+            <img class="timeline__profile__avatar" ng-src="{{item.quote.user.profile_image_url_https}}" alt="avatar">
+            <div class="timeline__profile__fullname">
+                <strong>{{item.quote.user.name}}</strong>
+            </div>
+        </div>
+    </a>
+
+    <a ng-href="//weibo.com/{{item.quote.user.idstr}}/{{item.quote.mid}}" target="_blank">
+       <div class="timeline__content">
+            <p class="timeline__text" linkify="weibo">{{item.quote.text}}</p>
+        </div>
+    </a>
+
+    <span class="timeline__time" relative-date="{{item.quote.created_at}}"></span>
+</div>
+
+<ng-include src=" 'actions--weibo.html' " class="cursor--pointer"></ng-include>
+
+<span class="timeline__time tips" relative-date="{{item.created_at}}"></span>

@@ -6,14 +6,17 @@
 
 
     <div ng-if="item.provider === 'twitter'">
-        <ng-include class="timeline--twitter" src=" item.type + '.html' "></ng-include>
+        <ng-include class="timeline--twitter" src=" 'twitter--' + item.type + '.html' "></ng-include>
     </div>
 
 
     <div ng-if="item.provider === 'instagram'">
-        <ng-include class="timeline--instagram" src=" 'ig-post.html' "></ng-include>
+        <ng-include class="timeline--instagram" src=" 'instagram--post.html' "></ng-include>
     </div>
 
+    <div ng-if="item.provider === 'weibo'">
+        <ng-include class="timeline--weibo" src=" 'weibo--' + item.type + '.html' "></ng-include>
+    </div>
 
 </div>
 

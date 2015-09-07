@@ -85,8 +85,11 @@
 
         @include transform(scale(.7));
 
-        &:hover {
+        &--twitter:hover {
             background-color: $color-twitter-alpha;
+        }
+        &--weibo:hover {
+            background-color: $color-weibo-alpha;
         }
 
         strong, p {

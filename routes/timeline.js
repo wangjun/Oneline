@@ -33,9 +33,10 @@ router.get('/', function (req, res, next){
 
     Q.all([
         q_userFindOne({id: 'twitter' + req.olPassports.twitter}),
-        q_userFindOne({id: 'instagram' + req.olPassports.instagram})
+        q_userFindOne({id: 'instagram' + req.olPassports.instagram}),
+        q_userFindOne({id: 'weibo' + req.olPassports.weibo})
     ])
-    .spread(function (twit, ig){
+    .spread(function (twit, ig, weibo){
         var feedPromises = [];
 
         if (twit){
@@ -47,7 +48,13 @@ router.get('/', function (req, res, next){
 
         if (ig){
             feedPromises[1] = feed.i({
-                token : ig.token
+                token: ig.token
+            })
+        }
+
+        if (weibo){
+            feedPromises[2] = feed.w({
+                token: weibo.token
             })
         }
 
@@ -65,9 +72,10 @@ router.get('/:id/:count', function (req, res, next){
 
     Q.all([
         q_userFindOne({id: 'twitter' + req.olPassports.twitter}),
-        q_userFindOne({id: 'instagram' + req.olPassports.instagram})
+        q_userFindOne({id: 'instagram' + req.olPassports.instagram}),
+        q_userFindOne({id: 'weibo' + req.olPassports.weibo})
     ])
-    .spread(function (twit, ig){
+    .spread(function (twit, ig, weibo){
         var feedPromises = [];
 
         if (twit && (req.olId.twitter_minId || req.olId.twitter_maxId)){
@@ -89,6 +97,15 @@ router.get('/:id/:count', function (req, res, next){
             })
         }
 
+        if (weibo && (req.olId.weibo_minId || req.olId.weibo_maxId)){
+            feedPromises[2] = feed.w({
+                token   : weibo.token,
+                since_id: req.olId.weibo_minId,
+                max_id  : req.olId.weibo_maxId,
+                count   : req.olCount
+            })
+        }
+
         return Q.all(feedPromises)
     })
     .spread(handleData(req, res, next))
@@ -99,7 +116,7 @@ router.get('/:id/:count', function (req, res, next){
 })
 
 function handleData(req, res, next){
-    return function (tData, iData){
+    return function (tData, iData, wData){
 
         var combineData = {
             data    : [],
@@ -131,6 +148,18 @@ function handleData(req, res, next){
             combineData.max_date.instagram = iData.max_date
 
             combineData.data = combineData.data.concat(iData.data)
+        }
+
+        if (wData){
+
+            var wData = filter.weibo(wData.statuses);
+
+            combineData.min_id.weibo = wData.min_id
+            combineData.min_date.weibo = wData.min_date
+            combineData.max_id.weibo = wData.max_id
+            combineData.max_date.weibo = wData.max_date
+
+            combineData.data = combineData.data.concat(wData.data)
         }
 
         res.json(combineData)

@@ -1,6 +1,6 @@
-var Twit   = require('Twit'),
-    Ig     = require('instagram-node').instagram();
-
+var Twit    = require('Twit'),
+    Ig      = require('instagram-node').instagram(),
+    request = require('request');
 
 module.exports = {
     t: function (opts){
@@ -41,6 +41,40 @@ module.exports = {
         }
 
         return q_ig_timeline(iOpts)
+    },
+    w: function (opts){
+        var wOpts = {
+            access_token: opts.token,
+            count: opts.count || 20
+        };
+
+        if (opts.since_id){
+            wOpts.since_id = opts.since_id
+        } else if (opts.max_id) {
+            wOpts.max_id = opts.max_id
+        }
+
+        var deferred = Q.defer();
+
+        request({ 
+            url: 'https://api.weibo.com/2/statuses/home_timeline.json',
+            qs : wOpts
+        }, function (err, res, body){
+            if (err){
+                deferred.reject(err)
+            } else {
+                var data;
+                try {
+                    data = JSON.parse(body)
+                } catch (e) {
+                    data = body
+                } finally {
+                    deferred.resolve(data)
+                }
+            }
+        })
+
+        return deferred.promise;
     }
 }
 

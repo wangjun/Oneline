@@ -17,9 +17,16 @@ angular.module('Oneline.actionsServices', [])
             if (action === 'retweet'){
                 if (method === 'create'){
                     olUI.actionData(action, _id, data.id_str)
-                    olUI.actionData('count', _id, data.retweet_count)
+
+                    var count = provider === 'twitter'
+                                    ? data.retweet_count
+                                    : ~~olUI.actionData('count', _id) + 1;
+
+                    olUI.actionData('count', _id, count)
                 } else {
-                    var count = data.retweet_count - 1,
+                    var count = provider === 'twitter' 
+                                    ? data.retweet_count - 1
+                                    : ~~olUI.actionData('count', _id) - 1;
                         count_value = count > 0 ? count : '';
 
                     olUI.actionData('count', _id, count_value)

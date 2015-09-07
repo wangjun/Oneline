@@ -20,7 +20,7 @@ passport.use(new InstagramStrategy({
     'callbackURL' : process.env.INSTAGRAM_CB_URL
 }, oauth2))
 
-// Instagram
+// Weibo
 passport.use(new WeiboStrategy({
     'clientID'    : process.env.WEIBO_KEY,
     'clientSecret': process.env.WEIBO_SECRET,

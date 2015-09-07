@@ -497,8 +497,11 @@ ng\:form {
   -webkit-transform: scale(0.7);
   transform: scale(0.7);
 }
-.timeline--quote:hover {
+.timeline--quote--twitter:hover {
   background-color: rgba(42, 169, 224, 0.3);
+}
+.timeline--quote--weibo:hover {
+  background-color: rgba(230, 22, 45, 0.3);
 }
 .timeline--quote strong, .timeline--quote p {
   color: #000;

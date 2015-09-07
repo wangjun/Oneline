@@ -1,0 +1,24 @@
+<div ng-click="toggleAction('like', item.provider, item.id_str)" class="actions tips--deep" ng-class="::{'tips--active': item.favorited}">
+    <svg class="actions__button" ng-class="::{'actions__button--active': item.favorited}" data-like>
+        <use xlink:href="/public/img/icon-sprite.svg#like-icon"></use>
+    </svg>
+</div>
+<div ng-click="toggleAction('retweet', item.provider, item.id_str)" class="actions tips--deep" ng-class="::{'tips--frozen': item.retweeted}">
+    <svg class="actions__button actions__button--retweet" ng-class="::{'actions__button--active': item.retweeted}" data-retweet>
+        <use xlink:href="/public/img/icon-sprite.svg#retweet-icon"></use>
+    </svg>
+    <span class="actions__count" ng-attr-data-count="{{:: item.retweet_count > 0 ? item.retweet_count : ''}}"></span>
+</div>
+<div class="actions tips--deep tips--frozen">
+    <svg class="actions__button">
+        <use xlink:href="/public/img/icon-sprite.svg#reply-icon"></use>
+    </svg>
+    <span class="actions__count" ng-attr-data-count="{{:: item.comments_count > 0 ? item.comments_count : ''}}"></span>
+</div>
+<div class="actions tips--deep">
+    <a ng-href="//weibo.com/{{item.user.idstr}}/{{item.mid}}" target="_blank">
+        <svg class="actions__button">
+            <use xlink:href="/public/img/icon-sprite.svg#source-icon"></use>
+        </svg>
+    </a>
+</div>

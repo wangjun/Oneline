@@ -7,6 +7,7 @@
             <strong>{{item.user.name}}</strong>
         </a>
     </div>
+
 </div>
 
 <div class="timeline__content">
@@ -24,26 +25,6 @@
     </div>
 </div>
 
-<div class="timeline timeline--quote">
-    <a ng-href="{{'//twitter.com/' + item.quote.user.screen_name + '/status/' + item.quote.id_str}}" target="_blank">
-        <div class="timeline__profile">
-            <img class="timeline__profile__avatar" ng-src="{{item.quote.user.profile_image_url_https}}" alt="avatar">
-            <div class="timeline__profile__fullname">
-                <strong>{{item.quote.user.name}}</strong>
-            </div>
-        </div>
-    </a>
-
-    <a ng-href="{{'//twitter.com/' + item.quote.user.screen_name + '/status/' + item.quote.id_str}}" target="_blank">
-       <div class="timeline__content">
-            <p class="timeline__text" linkify="twitter">{{item.quote.text}}</p>
-        </div>
-    </a>
-
-    <span class="timeline__time" relative-date="{{item.quote.created_at}}"></span>
-</div>
-
-<ng-include src=" 'actions--tweet.html' " class="cursor--pointer"></ng-include>
+<ng-include src=" 'actions--twitter.html' " class="cursor--pointer"></ng-include>
 
 <span class="timeline__time tips" relative-date="{{item.created_at}}"></span>
-
