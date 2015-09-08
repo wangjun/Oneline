@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -462,17 +463,93 @@ ng\:form {
   white-space: pre-wrap;
 }
 .timeline__media {
+  display: block;
   position: relative;
+  width: 100%;
   margin: 17px 0;
+  white-space: nowrap;
+  text-align: center;
+  /**
+   * 圖片（視頻）尺寸
+   *
+   */
 }
-.timeline__media img, .timeline__media video {
+.timeline__media::-webkit-scrollbar {
+  display: none;
+}
+.timeline__media video {
+  cursor: pointer;
+}
+.timeline__media__normal img {
   width: 100%;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-.timeline__media video {
+.timeline__media__thumb img {
+  width: 80px;
+  margin-right: 3px;
+  cursor: zoom-in;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+}
+.timeline__media__thumb--small img {
+  width: calc(100% / 9 - 7px);
+  margin-right: 7px;
+  border: 0px solid;
   cursor: pointer;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+.timeline__media__thumb--small--active {
+  -webkit-filter: grayscale(0%) !important;
+  filter: grayscale(0%) !important;
+}
+.timeline__media__thumb--small--loading {
+  border: 7px solid !important;
+  -moz-animation: imgLoadAnimate 1.7s infinite linear;
+  -webkit-animation: imgLoadAnimate 1.7s infinite linear;
+  animation: imgLoadAnimate 1.7s infinite linear;
+}
+@-moz-keyframes imgLoadAnimate {
+  0%, 100% {
+    border-color: #F1F1F1;
+  }
+  50% {
+    border-color: #CECECF;
+  }
+}
+@-webkit-keyframes imgLoadAnimate {
+  0%, 100% {
+    border-color: #F1F1F1;
+  }
+  50% {
+    border-color: #CECECF;
+  }
+}
+@keyframes imgLoadAnimate {
+  0%, 100% {
+    border-color: #F1F1F1;
+  }
+  50% {
+    border-color: #CECECF;
+  }
+}
+.timeline__media__large img {
+  width: 100%;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.timeline__media__large--inactive {
+  display: none;
+}
+.timeline__media__large--tips {
+  cursor: e-resize;
 }
 .timeline__media__playButton {
   position: absolute;

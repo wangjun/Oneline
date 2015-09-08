@@ -45,7 +45,7 @@ module.exports = {
     w: function (opts){
         var wOpts = {
             access_token: opts.token,
-            count: opts.count || 20
+            count: opts.count || 50
         };
 
         if (opts.since_id){
@@ -60,7 +60,7 @@ module.exports = {
             url: 'https://api.weibo.com/2/statuses/home_timeline.json',
             qs : wOpts
         }, function (err, res, body){
-            if (err){
+            if (err || res.statusCode !== 200){
                 deferred.reject(err)
             } else {
                 var data;

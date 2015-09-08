@@ -10,18 +10,9 @@
 </div>
 
 <div class="timeline__content">
-    <p class="timeline__text" trim-media-link="{{item.mediaLink}}" linkify="weibo">{{item.retweet.text}}</p>
-    <div ng-if="item.media" class="timeline__media">
-        <div ng-repeat="media in item.media">
-            <div ng-if="media.type === 'photo'">
-                <img ng-src="{{media.image_url}}" alt="weibo_photo">
-            </div>
+    <p class="timeline__text" linkify="weibo">{{item.retweet.text}}</p>
 
-            <div ng-if="media.type !== 'photo'">
-                <ol-video ol-src="media.video_url" ol-poster="media.image_url"></ol-video>
-            </div>
-        </div>
-    </div>
+    <ng-include ng-if="::item.media" src=" 'media--weibo.html' "></ng-include>
 </div>
 
 <a class="timeline--retweet__profile__avatar" ng-href="//weibo.com/n/{{item.user.screen_name}}" target="_blank">

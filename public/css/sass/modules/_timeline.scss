@@ -48,16 +48,79 @@
     }
     // 圖片／視頻
     &__media {
+        display: block;
         position: relative;
+        width: 100%;
         margin: 17px 0;
+        white-space: nowrap;
+        text-align: center;
 
-        img, video {
-            width: 100%;
-            @include border-radius(3px);
+        &::-webkit-scrollbar { 
+            display: none; 
         }
+
         video {
             cursor: pointer;
         }
+        /**
+         * 圖片（視頻）尺寸
+         *
+         */
+        &__normal {
+            img {
+                width: 100%;
+                @include border-radius(3px);
+            }
+        }
+        &__thumb {
+            img {
+                width: 80px;
+                margin-right: 3px;
+                cursor: zoom-in;
+                @include border-radius(1px);
+            }
+
+            &--small {
+                img {
+                    width: calc(100% / 9 - 7px);
+                    margin-right: 7px;
+                    border: 0px solid;
+                    cursor: pointer;
+                    @include border-radius(50%);
+                    @include filter(grayscale(100%));
+                }
+
+                &--active {
+                    @include filter(grayscale(0%)!important);
+                }
+                &--loading {
+                    border: 7px solid!important;
+                    @include animation(imgLoadAnimate 1.7s infinite linear);
+                    @include keyframes(imgLoadAnimate) {
+                        0%, 100% {
+                            border-color: $color-gray;
+                        }
+                        50% {
+                            border-color: $color-gray-drak;
+                        }
+                    }
+                }
+            }
+        }
+        &__large {
+            img {
+                width: 100%;
+                @include border-radius(3px);
+            }
+
+            &--inactive {
+                display: none;
+            }
+            &--tips {
+                cursor: e-resize;
+            }
+        }
+
         // 播放按鈕
         &__playButton {
             position: absolute;

@@ -21,7 +21,7 @@ angular.module('Oneline', [
     'Oneline.tokenHelperServices',
     'Oneline.UIServices',
     // Directives
-    'Oneline.olVideoDirectives',
+    'Oneline.olMediaDirectives',
     'Oneline.trimMediaLinkDirectives'
 ])
 .config(['$locationProvider', '$stateProvider', 

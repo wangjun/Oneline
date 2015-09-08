@@ -280,13 +280,13 @@ function filterWeiboMedia(items){
 
         if (type === 'photo'){
             extend(mediaObj, {
-                image_url: item.thumbnail_pic.replace('thumbnail', 'bmiddle')
+                image_url: item.thumbnail_pic.replace('thumbnail', 'square')
             })
         }
 
         if (type === 'gif'){
             extend(mediaObj, {
-                image_url: item.thumbnail_pic.replace('thumbnail', 'small'),
+                image_url: item.thumbnail_pic.replace('thumbnail', 'square'),
                 gif_url: item.thumbnail_pic.replace('thumbnail', 'bmiddle')
             })
         }

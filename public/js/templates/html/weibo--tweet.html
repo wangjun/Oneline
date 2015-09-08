@@ -7,23 +7,12 @@
             <strong>{{item.user.name}}</strong>
         </a>
     </div>
-
 </div>
 
 <div class="timeline__content">
     <p class="timeline__text" linkify="weibo">{{item.text}}</p>    
-    <div ng-if="item.media" class="timeline__media">
-        <div ng-repeat="media in item.media">
-            <div ng-if="media.type === 'photo'">
-                <img ng-src="{{media.image_url}}" alt="weibo_photo">
-            </div>
 
-            <div ng-if="media.type === 'gif'">
-                <img ng-src="{{media.image_url}}" alt="weibo_photo">
-                <!-- TODO -->
-            </div>
-        </div>
-    </div>
+    <ng-include ng-if="::item.media" src=" 'media--weibo.html' "></ng-include>
 </div>
 
 <ng-include src=" 'actions--weibo.html' " class="cursor--pointer"></ng-include>

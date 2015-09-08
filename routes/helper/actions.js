@@ -1,7 +1,7 @@
 var extend  = require('extend'),
     Twit    = require('Twit'),
     Ig      = require('instagram-node').instagram(),
-    request = require('request')
+    request = require('request');
 
 module.exports = {
     twitter: function (action, opts){
@@ -52,7 +52,7 @@ module.exports = {
             url: 'https://api.weibo.com/2/' + action_str + '.json', 
             form: wOpts
         }, function (err, res, body){
-            if (err){
+            if (err || res.statusCode !== 200){
                 deferred.reject(err)
             } else {
 

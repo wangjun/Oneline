@@ -11,18 +11,9 @@
 </div>
 
 <div class="timeline__content">
-    <p class="timeline__text" trim-media-link="{{item.mediaLink}}" linkify="twitter">{{item.text}}</p>    
-    <div ng-if="item.media" class="timeline__media">
-        <div ng-repeat="media in item.media">
-            <div ng-if="media.type === 'photo'">
-                <img ng-src="{{media.image_url}}" alt="tweet_photo">
-            </div>
-
-            <div ng-if="media.type !== 'photo'">
-                <ol-video ol-src="media.video_url" ol-poster="media.image_url"></ol-video>
-            </div>
-        </div>
-    </div>
+    <p class="timeline__text" trim-media-link="{{item.mediaLink}}" linkify="twitter">{{item.text}}</p>
+    
+    <ng-include ng-if="::item.media" src=" 'media--twitter.html' " class="timeline__media"></ng-include>
 </div>
 
 <ng-include src=" 'actions--twitter.html' " class="cursor--pointer"></ng-include>
