@@ -145,4 +145,22 @@ $tablet-landscape: '(min-device-width : 768px) and (max-device-width : 1024px) a
     &--pointer {
         cursor: pointer;
     }
+    &--next {
+        cursor: e-resize;
+    }
+}
+.button {
+    &--inactive {
+        @include filter(grayscale(100%));
+        @include opacity(.7);
+
+        &:hover {
+            @include filter(grayscale(0%));
+            @include opacity(1);
+        }
+    }
+    &--active {
+        @include filter(grayscale(0%));
+        @include opacity(1);
+    }
 }

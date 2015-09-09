@@ -59,69 +59,58 @@
             display: none; 
         }
 
+        /**
+         * 圖片（視頻）尺寸／樣式
+         *
+         */
+        // 大圖
+        img, video {
+            width: 100%;
+            @include border-radius(3px);
+        }
         video {
             cursor: pointer;
         }
-        /**
-         * 圖片（視頻）尺寸
-         *
-         */
-        &__normal {
-            img {
-                width: 100%;
-                @include border-radius(3px);
-            }
-        }
-        &__thumb {
+        // 縮略圖
+        &--thumb {
             img {
                 width: 80px;
                 margin-right: 3px;
                 cursor: zoom-in;
                 @include border-radius(1px);
             }
-
-            &--small {
-                img {
-                    width: calc(100% / 9 - 7px);
-                    margin-right: 7px;
-                    border: 0px solid;
-                    cursor: pointer;
-                    @include border-radius(50%);
-                    @include filter(grayscale(100%));
-                }
-
-                &--active {
-                    @include filter(grayscale(0%)!important);
-                }
-                &--loading {
-                    border: 7px solid!important;
-                    @include animation(imgLoadAnimate 1.7s infinite linear);
-                    @include keyframes(imgLoadAnimate) {
-                        0%, 100% {
-                            border-color: $color-gray;
-                        }
-                        50% {
-                            border-color: $color-gray-drak;
-                        }
-                    }
-                }
-            }
         }
-        &__large {
+        // 小圖（小於縮略圖）
+        &--small {
             img {
-                width: 100%;
-                @include border-radius(3px);
-            }
-
-            &--inactive {
-                display: none;
-            }
-            &--tips {
-                cursor: e-resize;
+                width: calc(100% / 9 - 7px);
+                margin-right: 7px;
+                border: 0px solid;
+                cursor: pointer;
+                @include border-radius(50%);
             }
         }
-
-        // 播放按鈕
+        // 大圖（未打開）
+        &--inactive {
+            display: none;
+        }
+        // 縮略圖（正在加載）
+        &--loading {
+            border: 7px solid!important;
+            @include animation(imgLoadAnimate 1.7s infinite linear);
+            @include keyframes(imgLoadAnimate) {
+                0%, 100% {
+                    border-color: $color-gray;
+                }
+                50% {
+                    border-color: $color-gray-drak;
+                }
+            }
+        }
+        /**
+         * 播放按鈕
+         *
+         */
         &__playButton {
             position: absolute;
             top: 0px;

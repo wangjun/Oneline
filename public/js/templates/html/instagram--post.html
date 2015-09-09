@@ -1,27 +1,20 @@
 <div class="timeline__profile">
-    <a ng-href="//instagram.com/{{item.user.username}}" target="_blank">
-        <img class="timeline__profile__avatar timeline__profile__avatar--instagram" ng-src="{{item.user.profile_picture}}" alt="avatar">
+    <a ng-href="//instagram.com/{{::item.user.username}}" target="_blank">
+        <img class="timeline__profile__avatar timeline__profile__avatar--instagram" ng-src="{{::item.user.profile_picture}}" alt="avatar">
     </a>
     <div class="timeline__profile__fullname">
-        <a ng-href="//instagram.com/{{item.user.username}}" target="_blank">
-            <strong>{{item.user.full_name}}</strong>
+        <a ng-href="//instagram.com/{{::item.user.username}}" target="_blank">
+            <strong>{{::item.user.full_name}}</strong>
         </a>
     </div>
 </div>
 
 <div class="timeline__content">
 
-    <div class="timeline__media" ng-if="item.type === 'image'">
-        <img ng-src="{{item.images.standard_resolution}}" alt="instagram-post-image">        
-    </div>
-
-    <div class="timeline__media" ng-if="item.type === 'video'">
-        <ol-video ol-src="item.videos.standard_resolution" ol-poster="item.images.standard_resolution">
-        </ol-video>
-     </div>
-    <p class="timeline__text" linkify="instagram">{{item.text}}</p>
+    <ng-include src=" 'media--instagram.html' "></ng-include>
+    <p class="timeline__text" linkify="instagram">{{::item.text}}</p>
 </div>
 
 <ng-include src=" 'actions--instagram.html' " class="cursor--pointer"></ng-include>
 
-<span class="timeline__time tips" relative-date="{{item.created_at}}"></span>
+<span class="timeline__time tips" relative-date="{{::item.created_at}}"></span>

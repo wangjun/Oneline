@@ -133,6 +133,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .cursor--pointer {
   cursor: pointer;
 }
+.cursor--next {
+  cursor: e-resize;
+}
+
+.button--inactive {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+.button--inactive:hover {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+}
+.button--active {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+}
 
 /* sy-news-reset */
 html {
@@ -366,10 +388,6 @@ ng\:form {
   animation: waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
   cursor: default;
 }
-.actions__button--active {
-  -webkit-filter: grayscale(0%);
-  filter: grayscale(0%);
-}
 .actions__button--retweet {
   width: 20px;
 }
@@ -470,23 +488,27 @@ ng\:form {
   white-space: nowrap;
   text-align: center;
   /**
-   * 圖片（視頻）尺寸
+   * 圖片（視頻）尺寸／樣式
+   *
+   */
+  /**
+   * 播放按鈕
    *
    */
 }
 .timeline__media::-webkit-scrollbar {
   display: none;
 }
-.timeline__media video {
-  cursor: pointer;
-}
-.timeline__media__normal img {
+.timeline__media img, .timeline__media video {
   width: 100%;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-.timeline__media__thumb img {
+.timeline__media video {
+  cursor: pointer;
+}
+.timeline__media--thumb img {
   width: 80px;
   margin-right: 3px;
   cursor: zoom-in;
@@ -494,7 +516,7 @@ ng\:form {
   -webkit-border-radius: 1px;
   border-radius: 1px;
 }
-.timeline__media__thumb--small img {
+.timeline__media--small img {
   width: calc(100% / 9 - 7px);
   margin-right: 7px;
   border: 0px solid;
@@ -502,14 +524,11 @@ ng\:form {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
 }
-.timeline__media__thumb--small--active {
-  -webkit-filter: grayscale(0%) !important;
-  filter: grayscale(0%) !important;
+.timeline__media--inactive {
+  display: none;
 }
-.timeline__media__thumb--small--loading {
+.timeline__media--loading {
   border: 7px solid !important;
   -moz-animation: imgLoadAnimate 1.7s infinite linear;
   -webkit-animation: imgLoadAnimate 1.7s infinite linear;
@@ -538,18 +557,6 @@ ng\:form {
   50% {
     border-color: #CECECF;
   }
-}
-.timeline__media__large img {
-  width: 100%;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-.timeline__media__large--inactive {
-  display: none;
-}
-.timeline__media__large--tips {
-  cursor: e-resize;
 }
 .timeline__media__playButton {
   position: absolute;

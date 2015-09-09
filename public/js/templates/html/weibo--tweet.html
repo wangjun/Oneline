@@ -1,20 +1,20 @@
 <div class="timeline__profile">
-    <a ng-href="//weibo.com/n/{{item.user.screen_name}}" target="_blank">
-        <img class="timeline__profile__avatar" ng-src="{{item.user.profile_image_url_https}}" alt="avatar">
+    <a ng-href="//weibo.com/n/{{::item.user.screen_name}}" target="_blank">
+        <img class="timeline__profile__avatar" ng-src="{{::item.user.profile_image_url_https}}" alt="avatar">
     </a>
     <div class="timeline__profile__fullname">
-        <a ng-href="//weibo.com/n/{{item.user.screen_name}}" target="_blank">
-            <strong>{{item.user.name}}</strong>
+        <a ng-href="//weibo.com/n/{{::item.user.screen_name}}" target="_blank">
+            <strong>{{::item.user.name}}</strong>
         </a>
     </div>
 </div>
 
 <div class="timeline__content">
-    <p class="timeline__text" linkify="weibo">{{item.text}}</p>    
+    <p class="timeline__text" linkify="weibo" weibo-emotify>{{::item.text}}</p>    
 
     <ng-include ng-if="::item.media" src=" 'media--weibo.html' "></ng-include>
 </div>
 
 <ng-include src=" 'actions--weibo.html' " class="cursor--pointer"></ng-include>
 
-<span class="timeline__time tips" relative-date="{{item.created_at}}"></span>
+<span class="timeline__time tips" relative-date="{{::item.created_at}}"></span>

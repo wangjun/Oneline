@@ -1,0 +1,7 @@
+<div class="timeline__media">
+
+    <img ng-if="::!item.videos" ng-src="{{::item.images.standard_resolution}}" alt="instagram-post-image">
+
+    <ol-video ng-if="::item.videos" ol-src="::item.videos.standard_resolution" ol-poster="::item.images.standard_resolution"></ol-video>
+
+</div>

@@ -7,6 +7,7 @@ angular.module('Oneline', [
     'angular-jwt',
     'angular-storage',
     'linkify',
+    'weibo-emotify',
     // Templates
     'Oneline.templates',
     // Controllers

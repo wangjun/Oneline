@@ -93,7 +93,7 @@ var filter = {
                 provider: 'instagram',
                 created_at: Date.parse(new Date(item.created_time * 1000)),
                 id_str: item.id,
-                type: item.type,
+                type: 'post',
                 user: item.user,
                 text: item.caption && item.caption.text
                         ? item.caption.text

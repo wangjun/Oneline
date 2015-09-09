@@ -2,21 +2,9 @@
     <div class="loadMore__loading"></div>
 </div>
 
-<div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'" data-id="{{item.id_str}}">
+<div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'" data-id="{{::item.id_str}}">
 
-
-    <div ng-if="item.provider === 'twitter'">
-        <ng-include class="timeline--twitter" src=" 'twitter--' + item.type + '.html' "></ng-include>
-    </div>
-
-
-    <div ng-if="item.provider === 'instagram'">
-        <ng-include class="timeline--instagram" src=" 'instagram--post.html' "></ng-include>
-    </div>
-
-    <div ng-if="item.provider === 'weibo'">
-        <ng-include class="timeline--weibo" src=" 'weibo--' + item.type + '.html' "></ng-include>
-    </div>
+    <ng-include ng-class="::'timeline--' + item.provider" src=" item.provider + '--' + item.type + '.html' "></ng-include>
 
 </div>
 
