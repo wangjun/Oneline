@@ -28,7 +28,7 @@ var paths = {
         '!views/*.min.html'
     ],
     templates_ol: [
-        'public/js/templates/html/*.html'
+        'public/js/templates/html/**/*.html'
     ]
 };
 

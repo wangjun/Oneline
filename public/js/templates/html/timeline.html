@@ -4,7 +4,7 @@
 
 <div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'" data-id="{{::item.id_str}}">
 
-    <ng-include ng-class="::'timeline--' + item.provider" src=" item.provider + '--' + item.type + '.html' "></ng-include>
+    <ng-include ng-class="::'timeline--' + item.provider" src="item.provider + '/' + item.type + '.html'"></ng-include>
 
 </div>
 

@@ -51,7 +51,7 @@ var filter = {
                         user: trimTweetUser(item.quoted_status.user)
                     }
                 })
-            } 
+            }
             // Reply / Tweet
             else {
                 extend(tweetObj, {
@@ -154,36 +154,29 @@ var filter = {
                 favorited: item.favorited
             }
 
-            // Retweet (Reposts)
-            if (item.retweeted_status && item.text === '转发微博'){
+            // Retweet & Quote
+            if (item.retweeted_status){
+                var retweetType = item.text === '转发微博' ? 'retweet' : 'quote',
+                    retweetItem = item.retweeted_status;
+
                 extend(weiboObj, {
-                    type: 'retweet',
+                    type: retweetType,
                     retweet: {
-                        created_at: Date.parse(item.retweeted_status.created_at),
-                        text: item.retweeted_status.text,
-                        user: trimWeiboUser(item.retweeted_status.user)
+                        created_at: Date.parse(retweetItem.created_at),
+                        id_str: retweetItem.idstr,
+                        mid: mid.encode(retweetItem.mid),
+                        user: trimWeiboUser(retweetItem.user),
+                        text: retweetItem.text
                     }
                 })
 
-                if (item.retweeted_status.pic_urls && item.retweeted_status.pic_urls.length > 0){
+                // media
+                if (retweetItem.pic_urls && retweetItem.pic_urls.length > 0){
                     extend(weiboObj, {
-                        media: filterWeiboMedia(item.retweeted_status.pic_urls)
+                        media: filterWeiboMedia(retweetItem.pic_urls)
                     })
                 }
             }
-            // Quote
-            else if (item.retweeted_status && item.text !== '转发微博'){
-                extend(weiboObj, {
-                    type: 'quote',
-                    quote: {
-                        created_at: Date.parse(item.retweeted_status.created_at),
-                        id_str: item.retweeted_status.idstr,
-                        mid: mid.encode(item.retweeted_status.mid),
-                        text: item.retweeted_status.text,
-                        user: trimWeiboUser(item.retweeted_status.user)
-                    }
-                })
-            } 
             // Reply / Tweet (Weibo)
             else {
                 extend(weiboObj, {

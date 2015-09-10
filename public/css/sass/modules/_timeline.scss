@@ -16,6 +16,7 @@
         // 頭銜
         &__avatar {
             width: 48px;
+            height: 48px;
             border-width: 1px;
             border-style: solid;
             @include border-radius(50%);
@@ -130,23 +131,32 @@
     // 引用推文
     &--quote {
         top: -12px;
-        margin: 0;
+        margin: 27px 7px 7px 7px;
         border: 1px solid $color-gray;
         background-color: $color-gray;
-        cursor: pointer;
-
-        @include transform(scale(.7));
-
-        &--twitter:hover {
-            background-color: $color-twitter-alpha;
-        }
-        &--weibo:hover {
-            background-color: $color-weibo-alpha;
-        }
+        font-size: $font-size-small;
 
         strong, p {
             color: $color-black;
         }
+        .timeline {
+            &__profile {
+                &__avatar {
+                    width: 40px;
+                    height: 40px;
+                }
+                &__fullname {
+                    margin-bottom: 7px;
+                }
+            }
+            &__content {
+                top: -14px;
+            }
+            &__time {
+                font-size: 10px;
+            }       
+        }
+
     }
     // 轉推用戶頭像
     &--retweet__profile__avatar {
@@ -156,6 +166,7 @@
 
         img {
             width: 24px;
+            height: 24px;
         }
         &::after {
             content: '';
@@ -174,6 +185,7 @@
     &--twitter {
         .timeline__profile__avatar {
             border-color: $color-twitter;
+            background-color: $color-twitter;
         }
         .timeline__content {
             a, a:visited {
@@ -185,6 +197,7 @@
     &--instagram {
         .timeline__profile__avatar {
             border-color: $color-instagram;
+            background-color: $color-instagram;
         }
         .timeline__content {
             a, a:visited {
@@ -196,6 +209,7 @@
     &--weibo {
         .timeline__profile__avatar {
             border-color: $color-weibo;
+            background-color: $color-weibo;
         }
         .timeline__content {
             a, a:visited {

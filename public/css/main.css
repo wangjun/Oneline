@@ -383,23 +383,11 @@ ng\:form {
   filter: grayscale(100%);
 }
 .actions__button--wait {
+  cursor: default;
   -moz-animation: waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
   -webkit-animation: waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
   animation: waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  cursor: default;
 }
-.actions__button--retweet {
-  width: 20px;
-}
-.actions__count {
-  display: inline-block;
-  font-size: 11px;
-  color: #89A;
-}
-.actions__count::after {
-  content: attr(data-count);
-}
-
 @-moz-keyframes waitAnimate {
   0% {
     -moz-transform: rotate(0deg);
@@ -434,6 +422,33 @@ ng\:form {
     transform: rotate(360deg);
   }
 }
+.actions__button--active {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+}
+.actions__button--retweet {
+  width: 20px;
+}
+.actions__count {
+  display: inline-block;
+  font-size: 11px;
+  color: #89A;
+}
+.actions__count::after {
+  content: attr(data-count);
+}
+
+.timeline--quote .actions__button {
+  width: 15px;
+  height: 24px;
+}
+.timeline--quote .actions__button--retweet {
+  width: 18px;
+}
+.timeline--quote .actions__count {
+  font-size: 10px;
+}
+
 .timeline, .loadMore {
   position: relative;
   margin: 36px 7px;
@@ -450,6 +465,7 @@ ng\:form {
 }
 .timeline__profile__avatar {
   width: 48px;
+  height: 48px;
   border-width: 1px;
   border-style: solid;
   -moz-border-radius: 50%;
@@ -572,23 +588,26 @@ ng\:form {
 }
 .timeline--quote {
   top: -12px;
-  margin: 0;
+  margin: 27px 7px 7px 7px;
   border: 1px solid #F1F1F1;
   background-color: #F1F1F1;
-  cursor: pointer;
-  -moz-transform: scale(0.7);
-  -ms-transform: scale(0.7);
-  -webkit-transform: scale(0.7);
-  transform: scale(0.7);
-}
-.timeline--quote--twitter:hover {
-  background-color: rgba(42, 169, 224, 0.3);
-}
-.timeline--quote--weibo:hover {
-  background-color: rgba(230, 22, 45, 0.3);
+  font-size: 12px;
 }
 .timeline--quote strong, .timeline--quote p {
   color: #000;
+}
+.timeline--quote .timeline__profile__avatar {
+  width: 40px;
+  height: 40px;
+}
+.timeline--quote .timeline__profile__fullname {
+  margin-bottom: 7px;
+}
+.timeline--quote .timeline__content {
+  top: -14px;
+}
+.timeline--quote .timeline__time {
+  font-size: 10px;
 }
 .timeline--retweet__profile__avatar {
   position: absolute;
@@ -597,6 +616,7 @@ ng\:form {
 }
 .timeline--retweet__profile__avatar img {
   width: 24px;
+  height: 24px;
 }
 .timeline--retweet__profile__avatar::after {
   content: '';
@@ -613,18 +633,21 @@ ng\:form {
 }
 .timeline--twitter .timeline__profile__avatar {
   border-color: #2AA9E0;
+  background-color: #2AA9E0;
 }
 .timeline--twitter .timeline__content a, .timeline--twitter .timeline__content a:visited {
   color: #2AA9E0;
 }
 .timeline--instagram .timeline__profile__avatar {
   border-color: #3F5D87;
+  background-color: #3F5D87;
 }
 .timeline--instagram .timeline__content a, .timeline--instagram .timeline__content a:visited {
   color: #3F5D87;
 }
 .timeline--weibo .timeline__profile__avatar {
   border-color: #E6162D;
+  background-color: #E6162D;
 }
 .timeline--weibo .timeline__content a, .timeline--weibo .timeline__content a:visited {
   color: #E6162D;

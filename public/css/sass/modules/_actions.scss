@@ -14,8 +14,20 @@
         @include filter(grayscale(100%));
 
         &--wait {
-            @include animation(waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55));
             cursor: default;
+
+            @include animation(waitAnimate 1s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55));
+            @include keyframes(waitAnimate) {
+                0% {
+                    @include transform(rotate(0deg));
+                }
+                100% {
+                    @include transform(rotate(360deg));
+                }
+            }
+        }
+        &--active {        
+            @include filter(grayscale(0%));        
         }
         &--retweet {
             width: 20px;
@@ -32,11 +44,18 @@
     }
 }
 
-@include keyframes(waitAnimate) {
-    0% {
-        @include transform(rotate(0deg));
-    }
-    100% {
-        @include transform(rotate(360deg));
+.timeline--quote {
+    .actions {
+        &__button {
+            width: 15px;
+            height: 24px;
+
+            &--retweet {
+                width: 18px;
+            }
+        }
+        &__count {
+            font-size: 10px;
+        }
     }
 }

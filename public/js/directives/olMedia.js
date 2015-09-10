@@ -44,7 +44,7 @@ angular.module('Oneline.olMediaDirectives', [])
                 if (img_thumb.length === 1){
                     elem.addClass('timeline__media--loading')
                     img_large.bind('load', function (){
-                        elem.remove()
+                        elem.parent().remove()
                         wrapper_large.removeClass('cursor--next')
                         img_large.unbind('load')
                     })
