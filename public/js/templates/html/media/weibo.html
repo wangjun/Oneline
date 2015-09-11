@@ -1,6 +1,6 @@
 <div class="timeline__media overflow--x timeline__media--thumb">
     <img class="animate--faster" ng-repeat="media in ::item.media" ng-src="{{::media.image_url}}" alt="weibo_photo" ol-image-thumb>
 </div>
-<div class="timeline__media timeline__media--inactive cursor--next">
-    <img src="" alt="weibo_large_photo" ol-image-large>
+<div class="timeline__media timeline__media--inactive">
+    <img src="" alt="weibo_large_photo" select-image image-count="{{:: item.media.length}}">
 </div>

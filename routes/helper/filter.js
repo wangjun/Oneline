@@ -26,9 +26,9 @@ var filter = {
             if (item.retweeted_status){
                 extend(tweetObj, {
                     type: 'retweet',
+                    text: item.retweeted_status.text,
                     retweet: {
                         created_at: Date.parse(item.retweeted_status.created_at),
-                        text: item.retweeted_status.text,
                         user: trimTweetUser(item.retweeted_status.user)
                     }
                 })
@@ -51,6 +51,13 @@ var filter = {
                         user: trimTweetUser(item.quoted_status.user)
                     }
                 })
+
+                if (item.quoted_status.extended_entities && item.quoted_status.extended_entities.media){
+                    extend(tweetObj.quote, {
+                        media: filterTweetMedia(item.quoted_status.extended_entities.media),
+                        mediaLink: item.quoted_status.extended_entities.media[0].url
+                    })
+                }
             }
             // Reply / Tweet
             else {

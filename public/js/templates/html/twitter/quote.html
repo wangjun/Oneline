@@ -1,42 +1,21 @@
-<div class="timeline__profile">
-    <a ng-href="//twitter.com/{{::item.user.screen_name}}" target="_blank">
-        <img class="timeline__profile__avatar" ng-src="{{::item.user.profile_image_url_https.replace('normal', 'bigger')}}" alt="avatar">
-    </a>
-    <div class="timeline__profile__fullname">
-        <a ng-href="//twitter.com/{{::item.user.screen_name}}" target="_blank">
-            <strong>{{::item.user.name}}</strong>
-        </a>
-    </div>
-</div>
+<div ng-include=" 'twitter/component/profile.html' "></div>
 
-<div class="timeline__content">
-    <p class="timeline__text" trim-media-link="{{::item.mediaLink}}" linkify="twitter">{{::item.text}}</p>
+<div ng-include=" 'twitter/component/content.html' "></div>
 
-    <ng-include ng-if="::item.media" src=" 'media/twitter.html' "></ng-include>
-</div>
 <!-- Origin Start -->
 <div class="timeline timeline--quote timeline--quote--twitter">
-    <div class="timeline__profile">
-        <a ng-href="//twitter.com/{{::item.quote.user.screen_name}}" target="_blank">
-            <img class="timeline__profile__avatar" ng-src="{{::item.quote.user.profile_image_url_https}}" alt="avatar">
-        </a>
-        <div class="timeline__profile__fullname">
-            <a ng-href="//twitter.com/{{::item.quote.user.screen_name}}" target="_blank">
-                <strong>{{::item.quote.user.name}}</strong>
-            <a>
-        </div>
-    </div>
 
-   <div class="timeline__content">
-        <p class="timeline__text" linkify="twitter">{{::item.quote.text}}</p>
-    </div>
+    <div ng-include=" 'twitter/component/profile--quote.html' "></div>
 
-    <ng-include src=" 'actions/twitter--quote.html' " class="cursor--pointer"></ng-include>
+    <div ng-include=" 'twitter/component/content--quote.html' "></div>
+
+    <div ng-include=" 'actions/twitter--quote.html' " class="cursor--pointer"></div>
 
     <span class="timeline__time" relative-date="{{::item.quote.created_at}}"></span>
+
 </div>
 <!-- Origin End -->
-<ng-include src=" 'actions/twitter.html' " class="cursor--pointer"></ng-include>
+
+<div ng-include=" 'actions/twitter.html' " class="cursor--pointer"></div>
 
 <span class="timeline__time tips" relative-date="{{::item.created_at}}"></span>
-

@@ -133,6 +133,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .cursor--pointer {
   cursor: pointer;
 }
+.cursor--pre {
+  cursor: w-resize;
+}
 .cursor--next {
   cursor: e-resize;
 }
@@ -229,6 +232,13 @@ h6 {
 a, a:visited {
   color: inherit;
   text-decoration: none;
+}
+
+svg {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 ::-webkit-scrollbar {

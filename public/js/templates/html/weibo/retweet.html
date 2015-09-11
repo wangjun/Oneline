@@ -1,24 +1,11 @@
-<div class="timeline__profile">
-    <a ng-href="//weibo.com/n/{{::item.retweet.user.screen_name}}" target="_blank">
-        <img class="timeline__profile__avatar" ng-src="{{::item.retweet.user.profile_image_url_https}}" alt="avatar">
-    </a>
-    <div class="timeline__profile__fullname">
-        <a ng-href="//weibo.com/n/{{::item.retweet.user.screen_name}}" target="_blank">
-            <strong>{{::item.retweet.user.name}}</strong>
-        </a>
-    </div>
-</div>
+<div ng-include=" 'weibo/component/profile--retweet.html' "></div>
 
-<div class="timeline__content">
-    <p class="timeline__text" linkify="weibo" weibo-emotify>{{::item.retweet.text}}</p>
-
-    <ng-include ng-if="::item.media" src=" 'media/weibo.html' "></ng-include>
-</div>
+<div ng-include=" 'weibo/component/content--retweet.html' "></div>
 
 <a class="timeline--retweet__profile__avatar" ng-href="//weibo.com/n/{{::item.user.screen_name}}" target="_blank">
     <img class="timeline__profile__avatar" ng-src="{{::item.user.profile_image_url_https}}" alt="avatar">
 </a>
 
-<ng-include src=" 'actions/weibo.html' " class="cursor--pointer"></ng-include>
+<div ng-include=" 'actions/weibo.html' " class="cursor--pointer"></div>
 
 <span class="timeline__time tips" relative-date="{{::item.created_at}}"></span>

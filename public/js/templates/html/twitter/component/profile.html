@@ -1,0 +1,10 @@
+<div class="timeline__profile">
+    <a ng-href="//twitter.com/{{::item.user.screen_name}}" target="_blank">
+        <img class="timeline__profile__avatar" ng-src="{{::item.user.profile_image_url_https.replace('normal', 'bigger')}}" alt="avatar">
+    </a>
+    <div class="timeline__profile__fullname">
+        <a ng-href="//twitter.com/{{::item.user.screen_name}}" target="_blank">
+            <strong>{{::item.user.name}}</strong>
+        </a>
+    </div>
+</div>

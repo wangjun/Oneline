@@ -46,6 +46,8 @@ a, a:visited {
     color: inherit;
     text-decoration: none;
 }
-
+svg {
+    @include user-select(none);
+}
 @include scrollbars(1px, $color-steel, transparent);
 

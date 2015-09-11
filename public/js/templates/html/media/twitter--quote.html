@@ -1,0 +1,7 @@
+<div class="timeline__media">
+    <div ng-repeat="media in ::item.quote.media">
+        <img ng-if="::media.type === 'photo'" ng-src="{{::media.image_url}}" alt="tweet_photo">
+
+        <ol-video ng-if="::media.type !== 'photo'" ol-src="::media.video_url" ol-poster="::media.image_url"></ol-video>
+    </div>
+</div>
