@@ -1,5 +1,5 @@
 var extend  = require('extend'),
-    Twit    = require('Twit'),
+    Twit    = require('twit'),
     Ig      = require('instagram-node').instagram(),
     request = require('request');
 

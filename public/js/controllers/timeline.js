@@ -27,6 +27,8 @@ angular.module('Oneline.timelineControllers', [])
     .initLoad()
     .$promise
     .then(function (posts){
+        if (!posts || (posts.data && posts.data.length < 1)) return;
+
         // 保存貼文與 min_id & min_date
         olTimelineHelper.storePosts('oldPosts', posts, $scope.providerList)
         // 保存 max_id & max_date
@@ -69,15 +71,19 @@ angular.module('Oneline.timelineControllers', [])
 
             // 從本地獲取
             var newPostsFromCache = timelineCache.get('newPosts') || []
-            if (newPostsFromCache.length > 0){
 
-                olUI.setDivider(step)
-                $scope.timelineData = $scope.timelineData.concat(newPostsFromCache)
+            if (newPostsFromCache.length > 1){
+                var cache = []
+                cache = $scope.timelineData.concat(newPostsFromCache)
+                $scope.timelineData = olTimelineHelper.removeOldPosts(cache)
                 timelineCache.put('newPosts', [])
+
                 olUI.setLoading(false, step)
+                olUI.setDivider(step)
 
                 return;
             }
+
 
             // 從後端獲取
             Timeline
@@ -87,10 +93,15 @@ angular.module('Oneline.timelineControllers', [])
             })
             .$promise
             .then(function (newPosts){
-                if (newPosts.data.length > 0){
-                    olUI.setDivider(step)
-                    $scope.timelineData = $scope.timelineData.concat(newPosts.data)
-                }
+                if (!newPosts || (newPosts.data && newPosts.data.length < 1)) return;
+
+                var cache = []
+                olTimelineHelper.storePosts('newPosts', newPosts, $scope.providerList)
+                cache = $scope.timelineData.concat(timelineCache.get('newPosts') || [])
+                $scope.timelineData = olTimelineHelper.removeOldPosts(cache)
+                timelineCache.put('newPosts', [])
+
+                olUI.setDivider(step)
             })
             .catch(function (err){
                 if (err.status === 401){
@@ -156,5 +167,4 @@ angular.module('Oneline.timelineControllers', [])
             olUI.setActionState(action, id, 'done')
         })
     }
-
 }])

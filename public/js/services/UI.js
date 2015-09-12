@@ -22,9 +22,9 @@ angular.module('Oneline.UIServices', [])
         var timelineElem = document.querySelectorAll('.timeline:not(.timeline--quote)');
 
         if (step === 1){
-            angular.element(timelineElem[0]).addClass('divider--top')
+            angular.element(timelineElem[0]).addClass('divider divider--top')
         } else {
-            angular.element(timelineElem[timelineElem.length - 1]).addClass('divider--bottom')
+            angular.element(timelineElem[timelineElem.length - 1]).addClass('divider divider--bottom')
         }
     },
     this.setNewPostsCount = function (count){

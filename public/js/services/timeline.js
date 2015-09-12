@@ -5,7 +5,7 @@ angular.module('Oneline.timelineServices', [])
     var time_pointer   = Date.now();
     var retrieve_count = 50;
     var TIME_RANGE     = 1800000;
-
+    var pre_time_pointer;
 
     // 獲取最「新／舊貼文」的 max_id / min_id
     this.getId = function (typeOfPosts, providerList){
@@ -89,26 +89,21 @@ angular.module('Oneline.timelineServices', [])
     }
     // 獲取「時間指針」 30 分鐘內的「舊貼文」
     this.extractOldPosts = function (){
-
         var oldPosts = timelineCache.get('oldPosts') || [],
-            postsCache = [],
             isEmpty = true,
             extractOldPosts;
 
+        // 紀錄上次 `time_pointer`
+        pre_time_pointer = time_pointer
+
         while (isEmpty){
             extractOldPosts = oldPosts.filter(function (item){
-                var isExtractPost = time_pointer - item.created_at <= TIME_RANGE;
+                var time_diff = time_pointer - item.created_at;
 
-                if (!isExtractPost){
-                    postsCache.push(item)
-                }
-
-                return isExtractPost
+                return 0 < time_diff && time_diff <= TIME_RANGE;
             })
 
             time_pointer -= TIME_RANGE
-            timelineCache.put('oldPosts', postsCache)
-            postsCache = []
 
             if (extractOldPosts.length > 0){
                 isEmpty = false
@@ -133,6 +128,11 @@ angular.module('Oneline.timelineServices', [])
             .load({id: max_id_str, count: count})
             .$promise
             .then(function (oldPosts){
+                if (!oldPosts || (oldPosts.data && oldPosts.data.length < 1)){
+                    defer.reject()
+                    return;
+                }
+
                 // 過濾 Twitter 返回的「舊貼文」中包含 max_id 貼文
                 if (oldPosts.min_date.twitter){
                     oldPosts.data.splice(0, 1)
@@ -188,9 +188,11 @@ angular.module('Oneline.timelineServices', [])
         })
         .$promise
         .then(function (newPosts){
-            if (newPosts.data.length > 0){
+            if (newPosts.data && newPosts.data.length > 0){
                 _this.storePosts('newPosts', newPosts, providerList)
                 defer.resolve()
+            } else {
+                defer.reject()
             }
         })
 
@@ -201,6 +203,22 @@ angular.module('Oneline.timelineServices', [])
         retrieve_count = 50
         // 清空 `timelineCache`
         timelineCache.removeAll()
+    }
+    // 折疊最底部的「舊貼文」
+    this.removeOldPosts = function (timelineData){
+
+        var divider = document.getElementsByClassName('divider'),
+            len     = divider.length;
+
+        if (len < 2) return timelineData;
+
+        time_pointer = pre_time_pointer// TODO
+
+        var t_date  = parseInt(divider[len - 1].getAttribute('data-date'))
+
+        return timelineData.filter(function (item){
+            return t_date <= item.created_at
+        })
     }
 
 }])

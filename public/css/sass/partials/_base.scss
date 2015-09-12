@@ -146,10 +146,10 @@ $tablet-landscape: '(min-device-width : 768px) and (max-device-width : 1024px) a
         cursor: pointer;
     }
     &--pre {
-        cursor: w-resize;
+        cursor: url(data:image/gif;base64,R0lGODlhMAAwAPAAAAAAAAAAACH5BAEAAAEAIf8LSW1hZ2VNYWdpY2sHZ2FtbWE9MQAsAAAAADAAMAAAAm2Mj6nL7Q+jnA1Yip+9uacNeKIBjmJpdmiKrezkvlEsa1sN3/is7zbnc9CCnx5xMTySjEpEUvk8RonTYNXKbDqz2iWwu/2CvaFxuGwmpw9XrHjc9sV3c1y9dpflX3tWP/VnEjgyeMLVdbimGFEAADs=), w-resize;
     }
     &--next {
-        cursor: e-resize;
+        cursor: url(data:image/gif;base64,R0lGODlhMAAwAPAAAAAAAAAAACH5BAEAAAEAIf8LSW1hZ2VNYWdpY2sHZ2FtbWE9MQAsAAAAADAAMAAAAmmMj6nL7Q+jPKDOK6vFvGnQhconlgZpimjarSzmvlMsR3T93Lin7XPvswGDuSGRtzkiQcpl0/lc6J7TZvV4DWZ9210X962FZeNXmXVOpU3rUltljAbeIXorHrVz9DA81W8FGMgkV2i4UAAAOw==), e-resize;
     }
 }
 .button {

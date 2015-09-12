@@ -48,7 +48,7 @@ angular.module('Oneline.olMediaDirectives', [])
                 wrapper_thumb.addClass('timeline__media--small')
                 // 設置大圖樣式
                 wrapper_large.removeClass('timeline__media--inactive')
-                img_large.attr('src', attrs.src.replace('square', 'bmiddle'))
+                img_large.attr('src', attrs.src.replace(/square|small/, 'bmiddle'))
                 // 大圖加載完畢
                 img_large.bind('load', function (){
                     img_thumb.length === 1 ? elem.parent().remove() : null
@@ -59,7 +59,7 @@ angular.module('Oneline.olMediaDirectives', [])
                 // 附加數據
                 if (!img_large.data('urlList')){
                     var urlList = Array.prototype.map.call(img_thumb, function (item){
-                        return angular.element(item).attr('src').replace('square', 'bmiddle')
+                        return angular.element(item).attr('src').replace(/square|small/, 'bmiddle')
                     })  
                     img_large.data('urlList', urlList)
                 }

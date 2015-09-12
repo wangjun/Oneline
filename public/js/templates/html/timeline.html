@@ -2,7 +2,7 @@
     <div class="loadMore__loading"></div>
 </div>
 
-<div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'" data-id="{{::item.id_str}}">
+<div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'" data-id="{{::item.id_str}}" data-date="{{::item.created_at}}">
 
     <div ng-class="::'timeline--' + item.provider" ng-include="item.provider + '/' + item.type + '.html'"></div>
 

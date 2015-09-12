@@ -11,6 +11,7 @@ angular.module('Oneline.settingsControllers', [])
      * 初始化
      *     1. 判斷是否需要跳轉到「時間線頁面」
      *     2. 設置 `isTimeline` 為 `false`
+     *     3. 若清除定時獲取貼文
      */
     // 1
     if (!olTokenHelper.isValidToken()){
@@ -19,7 +20,10 @@ angular.module('Oneline.settingsControllers', [])
     }
     // 2
     $scope.setTimeline(false)
-
+    // 3
+    if (window.intervalLoad){
+        clearInterval(window.intervalLoad)
+    }
 
     /**
      * 跨標籤頁通信

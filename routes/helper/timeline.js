@@ -1,4 +1,4 @@
-var Twit    = require('Twit'),
+var Twit    = require('twit'),
     Ig      = require('instagram-node').instagram(),
     request = require('request');
 
