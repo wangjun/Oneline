@@ -12,7 +12,7 @@
 <div class="timeline__content">
 
     <div ng-include=" 'media/instagram.html' "></div>
-    <p class="timeline__text" linkify="instagram">{{::item.text}}</p>
+    <p class="timeline__text" linkify="instagram" ng-bind-html="::item.text"></p>
 </div>
 
 <div ng-include=" 'actions/instagram.html' " class="cursor--pointer"></div>

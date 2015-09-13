@@ -2,6 +2,7 @@ angular.module('Oneline', [
     // ng
     'ngTouch',
     'ngResource',
+    'ngSanitize',
     // Vendors
     'ui.router',
     'angular-jwt',

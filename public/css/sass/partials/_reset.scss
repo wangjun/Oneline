@@ -9,6 +9,7 @@ body {
     @include font-smoothing;
     font-family: $font-family-base;
     font-size: $font-size-base;
+    font-weight: $font-weight-regular;
     line-height: $line-height-base;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;

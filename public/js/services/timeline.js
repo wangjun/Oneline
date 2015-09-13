@@ -3,10 +3,55 @@ angular.module('Oneline.timelineServices', [])
     function($q, Timeline, timelineCache, olUI){
 
     var time_pointer   = Date.now();
-    var retrieve_count = 50;
+    var retrieve_count = 90;
     var TIME_RANGE     = 1800000;
-    var pre_time_pointer;
 
+    /**
+     * 初始化相關
+     *
+     */
+    this.initLoad = function (providerList){
+        var defer = $q.defer();
+        var _this = this;
+
+        Timeline
+        .initLoad()
+        .$promise
+        .then(function (posts){
+            if (!posts || (posts.data && posts.data.length < 1)) return;
+
+            // 保存貼文與 min_id & min_date
+            _this.storePosts('oldPosts', posts, providerList)
+            // 保存 max_id & max_date
+            var fakeNewPosts = {
+                data    : [],
+                max_id  : posts.max_id,
+                max_date: posts.max_date
+            }
+            _this.storePosts('newPosts', fakeNewPosts, providerList)
+
+            // 獲取 30 分鐘內貼文
+            _this.checkOldPosts(providerList)
+            .then(function (invalidList){
+                return _this.loadOldPosts(invalidList, providerList)
+            })
+            .finally(function (){
+                defer.resolve()
+            })
+        })
+
+        return defer.promise;
+    }
+    this.initTimelineSettings = function (){
+        time_pointer = Date.now()
+        retrieve_count = 50
+        // 清空 `timelineCache`
+        timelineCache.removeAll()
+    }
+    /**
+     * 「新／舊帖文」相關
+     *
+     */
     // 獲取最「新／舊貼文」的 max_id / min_id
     this.getId = function (typeOfPosts, providerList){
         var id_str1, id_str2,
@@ -68,12 +113,8 @@ angular.module('Oneline.timelineServices', [])
         cache = cache.concat(posts.data)
         timelineCache.put(typeOfPosts, cache)
     }
-    /**
-     * 檢查 Provider 最舊的的貼文是否在「時間指針」30 分鐘範圍內，判斷是否需要從後端獲取「舊貼文」
-     * 
-     * @return 需要獲取（貼文）的 Providers
-     *
-     */
+
+    // 檢查 Provider 最舊的的貼文是否在「時間指針」30 分鐘範圍內，判斷是否需要從後端獲取「舊貼文」
     this.checkOldPosts = function (providerList){
         return $q(function (resolve, reject){
             var invalidList =  providerList.filter(function (provider){
@@ -88,29 +129,28 @@ angular.module('Oneline.timelineServices', [])
         })
     }
     // 獲取「時間指針」 30 分鐘內的「舊貼文」
-    this.extractOldPosts = function (){
+    this.extractOldPosts = function (providerList){
         var oldPosts = timelineCache.get('oldPosts') || [],
             isEmpty = true,
-            extractOldPosts;
-
-        // 紀錄上次 `time_pointer`
-        pre_time_pointer = time_pointer
+            cache;
 
         while (isEmpty){
-            extractOldPosts = oldPosts.filter(function (item){
+            cache = oldPosts.filter(function (item){
                 var time_diff = time_pointer - item.created_at;
 
-                return 0 < time_diff && time_diff <= TIME_RANGE;
+                return 0 < time_diff && time_diff <= TIME_RANGE;;
             })
 
             time_pointer -= TIME_RANGE
 
-            if (extractOldPosts.length > 0){
+            if (cache.length > 0){
                 isEmpty = false
             }
         }
 
-        return extractOldPosts
+        this.updateOldPostsCount(providerList)
+
+        return cache;
     }
     // 向後端請求加載「舊貼文」
     this.loadOldPosts = function (invalidList, providerList){
@@ -177,6 +217,7 @@ angular.module('Oneline.timelineServices', [])
 
         return defer.promise;
     }
+    // 向後端請求加載「新貼文」
     this.loadNewPosts = function (providerList){
         var defer = $q.defer()
             _this = this;
@@ -184,7 +225,7 @@ angular.module('Oneline.timelineServices', [])
         Timeline
         .load({
             id: _this.getId('newPosts', providerList),
-            count: 20
+            count: 70
         })
         .$promise
         .then(function (newPosts){
@@ -194,31 +235,43 @@ angular.module('Oneline.timelineServices', [])
             } else {
                 defer.reject()
             }
+
         })
 
         return defer.promise;
     }
-    this.initTimelineSettings = function (){
-        time_pointer = Date.now()
-        retrieve_count = 50
-        // 清空 `timelineCache`
-        timelineCache.removeAll()
+    // 折疊「舊貼文」（大於 TIME_RANGE * 2）
+    this.removeOldPosts = function (timelineData, providerList){
+        var now = Date.now(),
+            cache = timelineData.filter(function (item){
+                return now - item.created_at < TIME_RANGE * 2
+            });
+
+        time_pointer = now - TIME_RANGE * 2
+        this.updateOldPostsCount(providerList)
+
+        return cache;
     }
-    // 折疊最底部的「舊貼文」
-    this.removeOldPosts = function (timelineData){
+    // 更新（本地）「舊帖文」數目提示
+    this.updateOldPostsCount = function (providerList){
+        this.checkOldPosts(providerList)
+        .then(function (){
+            // 從後端加載
+            olUI.setPostsCount('oldPosts', 0)
+        }, function (){
+            // 從本地加載
+            var oldPosts = timelineCache.get('oldPosts') || [],
+                oldPostsCount = 0;
 
-        var divider = document.getElementsByClassName('divider'),
-            len     = divider.length;
+            oldPosts.forEach(function (item){
+                var time_diff = time_pointer - item.created_at;
 
-        if (len < 2) return timelineData;
+                if (0 < time_diff && time_diff <= TIME_RANGE){
+                    oldPostsCount ++
+                }
+            })
 
-        time_pointer = pre_time_pointer// TODO
-
-        var t_date  = parseInt(divider[len - 1].getAttribute('data-date'))
-
-        return timelineData.filter(function (item){
-            return t_date <= item.created_at
+            olUI.setPostsCount('oldPosts', oldPostsCount)
         })
     }
-
 }])

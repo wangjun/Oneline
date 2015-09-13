@@ -46,6 +46,11 @@
     &__text {
         word-wrap: break-word;
         white-space: pre-wrap;
+
+        img {
+            width: 1.5em;
+            vertical-align: text-bottom;
+        }
     }
     // 圖片／視頻
     &__media {

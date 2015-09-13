@@ -41,7 +41,7 @@ var filter = {
                 }
             } 
             // Quote
-            else if (item.quoted_status_id){
+            else if (item.quoted_status){
                 extend(tweetObj, {
                     type: 'quote',
                     quote: {

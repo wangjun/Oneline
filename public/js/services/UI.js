@@ -27,10 +27,11 @@ angular.module('Oneline.UIServices', [])
             angular.element(timelineElem[timelineElem.length - 1]).addClass('divider divider--bottom')
         }
     },
-    this.setNewPostsCount = function (count){
+    // 設置未讀「新／舊帖文」數提醒
+    this.setPostsCount = function (type, count){
         document
-        .getElementsByClassName('loadMore__count')[0]
-        .setAttribute('data-count', count)
+        .getElementsByClassName('loadMore__count')[type === 'newPosts' ? 0 : 1]
+        .setAttribute('data-count', count === 0 ? '' : count)
     }
     /**
      * 其他操作相關
