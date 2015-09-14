@@ -1,7 +1,7 @@
 angular.module('Oneline.timelineControllers', [])
-.controller('timelineCtrl', ['$scope', '$state', 
+.controller('timelineCtrl', ['$scope', '$q', '$state', 
     'Timeline', 'olUI', 'olTokenHelper', 'olTimelineHelper', 'olActionsHelper', 'timelineCache',
-    function($scope, $state, 
+    function($scope, $q, $state, 
         Timeline, olUI, olTokenHelper, olTimelineHelper, olActionsHelper, timelineCache){
 
 
@@ -46,68 +46,66 @@ angular.module('Oneline.timelineControllers', [])
      */
     $scope.loadMore = function (step){
         if (olUI.isLoading(step)) return;
-        olUI.setLoading(true, step)
 
-        // 加載「新貼文」
-        if (step > 0){
-            olUI.setPostsCount('newPosts', 0)
+        $q(function (resolve, reject){
+            olUI.setLoading(true, step)
 
-            var newPostsFromCache = timelineCache.get('newPosts') || []
-            // 從本地獲取
-            if (newPostsFromCache.length > 1){
-                var cache = []
+            // 加載「新貼文」
+            if (step > 0){
+                olUI.setPostsCount('newPosts', 0)
 
-                cache = $scope.timelineData.concat(newPostsFromCache)
-                $scope.timelineData = olTimelineHelper.removeOldPosts(cache, $scope.providerList)
-                timelineCache.put('newPosts', [])
+                var newPostsFromCache = timelineCache.get('newPosts') || []
 
-                olUI.setLoading(false, step)
-                olUI.setDivider(step)
-
-            }
-            // 從後端獲取
+                // 從本地獲取
+                if (newPostsFromCache.length > 0){
+                    resolve([newPostsFromCache, 'newPosts'])
+                }
+                // 從後端獲取
+                else {
+                    olTimelineHelper.loadNewPosts($scope.providerList)
+                    .then(function (){
+                        resolve([timelineCache.get('newPosts') || [], 'newPosts'])
+                    }, function (err){
+                        reject(err)
+                    })
+                }
+            } 
+            // 加載「舊貼文」
             else {
-                olTimelineHelper.loadNewPosts($scope.providerList)
-                .then(function (newPosts){
-                    var cache = []
-
-                    cache = $scope.timelineData.concat(timelineCache.get('newPosts') || [])
-                    $scope.timelineData = olTimelineHelper.removeOldPosts(cache, $scope.providerList)
-                    timelineCache.put('newPosts', [])
-
-                    olUI.setDivider(step)
-                }, function (){})
-                .catch(function (err){
-                    if (err.status === 401){
-                        $state.go('settings')
+                olTimelineHelper.checkOldPosts($scope.providerList)
+                .then(function (invalidList){
+                    if (invalidList.length > 0){
+                        return olTimelineHelper.loadOldPosts(invalidList, $scope.providerList)
                     }
                 })
-                .finally(function (){
-                    olUI.setLoading(false, step)
+                .then(function (){
+                    var extractOldPosts = olTimelineHelper.extractOldPosts($scope.providerList)
+
+                    resolve([$scope.timelineData.concat(extractOldPosts)])
                 })
             }
+        })
+        .then(function (data){
+            if (data[1] === 'newPosts'){
+                var allPosts = $scope.timelineData.concat(data[0]);
 
-        } 
-        // 加載「舊貼文」
-        else {
+                $scope.timelineData = olTimelineHelper.removeOldPosts(allPosts, $scope.providerList)
+                timelineCache.put('newPosts', [])
+            } else {
+                $scope.timelineData = data[0]
+            }
 
-            olTimelineHelper.checkOldPosts($scope.providerList)
-            .then(function (invalidList){
-                return olTimelineHelper.loadOldPosts(invalidList, $scope.providerList)
-            })
-            .catch(function (err){
-                // 此處 401 錯誤不跳轉到授權頁面
-                console.log(err)
-            })
-            .finally(function (){
-                var extractOldPosts = olTimelineHelper.extractOldPosts($scope.providerList)
-
-                $scope.timelineData = $scope.timelineData.concat(extractOldPosts)
-
-                olUI.setDivider(step)
-                olUI.setLoading(false, step)
-            })
-        }
+            olUI.setDivider(step)
+        })
+        .catch(function (err){
+            console.log(err)
+            if (err && err.status === 401){
+                $state.go('settings')
+            }
+        })
+        .finally(function (){
+            olUI.setLoading(false, step)
+        })
     }
 
     // 定時獲取「新貼文」
@@ -120,7 +118,7 @@ angular.module('Oneline.timelineControllers', [])
             var newPostsLength = (timelineCache.get('newPosts') || []).length
             // 設置提醒
             olUI.setPostsCount('newPosts', newPostsLength)
-        }, function (){})
+        })
     }, 1000 * 60 * 3)
 
     /**

@@ -3,8 +3,7 @@ var Twit    = require('twit'),
     request = require('request');
 
 module.exports = {
-    t: function (opts){
-
+    twitter: function (opts){
         var T = new Twit({
             consumer_key       : process.env.TWITTER_KEY,
             consumer_secret    : process.env.TWITTER_SECRET,
@@ -26,7 +25,7 @@ module.exports = {
         return q_twit_timeline('statuses/home_timeline', tOpts)
 
     },
-    i: function (opts){
+    instagram: function (opts){
         Ig.use({ access_token : opts.token })
         var q_ig_timeline   = Q.nbind(Ig.user_self_feed, Ig);
 
@@ -42,7 +41,7 @@ module.exports = {
 
         return q_ig_timeline(iOpts)
     },
-    w: function (opts){
+    weibo: function (opts){
         var wOpts = {
             access_token: opts.token,
             count: opts.count || 50

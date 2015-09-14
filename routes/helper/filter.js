@@ -7,7 +7,7 @@ var extend = require('extend'),
 
 
 var filter = {
-    tweet: function (data){
+    twitter: function (data){
         var cache = [];
 
         data.forEach(function (item){
@@ -92,7 +92,7 @@ var filter = {
 
         return returnObj;
     },
-    igPost: function (data){
+    instagram: function (data){
         var cache = [];
 
         data.forEach(function (item){
@@ -274,21 +274,12 @@ function filterWeiboMedia(items){
     var cache = [];
 
     items.forEach(function (item){
-        var type = item.thumbnail_pic.indexOf('\.gif') > 0 ? 'gif' : 'photo'
+        var type = item.thumbnail_pic.indexOf('\.gif') > 0 ? 'gif' : 'photo',
+            image_url = item.thumbnail_pic.replace('thumbnail', 'square').replace('http:', '');
 
-        var mediaObj = { type: type }
-
-        if (type === 'photo'){
-            extend(mediaObj, {
-                image_url: item.thumbnail_pic.replace('thumbnail', 'square')
-            })
-        }
-
-        if (type === 'gif'){
-            extend(mediaObj, {
-                image_url: item.thumbnail_pic.replace('thumbnail', 'square'),
-                gif_url: item.thumbnail_pic.replace('thumbnail', 'bmiddle')
-            })
+        var mediaObj = {
+            type: type,
+            image_url: image_url
         }
 
         cache.push(mediaObj)

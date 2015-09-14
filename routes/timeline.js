@@ -36,31 +36,21 @@ router.get('/', function (req, res, next){
         q_userFindOne({id: 'instagram' + req.olPassports.instagram}),
         q_userFindOne({id: 'weibo' + req.olPassports.weibo})
     ])
-    .spread(function (twit, ig, weibo){
+    .then(function (providerList){
         var feedPromises = [];
 
-        if (twit){
-            feedPromises[0] = feed.t({
-                token      : twit.token,
-                tokenSecret: twit.tokenSecret
-            })
-        }
+        providerList.forEach(function (userInfo, index){
+            if (!userInfo) return;
 
-        if (ig){
-            feedPromises[1] = feed.i({
-                token: ig.token
+            feedPromises[index] = feed[userInfo['provider']]({
+                token      : userInfo['token'],
+                tokenSecret: userInfo['tokenSecret']
             })
-        }
-
-        if (weibo){
-            feedPromises[2] = feed.w({
-                token: weibo.token
-            })
-        }
+        })
 
         return Q.all(feedPromises)
     })
-    .spread(handleData(req, res, next))
+    .then(handleData(req, res, next))
     .fail(function (err){
         console.log(err.stack)
         next(err)
@@ -75,92 +65,62 @@ router.get('/:id/:count', function (req, res, next){
         q_userFindOne({id: 'instagram' + req.olPassports.instagram}),
         q_userFindOne({id: 'weibo' + req.olPassports.weibo})
     ])
-    .spread(function (twit, ig, weibo){
+    .then(function (providerList){
         var feedPromises = [];
 
-        if (twit && (req.olId.twitter_minId || req.olId.twitter_maxId)){
-            feedPromises[0] = feed.t({
-                token      : twit.token,
-                tokenSecret: twit.tokenSecret,
-                since_id   : req.olId.twitter_minId,
-                max_id     : req.olId.twitter_maxId,
+        providerList.forEach(function (userInfo, index){
+            if (!userInfo) return;
+
+            var min_id = req.olId[userInfo['provider'] + '_minId'],
+                max_id = req.olId[userInfo['provider'] + '_maxId'];
+
+            if (!userInfo || !(min_id || max_id)) return;
+
+            feedPromises[index] = feed[userInfo['provider']]({
+                token      : userInfo['token'],
+                tokenSecret: userInfo['tokenSecret'],
+                since_id   : min_id,
+                min_id     : min_id,
+                max_id     : max_id,
                 count      : req.olCount
             })
-        }
-
-        if (ig && (req.olId.instagram_minId || req.olId.instagram_maxId)){
-            feedPromises[1] = feed.i({
-                token : ig.token,
-                min_id: req.olId.instagram_minId,
-                max_id: req.olId.instagram_maxId,
-                count : req.olCount
-            })
-        }
-
-        if (weibo && (req.olId.weibo_minId || req.olId.weibo_maxId)){
-            feedPromises[2] = feed.w({
-                token   : weibo.token,
-                since_id: req.olId.weibo_minId,
-                max_id  : req.olId.weibo_maxId,
-                count   : req.olCount
-            })
-        }
+        })
 
         return Q.all(feedPromises)
     })
-    .spread(handleData(req, res, next))
+    .then(handleData(req, res, next))
     .fail(function (err){
-        console.log(err)
+        console.log(err.stack)
         next(err)
     })
 })
 
 function handleData(req, res, next){
-    return function (tData, iData, wData){
+    return function (dataList){
+        var providerList = ['twitter', 'instagram', 'weibo'],
+            combineData = {
+                data    : [],
+                min_id  : {},
+                max_id  : {},
+                min_date: {},
+                max_date: {},
+            };
 
-        var combineData = {
-            data    : [],
-            min_id  : {},
-            min_date: {},
-            max_id  : {},
-            max_date: {}
-        };
+        dataList.forEach(function (dataItem, index){
+            var provider = providerList[index],
+                dataItem = provider === 'weibo' ? dataItem['statuses'] : dataItem[0];
 
-        if (tData){
+            if (!dataItem) return;
 
-            var tData = filter.tweet(tData[0]);
+            dataItem = filter[provider](dataItem)
 
-            combineData.min_id.twitter = tData.min_id
-            combineData.min_date.twitter = tData.min_date
-            combineData.max_id.twitter = tData.max_id
-            combineData.max_date.twitter = tData.max_date
+            combineData.min_id[provider]   = dataItem.min_id
+            combineData.max_id[provider]   = dataItem.max_id
+            combineData.min_date[provider] = dataItem.min_date
+            combineData.max_date[provider] = dataItem.max_date
 
-            combineData.data = combineData.data.concat(tData.data)
-        }
-
-        if (iData){
-
-            var iData = filter.igPost(iData[0]);
-
-            combineData.min_id.instagram = iData.min_id
-            combineData.min_date.instagram = iData.min_date
-            combineData.max_id.instagram = iData.max_id
-            combineData.max_date.instagram = iData.max_date
-
-            combineData.data = combineData.data.concat(iData.data)
-        }
-
-        if (wData){
-
-            var wData = filter.weibo(wData.statuses);
-
-            combineData.min_id.weibo = wData.min_id
-            combineData.min_date.weibo = wData.min_date
-            combineData.max_id.weibo = wData.max_id
-            combineData.max_date.weibo = wData.max_date
-
-            combineData.data = combineData.data.concat(wData.data)
-        }
+            combineData.data = combineData.data.concat(dataItem.data)
+        })
 
         res.json(combineData)
     }

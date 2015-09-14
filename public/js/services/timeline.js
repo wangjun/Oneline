@@ -33,7 +33,9 @@ angular.module('Oneline.timelineServices', [])
             // 獲取 30 分鐘內貼文
             _this.checkOldPosts(providerList)
             .then(function (invalidList){
-                return _this.loadOldPosts(invalidList, providerList)
+                if (invalidList.length > 0){
+                    return _this.loadOldPosts(invalidList, providerList)
+                }
             })
             .finally(function (){
                 defer.resolve()
@@ -121,11 +123,7 @@ angular.module('Oneline.timelineServices', [])
                 return time_pointer - timelineCache.get(provider + '_min_date') < TIME_RANGE
             })
 
-            if (invalidList.length > 0){
-                resolve(invalidList)
-            } else {
-                reject('all valid')
-            }
+            resolve(invalidList)
         })
     }
     // 獲取「時間指針」 30 分鐘內的「舊貼文」
@@ -196,13 +194,15 @@ angular.module('Oneline.timelineServices', [])
 
             _this.checkOldPosts(providerList)
             .then(function (invalidList){
-                fetchPosts(invalidList)
-                .then(isLoadFin)
-                .then(function (){
+                if (invalidList.length > 0){
+                    fetchPosts(invalidList)
+                    .then(isLoadFin)
+                    .then(function (){
+                        defer.resolve()
+                    })                    
+                } else {
                     defer.resolve()
-                })
-            }, function (){
-                defer.resolve()
+                }
             })
 
             return defer.promise;
@@ -235,7 +235,8 @@ angular.module('Oneline.timelineServices', [])
             } else {
                 defer.reject()
             }
-
+        }, function (err){
+            defer.reject(err)
         })
 
         return defer.promise;
@@ -255,23 +256,26 @@ angular.module('Oneline.timelineServices', [])
     // 更新（本地）「舊帖文」數目提示
     this.updateOldPostsCount = function (providerList){
         this.checkOldPosts(providerList)
-        .then(function (){
+        .then(function (invalidList){
             // 從後端加載
-            olUI.setPostsCount('oldPosts', 0)
-        }, function (){
+            if (invalidList.length > 0){
+                olUI.setPostsCount('oldPosts', 0)
+            }
             // 從本地加載
-            var oldPosts = timelineCache.get('oldPosts') || [],
-                oldPostsCount = 0;
+            else {
+                var oldPosts = timelineCache.get('oldPosts') || [],
+                    oldPostsCount = 0;
 
-            oldPosts.forEach(function (item){
-                var time_diff = time_pointer - item.created_at;
+                oldPosts.forEach(function (item){
+                    var time_diff = time_pointer - item.created_at;
 
-                if (0 < time_diff && time_diff <= TIME_RANGE){
-                    oldPostsCount ++
-                }
-            })
+                    if (0 < time_diff && time_diff <= TIME_RANGE){
+                        oldPostsCount ++
+                    }
+                })
 
-            olUI.setPostsCount('oldPosts', oldPostsCount)
+                olUI.setPostsCount('oldPosts', oldPostsCount)
+            }
         })
     }
 }])
