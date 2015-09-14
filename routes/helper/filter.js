@@ -275,7 +275,7 @@ function filterWeiboMedia(items){
 
     items.forEach(function (item){
         var type = item.thumbnail_pic.indexOf('\.gif') > 0 ? 'gif' : 'photo',
-            image_url = item.thumbnail_pic.replace('thumbnail', 'square').replace('http:', '');
+            image_url = item.thumbnail_pic.replace('thumbnail', 'square');
 
         var mediaObj = {
             type: type,
