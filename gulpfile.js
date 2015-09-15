@@ -4,7 +4,7 @@ var gulp       = require('gulp'),
     concat     = require('gulp-concat'),
     uglify     = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
-    minifyCSS  = require('gulp-minify-css'),
+    csso       = require('gulp-csso'),
     minifyHTML = require('gulp-minify-html'),
     ngTpCache  = require('gulp-angular-templatecache');
 
@@ -73,7 +73,7 @@ gulp.task('css_ol', function () {
 
     return gulp.src(paths.css_ol)
         .pipe(sourcemaps.init())
-            .pipe(minifyCSS({keepSpecialComments: 1}))
+            .pipe(csso())
             .pipe(concat('oneline.min.css'))
             .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('public/dist'))

@@ -74,22 +74,22 @@ angular.module('Oneline.olMediaDirectives', [])
 
             if (attrs.imageCount > 1){
                 // 光標提示
-                elem.bind('mouseover', function (){
-                    elem.bind('mousemove', function (e){
-                        if (e.offsetX - elem[0].offsetWidth / 2 > 0){
-                            elem.removeClass('cursor--pre')
-                            elem.addClass('cursor--next')
-                        } else {
-                            elem.removeClass('cursor--next')
-                            elem.addClass('cursor--pre')
-                        }
-                    })
+                elem.bind('mousemove', function (e){
+                    if (e.offsetX - elem[0].offsetWidth / 2 > 0){
+                        elem.removeClass('cursor--pre')
+                        elem.addClass('cursor--next')
+                    } else {
+                        elem.removeClass('cursor--next')
+                        elem.addClass('cursor--pre')
+                    }
                 })
                 // 上／下一幅
-                elem.bind('click', function (e){
+                elem.bind('click', function (){
                     var urlList = elem.data('urlList') || [],
                         currentIndex = urlList.indexOf(elem.attr('src')),
-                        index = e.offsetX - elem[0].offsetWidth / 2 > 0 ? currentIndex + 1 : currentIndex - 1;
+                        index = elem.hasClass('cursor--next') ? currentIndex + 1 : currentIndex - 1;
+
+                    if (index < 0 || index > urlList.length - 1) return;
 
                     var img_thumb = angular.element(
                                         angular.element(

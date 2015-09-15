@@ -18,8 +18,10 @@ angular.module('Oneline.timelineServices', [])
         .initLoad()
         .$promise
         .then(function (posts){
-            if (!posts || (posts.data && posts.data.length < 1)) return;
-
+            if (!posts || (posts.data && posts.data.length < 1)){
+                defer.reject()
+                return;
+            }
             // 保存貼文與 min_id & min_date
             _this.storePosts('oldPosts', posts, providerList)
             // 保存 max_id & max_date
@@ -31,15 +33,21 @@ angular.module('Oneline.timelineServices', [])
             _this.storePosts('newPosts', fakeNewPosts, providerList)
 
             // 獲取 30 分鐘內貼文
-            _this.checkOldPosts(providerList)
+            return _this
+            .checkOldPosts(providerList)
             .then(function (invalidList){
                 if (invalidList.length > 0){
                     return _this.loadOldPosts(invalidList, providerList)
+                } else {
+                    defer.resolve()
                 }
             })
-            .finally(function (){
-                defer.resolve()
-            })
+        })
+        .then(function (){
+            defer.resolve()
+        })
+        .catch(function (err){
+            defer.reject(err)
         })
 
         return defer.promise;
@@ -163,7 +171,7 @@ angular.module('Oneline.timelineServices', [])
             var max_id_str = _this.getId('oldPosts', invalidList);
 
             Timeline
-            .load({id: max_id_str, count: count})
+            .load({ id: max_id_str, count: count })
             .$promise
             .then(function (oldPosts){
                 if (!oldPosts || (oldPosts.data && oldPosts.data.length < 1)){
@@ -181,10 +189,9 @@ angular.module('Oneline.timelineServices', [])
                 count < 100 ? count += 10 : null
 
                 defer.resolve()
-            }, function (err){
-                if (err.status === 404){
-                    olUI.setLoading(false, -1)
-                }
+            })
+            .catch(function (err){
+                defer.reject(err)
             })
 
             return defer.promise;
@@ -199,7 +206,10 @@ angular.module('Oneline.timelineServices', [])
                     .then(isLoadFin)
                     .then(function (){
                         defer.resolve()
-                    })                    
+                    })
+                    .catch(function (err){
+                        defer.reject(err)
+                    })
                 } else {
                     defer.resolve()
                 }
@@ -208,11 +218,15 @@ angular.module('Oneline.timelineServices', [])
             return defer.promise;
         }
 
-        fetchPosts(invalidList).then(isLoadFin).then(function (){
-
+        fetchPosts(invalidList)
+        .then(isLoadFin)
+        .then(function (){
             retrieve_count < 100 ? retrieve_count += 10 : null
 
             defer.resolve()
+        })
+        .catch(function (err){
+            defer.reject(err)
         })
 
         return defer.promise;

@@ -1,6 +1,6 @@
 {
   "name": "Oneline",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Social Network Aggregator",
   "main": "app.js",
   "repository": {
@@ -46,7 +46,7 @@
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.7.0",
     "gulp-concat": "^2.6.0",
-    "gulp-minify-css": "^1.2.1",
+    "gulp-csso": "^1.0.0",
     "gulp-minify-html": "^1.0.4",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",

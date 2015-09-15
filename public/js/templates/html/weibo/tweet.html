@@ -2,8 +2,6 @@
 
 <div ng-include=" 'weibo/component/content.html' "></div>
 
-<div ng-if="::item.media" ng-include=" 'media/weibo.html' "></div>
-
 <div ng-include=" 'actions/weibo.html' " class="cursor--pointer"></div>
 
 <span class="timeline__time tips" relative-date="{{::item.created_at}}"></span>

@@ -27,6 +27,19 @@ angular.module('Oneline.timelineControllers', [])
     .then(function (){
         $scope.timelineData = olTimelineHelper.extractOldPosts($scope.providerList)
 
+        // 定時獲取「新貼文」
+        if (window.intervalLoad){
+            clearInterval(window.intervalLoad)
+        }
+        window.intervalLoad = setInterval(function (){
+            olTimelineHelper.loadNewPosts($scope.providerList)
+            .then(function (){
+                var newPostsLength = (timelineCache.get('newPosts') || []).length
+                // 設置提醒
+                olUI.setPostsCount('newPosts', newPostsLength)
+            })
+        }, 1000 * 60 * 3)
+
         // 結束加載動畫
         olUI.setLoading(false, 1)
         olUI.setLoading(false, -1)
@@ -35,6 +48,8 @@ angular.module('Oneline.timelineControllers', [])
         if (err.status === 401){
             $state.go('settings')
         }
+        // TOOD
+        // olUI.setPostsCount('newPosts', err.msg)
     })
 
 
@@ -83,6 +98,9 @@ angular.module('Oneline.timelineControllers', [])
 
                     resolve([$scope.timelineData.concat(extractOldPosts)])
                 })
+                .catch(function (err){
+                    reject(err)
+                })
             }
         })
         .then(function (data){
@@ -108,18 +126,6 @@ angular.module('Oneline.timelineControllers', [])
         })
     }
 
-    // 定時獲取「新貼文」
-    if (window.intervalLoad){
-        clearInterval(window.intervalLoad)
-    }
-    window.intervalLoad = setInterval(function (){
-        olTimelineHelper.loadNewPosts($scope.providerList)
-        .then(function (){
-            var newPostsLength = (timelineCache.get('newPosts') || []).length
-            // 設置提醒
-            olUI.setPostsCount('newPosts', newPostsLength)
-        })
-    }, 1000 * 60 * 3)
 
     /**
      * 其他操作
