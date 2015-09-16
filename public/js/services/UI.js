@@ -83,13 +83,22 @@ angular.module('Oneline.UIServices', [])
         return actionElem.parent().hasClass('tips--frozen')
     }
     // 獲取／設置需要綁定的數據
-    this.actionData = function (action, id, data){
-        var actionElem = getActionElem(action, id);
+    this.actionData = function (action, id, data, type){
+        var actionElem = getActionElem(action, id),
+            attr_str;
 
-        if (arguments.length > 2){
-            actionElem.attr('data-' + action, data)
+        if (type === 'count'){
+            actionElem = actionElem.next()
+            attr_str = 'data-count';
+        } else {
+            attr_str = 'data-' + action;
         }
 
-        return actionElem.attr('data-' + action)
+        console.log(actionElem, attr_str)
+        if (data || data === ''){
+            actionElem.attr(attr_str, data)
+        } else {
+            return actionElem.attr(attr_str)
+        }
     }
 })

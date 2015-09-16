@@ -18,6 +18,7 @@ var filter = {
                 user: trimTweetUser(item.user),
                 text: item.text,
                 retweet_count: item.retweet_count,
+                favorite_count: item.favorite_count,
                 retweeted: item.retweeted,
                 favorited: item.favorited
             }
@@ -157,8 +158,7 @@ var filter = {
                 text: item.text,
                 retweet_count: item.reposts_count,
                 comments_count: item.comments_count,
-                attitudes_count: item.attitudes_count,
-                favorited: item.favorited
+                favorite_count: item.attitudes_count
             }
 
             // Retweet & Quote

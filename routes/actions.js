@@ -38,6 +38,7 @@ router.all('/:action/:provider/:id', function (req, res, next){
         })
     })
     .then(function (data){
+        console.log(data)
         res.json(data)
     })
     .fail(function (err){

@@ -1,18 +1,21 @@
-<div ng-click="toggleAction('like', item.provider, item.id_str)" class="actions tips--deep" ng-class="::{'tips--active': item.favorited}">
-    <svg class="actions__button" ng-class="::{'button--active': item.favorited}" data-like>
-        <use xlink:href="/public/img/icon-sprite.svg#like-icon"></use>
-    </svg>
-</div>
-<div ng-click="toggleAction('retweet', item.provider, item.id_str)" class="actions tips--deep" ng-class="::{'tips--frozen': item.retweeted}">
-    <svg class="actions__button actions__button--retweet" ng-class="::{'button--active': item.retweeted}" data-retweet>
-        <use xlink:href="/public/img/icon-sprite.svg#retweet-icon"></use>
-    </svg>
-    <span class="actions__count" ng-attr-data-count="{{::item.retweet_count > 0 ? item.retweet_count : ''}}"></span>
-</div>
-<div class="actions tips--deep">
-    <a ng-href="//twitter.com/{{::item.user.screen_name}}/status/{{::item.id_str}}" target="_blank">
-        <svg class="actions__button">
-            <use xlink:href="/public/img/icon-sprite.svg#source-icon"></use>
+<span class="cursor--pointer">
+    <div ng-click="toggleAction('like', item.provider, item.id_str)" class="actions tips--deep" ng-class="::{'tips--active': item.favorited}">
+        <svg class="actions__button" ng-class="::{'button--active': item.favorited}" data-like>
+            <use xlink:href="/public/img/icon-sprite.svg#like-icon"></use>
         </svg>
-    </a>
-</div>
+        <span class="actions__count" ng-attr-data-count="{{::item.favorite_count > 0 ? item.favorite_count : ''}}"></span>
+    </div>
+    <div ng-click="toggleAction('retweet', item.provider, item.id_str)" class="actions tips--deep" ng-class="::{'tips--frozen': item.retweeted}">
+        <svg class="actions__button actions__button--retweet" ng-class="::{'button--active': item.retweeted}" data-retweet>
+            <use xlink:href="/public/img/icon-sprite.svg#retweet-icon"></use>
+        </svg>
+        <span class="actions__count" ng-attr-data-count="{{::item.retweet_count > 0 ? item.retweet_count : ''}}"></span>
+    </div>
+    <div class="actions tips--deep">
+        <a ng-href="//twitter.com/{{::item.user.screen_name}}/status/{{::item.id_str}}" target="_blank">
+            <svg class="actions__button">
+                <use xlink:href="/public/img/icon-sprite.svg#source-icon"></use>
+            </svg>
+        </a>
+    </div>
+</span>

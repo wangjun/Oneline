@@ -8,28 +8,28 @@ angular.module('Oneline.actionsServices', [])
 
         if (action === 'retweet' && method === 'destroy'){
             id = olUI.actionData(action, _id)
+            console.log(id)
         }
 
         return Action[method]({ action: action, provider: provider, id: id })
         .$promise
         .then(function (data){
 
-            if (action === 'retweet'){
-                if (method === 'create'){
+            if (method === 'create'){
+                if (action === 'retweet'){
                     olUI.actionData(action, _id, data.id_str)
+                }
 
-                    var count = provider === 'twitter'
-                                    ? data.retweet_count
-                                    : ~~olUI.actionData('count', _id) + 1;
+                if (action !== 'star'){
+                    var count = ~~olUI.actionData(action, _id, null, 'count') + 1;
 
-                    olUI.actionData('count', _id, count)
-                } else {
-                    var count = provider === 'twitter' 
-                                    ? data.retweet_count - 1
-                                    : ~~olUI.actionData('count', _id) - 1;
-                        count_value = count > 0 ? count : '';
+                    olUI.actionData(action, _id, count, 'count')
+                }
+            } else {
+                if (action !== 'star'){
+                    var count = ~~olUI.actionData(action, _id, null, 'count') - 1;
 
-                    olUI.actionData('count', _id, count_value)
+                    olUI.actionData(action, _id, count > 0 ? count : '', 'count')
                 }
             }
 
