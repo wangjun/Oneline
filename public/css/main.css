@@ -506,6 +506,7 @@ ng\:form {
   user-select: text;
 }
 .timeline__text {
+  margin-top: 17px;
   word-wrap: break-word;
   white-space: pre-wrap;
 }
@@ -517,7 +518,7 @@ ng\:form {
   display: block;
   position: relative;
   width: 100%;
-  margin: 17px 0;
+  margin: 17px 0 0 0;
   white-space: nowrap;
   text-align: center;
   /**
@@ -543,7 +544,7 @@ ng\:form {
 }
 .timeline__media--thumb img {
   width: 80px;
-  margin-right: 3px;
+  margin-right: 7px;
   cursor: zoom-in;
   -moz-border-radius: 1px;
   -webkit-border-radius: 1px;
@@ -632,6 +633,9 @@ ng\:form {
 .timeline--quote .timeline__content {
   top: -14px;
 }
+.timeline--quote .timeline__text {
+  margin-top: 0;
+}
 .timeline--quote .timeline__time {
   font-size: 10px;
 }
@@ -718,24 +722,6 @@ ng\:form {
 .loadMore--old {
   z-index: 2;
 }
-.loadMore--initLoad {
-  position: absolute;
-  top: calc(50% - 20px);
-  width: calc(100% - 14px);
-}
-.loadMore__loading {
-  position: relative;
-  top: 19px;
-  width: 2px;
-  height: 2px;
-  background-color: #000;
-  -moz-border-radius: 1px;
-  -webkit-border-radius: 1px;
-  border-radius: 1px;
-  -moz-animation: loadAnimate 7s infinite linear;
-  -webkit-animation: loadAnimate 7s infinite linear;
-  animation: loadAnimate 7s infinite linear;
-}
 .loadMore__count::before {
   content: attr(data-count);
   position: absolute;
@@ -746,31 +732,124 @@ ng\:form {
   text-align: center;
   line-height: 40px;
 }
-
+.loadMore--initLoad {
+  position: absolute;
+  top: calc(50% - 20px);
+  width: calc(100% - 14px);
+  cursor: default;
+}
+.loadMore--loading::before {
+  content: '';
+  position: absolute;
+  top: 19px;
+  height: 2px;
+  background-color: #000;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+  -moz-animation: loadAnimate 2.7s infinite linear;
+  -webkit-animation: loadAnimate 2.7s infinite linear;
+  animation: loadAnimate 2.7s infinite linear;
+}
 @-moz-keyframes loadAnimate {
   0% {
-    width: 2px;
+    width: 0;
+    left: 0;
+  }
+  10%, 90% {
+    width: 7%;
   }
   100% {
-    width: 100%;
+    width: 0;
+    left: 100%;
   }
 }
 @-webkit-keyframes loadAnimate {
   0% {
-    width: 2px;
+    width: 0;
+    left: 0;
+  }
+  10%, 90% {
+    width: 7%;
   }
   100% {
-    width: 100%;
+    width: 0;
+    left: 100%;
   }
 }
 @keyframes loadAnimate {
   0% {
-    width: 2px;
+    width: 0;
+    left: 0;
+  }
+  10%, 90% {
+    width: 7%;
   }
   100% {
-    width: 100%;
+    width: 0;
+    left: 100%;
   }
 }
+.loadMore--loading--fail {
+  cursor: pointer;
+}
+.loadMore--loading--fail::before {
+  -moz-animation: loadAnimate--fail 7.7s infinite linear;
+  -webkit-animation: loadAnimate--fail 7.7s infinite linear;
+  animation: loadAnimate--fail 7.7s infinite linear;
+}
+@-moz-keyframes loadAnimate--fail {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  10%, 90% {
+    width: 7%;
+  }
+  100% {
+    width: 0;
+    left: 75%;
+  }
+}
+@-webkit-keyframes loadAnimate--fail {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  10%, 90% {
+    width: 7%;
+  }
+  100% {
+    width: 0;
+    left: 75%;
+  }
+}
+@keyframes loadAnimate--fail {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  10%, 90% {
+    width: 7%;
+  }
+  100% {
+    width: 0;
+    left: 75%;
+  }
+}
+.loadMore--loading--fail::after {
+  content: attr(data-count);
+  position: absolute;
+  top: 0;
+  right: 0%;
+  width: 25%;
+  height: 100%;
+  color: #CECECF;
+  text-align: center;
+  line-height: 40px;
+  border-left: 7px solid #000;
+}
+
 .divider_line, .divider--top::before, .divider--bottom::after {
   content: '';
   position: absolute;

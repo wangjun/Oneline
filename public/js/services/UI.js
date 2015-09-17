@@ -1,21 +1,24 @@
 angular.module('Oneline.UIServices', [])
 .service('olUI', function(){
     // 設置是否為「正在加載」
-    this.setLoading = function (bool, step){
+    this.setLoading = function (type, step){
         var loadingElem = angular.element(document.getElementsByClassName('loadMore')[step === 1 ? 0 : 1]);
 
-        if (bool){
-            loadingElem.children().addClass('loadMore__loading')
-        } else {
-            loadingElem.removeClass('loadMore--initLoad')
-            loadingElem.children().removeClass('loadMore__loading')
+        if (type === 'start'){
+            loadingElem.removeClass('loadMore--loading--fail')
+            loadingElem.addClass('loadMore--loading')
+        } else if (type === 'done') {
+            loadingElem.removeClass('loadMore--initLoad loadMore--loading loadMore--loading--fail')
+        } else if (type === 'fail'){
+            loadingElem.addClass('loadMore--loading loadMore--loading--fail')
         }
     }
     // 判斷是否「正在加載」
     this.isLoading = function (step){
         var loadingElem = angular.element(document.getElementsByClassName('loadMore')[step === 1 ? 0 : 1]);
 
-        return loadingElem.children().hasClass('loadMore__loading')
+        return (loadingElem.hasClass('loadMore--loading') && !loadingElem.hasClass('loadMore--loading--fail'))
+                || loadingElem.hasClass('loadMore--initLoad')
     }
     // 設置上次閱讀位置提醒
     this.setDivider = function (step){
@@ -26,12 +29,12 @@ angular.module('Oneline.UIServices', [])
         } else {
             angular.element(timelineElem[timelineElem.length - 1]).addClass('divider divider--bottom')
         }
-    },
+    }
     // 設置未讀「新／舊帖文」數提醒
-    this.setPostsCount = function (type, count){
+    this.setPostsCount = function (type, msg){
         document
         .getElementsByClassName('loadMore__count')[type === 'newPosts' ? 0 : 1]
-        .setAttribute('data-count', count === 0 ? '' : count)
+        .setAttribute('data-count', msg)
     }
     /**
      * 其他操作相關

@@ -52,7 +52,6 @@ router.get('/', function (req, res, next){
     })
     .then(handleData(req, res, next))
     .fail(function (err){
-        console.log(err.stack)
         next(err)
     })
 })
@@ -90,7 +89,6 @@ router.get('/:id/:count', function (req, res, next){
     })
     .then(handleData(req, res, next))
     .fail(function (err){
-        console.log(err.stack)
         next(err)
     })
 })

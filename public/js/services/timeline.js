@@ -1,6 +1,6 @@
 angular.module('Oneline.timelineServices', [])
-.service('olTimelineHelper', ['$q', 'Timeline', 'timelineCache', 'olUI', 
-    function($q, Timeline, timelineCache, olUI){
+.service('olTimelineHelper', ['$q', '$state', 'Timeline', 'timelineCache', 'olUI', 'olTokenHelper',
+    function($q, $state, Timeline, timelineCache, olUI, olTokenHelper){
 
     var time_pointer   = Date.now();
     var retrieve_count = 90;
@@ -273,7 +273,7 @@ angular.module('Oneline.timelineServices', [])
         .then(function (invalidList){
             // 從後端加載
             if (invalidList.length > 0){
-                olUI.setPostsCount('oldPosts', 0)
+                olUI.setPostsCount('oldPosts', '')
             }
             // 從本地加載
             else {
@@ -288,8 +288,23 @@ angular.module('Oneline.timelineServices', [])
                     }
                 })
 
-                olUI.setPostsCount('oldPosts', oldPostsCount)
+                olUI.setPostsCount('oldPosts', oldPostsCount === 0 ? '' : oldPostsCount)
             }
         })
+    }
+    this.handleError = function (err){
+        console.log(err)
+        if (!err){
+
+        };
+
+        if (err.status === 401){
+            olTokenHelper.clearToken()
+            $state.go('settings')
+        } else if (err.status === 429){
+            olUI.setLoading('fail', 1)
+            var safeTime = new Date(err.data.reset * 1000).toLocaleTimeString('en-GB').substring(0, 5)
+            olUI.setPostsCount('newPosts', safeTime)
+        }
     }
 }])

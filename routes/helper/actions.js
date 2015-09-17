@@ -30,9 +30,9 @@ module.exports = {
         return q_twit(action_str, tOpts)
         .then(function (data){
             if (action === 'like'){
-                return { code: 200 }
+                return { statusCode: 200 }
             } else if (action === 'retweet'){
-                return { code: 200, id_str: data[0].id_str }
+                return { statusCode: 200, id_str: data[0].id_str }
             }
         })
     },
@@ -49,24 +49,22 @@ module.exports = {
         }
 
         var deferred = Q.defer();
-        console.log(action_str)
+
         request.post({
             url: 'https://api.weibo.com/2/' + action_str + '.json', 
             form: wOpts
         }, function (err, res, body){
             if (err || res.statusCode !== 200){
-                console.log(err)
-                deferred.reject(err || { code: res.statusCode })
+                deferred.reject(err || { statusCode: res.statusCode })
             } else {
 
                 var data;
-
                 try {
                     data = JSON.parse(body)
                 } catch (e) {
                     data = body
                 } finally {
-                    deferred.resolve({ code: 200 })
+                    deferred.resolve({ statusCode: 200 })
                 }
             }
         })

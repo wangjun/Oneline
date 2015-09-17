@@ -98,8 +98,8 @@ app.use(['/timeline', '/actions', '/auth/revoke'], function (req, res, next){
         } catch (e){}
     })
 
-    if (Object.keys(validPassports).length === 0){
-        next({ status: 401, message: 'No authorization token was found' })
+    if (Object.keys(validPassports).length !== tokenList.length){
+        next({ statusCode: 401, message: 'No authorization token was found' })
     } else {
         req.olPassports = validPassports
         req.olId = {}
@@ -124,22 +124,13 @@ app.use(function (req, res){
 app.use(function (err, req, res, next){
     console.log(err, err.stack)
 
-    var statusCode = err.code || err.status;
+    var statusCode = err.statusCode || 500,
+        errObj     = Object.prototype.toString.call(err) === '[object Object]'
+                        ? err
+                        : { statusCode: statusCode }
 
-    switch (statusCode){
-        case 400:
-            res.status(statusCode).json({'status': 'error', 'msg': err.msg})
-            break;
-        case 401:
-            res.status(statusCode).json({'status': 'error','msg': err.message})
-            break;
-        case 500:
-            res.status(statusCode).json({'status': 'error', 'msg': err.msg})
-            break;
-        default:
-            res.status(500).json({'status': 'error', 'msg': 'server error'})
+    res.status(statusCode).json(errObj)
 
-    }
 })
 
 

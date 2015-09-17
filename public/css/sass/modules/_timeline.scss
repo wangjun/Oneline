@@ -44,6 +44,7 @@
     }
     // 文章內容
     &__text {
+        margin-top: 17px;
         word-wrap: break-word;
         white-space: pre-wrap;
 
@@ -57,7 +58,7 @@
         display: block;
         position: relative;
         width: 100%;
-        margin: 17px 0;
+        margin: 17px 0 0 0;
         white-space: nowrap;
         text-align: center;
 
@@ -81,7 +82,7 @@
         &--thumb {
             img {
                 width: 80px;
-                margin-right: 3px;
+                margin-right: 7px;
                 cursor: zoom-in;
                 @include border-radius(1px);
             }
@@ -166,6 +167,9 @@
             }
             &__content {
                 top: -14px;
+            }
+            &__text {
+                margin-top: 0;
             }
             &__time {
                 font-size: 10px;
@@ -278,21 +282,6 @@
     &--old {
         z-index: 2;
     }
-    &--initLoad {
-        position: absolute;
-        top: calc(50% - 20px);
-        width: calc(100% - 14px);
-    }
-
-    &__loading {
-        position: relative;
-        top: 19px;
-        width: 2px;
-        height: 2px;
-        background-color: $color-black;
-        @include border-radius(1px);
-        @include animation(loadAnimate 7s infinite linear);
-    }
     &__count::before {
         content: attr(data-count);
         position: absolute;
@@ -303,14 +292,67 @@
         text-align: center;
         line-height: 40px;
     }
-}
-
-@include keyframes(loadAnimate) {
-    0% {
-        width: 2px;
+    &--initLoad {
+        position: absolute;
+        top: calc(50% - 20px);
+        width: calc(100% - 14px);
+        cursor: default;
     }
-    100% {
-        width: 100%;
+    &--loading {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 19px;
+            height: 2px;
+            background-color: $color-black;
+            @include border-radius(1px);
+            @include animation(loadAnimate 2.7s infinite linear);
+            @include keyframes(loadAnimate) {
+                0% {
+                    width: 0;
+                    left: 0;
+                }
+                10%, 90% {
+                    width: 7%;
+                }
+                100% {
+                    width: 0;
+                    left: 100%;
+                }
+            }
+        }
+        &--fail {
+            cursor: pointer;
+
+            &::before {
+                @include animation(loadAnimate--fail 7.7s infinite linear);
+                @include keyframes(loadAnimate--fail) {
+                    0% {
+                        width: 0;
+                        left: 0;
+                    }
+                    10%, 90% {
+                        width: 7%;
+                    }
+                    100% {
+                        width: 0;
+                        left: 75%;
+                    }
+                }
+            }
+            &::after {
+                content: attr(data-count);
+                position: absolute;
+                top: 0;
+                right: 0%;
+                width: 25%;
+                height: 100%;
+                color: $color-gray-drak;
+                text-align: center;
+                line-height: 40px;
+                border-left: 7px solid $color-black;
+            }
+        }
     }
 }
 

@@ -22,7 +22,7 @@
     <div ng-include=" 'menu/left.html' "></div>
 
 
-    <div class="oneline overflow--y animate--general">
+    <div class="oneline overflow--y animate--general" ng-swipe-left="$state.go('settings')" ng-swipe-disable-mouse>
         <ui-view></ui-view>
     </div>
 

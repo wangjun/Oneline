@@ -1,5 +1,4 @@
-<div ng-click="loadMore(1)" class="loadMore loadMore--new loadMore--initLoad loadMore__count animate--faster" data-count>
-    <div class="loadMore__loading"></div>
+<div ng-click="loadMore(1)" class="loadMore loadMore--new loadMore--initLoad loadMore--loading loadMore__count animate--faster" data-count>
 </div>
 
 <div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'" data-id="{{::item.id_str}}">
@@ -9,5 +8,4 @@
 </div>
 
 <div ng-click="loadMore(-1)" class="loadMore loadMore--old loadMore--initLoad loadMore__count animate--faster" data-count>
-    <div></div>
 </div>

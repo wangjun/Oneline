@@ -27,9 +27,9 @@ angular.module('Oneline', [
     'Oneline.trimMediaLinkDirectives'
 ])
 .config(['$locationProvider', '$stateProvider', 
-    '$urlRouterProvider', '$httpProvider', 'jwtInterceptorProvider',
+    '$urlRouterProvider', '$httpProvider', 'jwtInterceptorProvider', 'weiboEmotifyProvider',
     function($locationProvider, $stateProvider, 
-        $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
+        $urlRouterProvider, $httpProvider, jwtInterceptorProvider, weiboEmotifyProvider) {
 
 
     $locationProvider.html5Mode(true)
@@ -57,6 +57,8 @@ angular.module('Oneline', [
             }],
             controller: 'timelineCtrl'
         })
+
+    weiboEmotifyProvider.setEmotionsURL('/public/dist/emotions_v1.min.json')
 }])
 .factory('timelineCache', ['$cacheFactory', function($cacheFactory){
     return $cacheFactory('timelineCache')

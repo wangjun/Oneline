@@ -41,15 +41,11 @@ angular.module('Oneline.timelineControllers', [])
         }, 1000 * 60 * 3)
 
         // 結束加載動畫
-        olUI.setLoading(false, 1)
-        olUI.setLoading(false, -1)
+        olUI.setLoading('done', 1)
+        olUI.setLoading('done', -1)
     })
     .catch(function (err){
-        if (err.status === 401){
-            $state.go('settings')
-        }
-        // TOOD
-        // olUI.setPostsCount('newPosts', err.msg)
+        olTimelineHelper.handleError(err)
     })
 
 
@@ -63,11 +59,11 @@ angular.module('Oneline.timelineControllers', [])
         if (olUI.isLoading(step)) return;
 
         $q(function (resolve, reject){
-            olUI.setLoading(true, step)
+            olUI.setLoading('start', step)
 
             // 加載「新貼文」
             if (step > 0){
-                olUI.setPostsCount('newPosts', 0)
+                olUI.setPostsCount('newPosts', '')
 
                 var newPostsFromCache = timelineCache.get('newPosts') || []
 
@@ -114,15 +110,10 @@ angular.module('Oneline.timelineControllers', [])
             }
 
             olUI.setDivider(step)
+            olUI.setLoading('done', step)
         })
         .catch(function (err){
-            console.log(err)
-            if (err && err.status === 401){
-                $state.go('settings')
-            }
-        })
-        .finally(function (){
-            olUI.setLoading(false, step)
+            olTimelineHelper.handleError(err)
         })
     }
 

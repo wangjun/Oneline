@@ -10,7 +10,7 @@ module.exports = {
             access_token       : opts.token,
             access_token_secret: opts.tokenSecret
         });
-        var q_twit_timeline = Q.nbind(T.get, T);
+        var q_twit_get = Q.nbind(T.get, T);
         var tOpts = {
             include_entities: false,
             count: opts.count || 20
@@ -22,7 +22,23 @@ module.exports = {
             tOpts.max_id = opts.max_id
         }
 
-        return q_twit_timeline('statuses/home_timeline', tOpts)
+        return q_twit_get('statuses/home_timeline', tOpts)
+        .then(function (data){
+            return data
+        }, function (err){
+            if (err.statusCode === 429){
+                return q_twit_get('application/rate_limit_status', { resources: ['statuses'] })
+                .then(function (data){
+                    throw {
+                        statusCode: 429,
+                        message: 'Rate limit exceeded',
+                        reset: data[0].resources.statuses['/statuses/home_timeline'].reset
+                    }
+                }, function (err){
+                    throw err
+                })
+            }
+        })
 
     },
     instagram: function (opts){
@@ -60,7 +76,7 @@ module.exports = {
             qs : wOpts
         }, function (err, res, body){
             if (err || res.statusCode !== 200){
-                deferred.reject(err)
+                deferred.reject(err || { statusCode: res.statusCode })
             } else {
                 var data;
                 try {
