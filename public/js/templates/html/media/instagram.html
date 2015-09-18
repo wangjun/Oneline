@@ -1,5 +1,9 @@
 <div class="timeline__media">
-
+    <a ng-if="::!item.videos" ng-href="{{::item.images.standard_resolution}}" target="_blank">
+        <svg class="timeline__media__jumpButton tips--deep animate--faster">
+            <use xlink:href="/public/img/icon-sprite.svg#instagram-eyeball-icon"></use>
+        </svg>
+    </a>
     <img ng-if="::!item.videos" ng-src="{{::item.images.standard_resolution}}" alt="instagram-post-image">
 
     <ol-video ng-if="::item.videos" ol-src="::item.videos.standard_resolution" ol-poster="::item.images.standard_resolution"></ol-video>

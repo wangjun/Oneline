@@ -124,6 +124,14 @@
                 }
             }
         }
+        &__jumpButton {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+        }
         /**
          * 播放按鈕
          *
@@ -360,8 +368,20 @@
     content: '';
     position: absolute;
     left: 50%;
+    left: calc(50% - 1px);
     height: 40px;
     border-right: 1px dashed $color-black;
+}
+.divider_text {
+    content: attr(data-date);
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    font-size: 10px;
+    font-weight: $font-weight-light;
+    line-height: 20px;
+    text-align: center;
+    background-color: $color-gray;
 }
 /* Divider */
 .divider {
@@ -373,15 +393,25 @@
 
             top: -82px;
         }
+        &::after {
+            @extend .divider_text;
+
+            top: -72px;
+        }
     }
 
     &--bottom {
         margin-bottom: 100px;
 
-        &::after {
+        &::before {
             @extend .divider_line;
 
             bottom: -58px;
+        }
+        &::after {
+            @extend .divider_text;
+
+            bottom: -48px;
         }
     }
 }

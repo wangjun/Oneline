@@ -1,5 +1,5 @@
 angular.module('Oneline.UIServices', [])
-.service('olUI', function(){
+.service('olUI', ['$filter', function($filter){
     // 設置是否為「正在加載」
     this.setLoading = function (type, step){
         var loadingElem = angular.element(document.getElementsByClassName('loadMore')[step === 1 ? 0 : 1]);
@@ -24,16 +24,45 @@ angular.module('Oneline.UIServices', [])
     this.setDivider = function (step){
         var timelineElem = document.querySelectorAll('.timeline:not(.timeline--quote)');
 
-        if (step === 1){
-            angular.element(timelineElem[0]).addClass('divider divider--top')
-        } else {
-            angular.element(timelineElem[timelineElem.length - 1]).addClass('divider divider--bottom')
-        }
+        timelineElem = angular.element(timelineElem[step === 1 ? 0 : timelineElem.length - 1]);
+
+        timelineElem
+        .attr('data-date', $filter('date')(Date.now(), 'HH:mm'))
+        .addClass(step === 1 ? 'divider divider--top' : 'divider divider--bottom')
     }
     // 設置未讀「新／舊帖文」數提醒
     this.setPostsCount = function (type, msg){
+        var isNewPosts = type === 'newPosts';
+
+        // 設置標題提醒
+        if (isNewPosts && msg % 1 === 0){
+            var _msg = (~~msg).toString().split(''),
+                nmap = {
+                    '0': '⁰',
+                    '1': '¹',
+                    '2': '²',
+                    '3': '³',
+                    '4': '⁴',
+                    '5': '⁵',
+                    '6': '⁶',
+                    '7': '⁷',
+                    '8': '⁸',
+                    '9': '⁹'
+                }
+                __msg = '';
+
+            if (msg !== ''){
+                _msg.forEach(function (numStr){
+                    __msg += nmap[numStr]
+                })
+            }
+
+            document.title = '｜'+ __msg
+        }
+
+
         document
-        .getElementsByClassName('loadMore__count')[type === 'newPosts' ? 0 : 1]
+        .getElementsByClassName('loadMore__count')[isNewPosts ? 0 : 1]
         .setAttribute('data-count', msg)
     }
     /**
@@ -104,4 +133,4 @@ angular.module('Oneline.UIServices', [])
             return actionElem.attr(attr_str)
         }
     }
-})
+}])

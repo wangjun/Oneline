@@ -1,5 +1,10 @@
 <div class="timeline__media">
     <div ng-repeat="media in ::item.quote.media">
+        <a ng-if="::media.type === 'photo'" ng-href="{{::media.image_url}}:large" target="_blank">
+            <svg class="timeline__media__jumpButton tips--deep animate--faster">
+                <use xlink:href="/public/img/icon-sprite.svg#twitter-eyeball-icon"></use>
+            </svg>
+        </a>
         <img ng-if="::media.type === 'photo'" ng-src="{{::media.image_url}}" alt="tweet_photo">
 
         <ol-video ng-if="::media.type !== 'photo'" ol-src="::media.video_url" ol-poster="::media.image_url"></ol-video>

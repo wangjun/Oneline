@@ -36,6 +36,7 @@ angular.module('Oneline.timelineControllers', [])
             .then(function (){
                 var newPostsLength = (timelineCache.get('newPosts') || []).length
                 // 設置提醒
+                olUI.setLoading('done', 1)
                 olUI.setPostsCount('newPosts', newPostsLength)
             })
         }, 1000 * 60 * 3)
@@ -45,7 +46,7 @@ angular.module('Oneline.timelineControllers', [])
         olUI.setLoading('done', -1)
     })
     .catch(function (err){
-        olTimelineHelper.handleError(err)
+        olTimelineHelper.handleError(err, step)
     })
 
 
@@ -113,7 +114,7 @@ angular.module('Oneline.timelineControllers', [])
             olUI.setLoading('done', step)
         })
         .catch(function (err){
-            olTimelineHelper.handleError(err)
+            olTimelineHelper.handleError(err, step)
         })
     }
 

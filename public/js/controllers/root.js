@@ -1,7 +1,7 @@
 angular.module('Oneline.rootControllers', [])
 .controller('rootController', [
-        '$scope', '$timeout', 'olTokenHelper',
-    function ($scope, $timeout, olTokenHelper){
+        '$scope', '$timeout', '$state', 'olTokenHelper',
+    function ($scope, $timeout, $state, olTokenHelper){
 
 
     /**
@@ -29,4 +29,7 @@ angular.module('Oneline.rootControllers', [])
         return $scope.providerList.indexOf(provider) >= 0
     }
 
+    $scope.goto = function (state){
+        $state.go(state)
+    }
 }])

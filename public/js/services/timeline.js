@@ -19,7 +19,7 @@ angular.module('Oneline.timelineServices', [])
         .$promise
         .then(function (posts){
             if (!posts || (posts.data && posts.data.length < 1)){
-                defer.reject()
+                defer.reject({ status: 304 })
                 return;
             }
             // 保存貼文與 min_id & min_date
@@ -175,7 +175,7 @@ angular.module('Oneline.timelineServices', [])
             .$promise
             .then(function (oldPosts){
                 if (!oldPosts || (oldPosts.data && oldPosts.data.length < 1)){
-                    defer.reject()
+                    defer.reject({ status: 304 })
                     return;
                 }
 
@@ -247,7 +247,7 @@ angular.module('Oneline.timelineServices', [])
                 _this.storePosts('newPosts', newPosts, providerList)
                 defer.resolve()
             } else {
-                defer.reject()
+                defer.reject({ status: 304 })
             }
         }, function (err){
             defer.reject(err)
@@ -292,19 +292,22 @@ angular.module('Oneline.timelineServices', [])
             }
         })
     }
-    this.handleError = function (err){
+    this.handleError = function (err, step){
         console.log(err)
         if (!err){
-
-        };
+            olUI.setLoading('fail', step)
+            return;
+        }
 
         if (err.status === 401){
             olTokenHelper.clearToken()
             $state.go('settings')
         } else if (err.status === 429){
-            olUI.setLoading('fail', 1)
+            olUI.setLoading('fail', step)
             var safeTime = new Date(err.data.reset * 1000).toLocaleTimeString('en-GB').substring(0, 5)
             olUI.setPostsCount('newPosts', safeTime)
+        } else {
+            olUI.setLoading('done', step)
         }
     }
 }])
