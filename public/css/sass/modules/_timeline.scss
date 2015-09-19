@@ -78,6 +78,9 @@
         video {
             cursor: pointer;
         }
+        &--large {
+            position: relative;
+        }
         // 縮略圖
         &--thumb {
             img {
@@ -272,7 +275,6 @@
 /* Load more button */
 .loadMore {
     @extend .timeline;
-    position: relative;
     height: 40px;
     margin: 10px 7px;
     border: 1px solid $color-gray;
@@ -320,7 +322,7 @@
                     width: 0;
                     left: 0;
                 }
-                10%, 90% {
+                15%, 85% {
                     width: 7%;
                 }
                 100% {
@@ -339,7 +341,7 @@
                         width: 0;
                         left: 0;
                     }
-                    10%, 90% {
+                    15%, 85% {
                         width: 7%;
                     }
                     100% {

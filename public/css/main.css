@@ -540,6 +540,9 @@ ng\:form {
 .timeline__media video {
   cursor: pointer;
 }
+.timeline__media--large {
+  position: relative;
+}
 .timeline__media--thumb img {
   width: 80px;
   margin-right: 7px;
@@ -710,7 +713,6 @@ ng\:form {
 
 /* Load more button */
 .loadMore {
-  position: relative;
   height: 40px;
   margin: 10px 7px;
   border: 1px solid #F1F1F1;
@@ -762,7 +764,7 @@ ng\:form {
     width: 0;
     left: 0;
   }
-  10%, 90% {
+  15%, 85% {
     width: 7%;
   }
   100% {
@@ -775,7 +777,7 @@ ng\:form {
     width: 0;
     left: 0;
   }
-  10%, 90% {
+  15%, 85% {
     width: 7%;
   }
   100% {
@@ -788,7 +790,7 @@ ng\:form {
     width: 0;
     left: 0;
   }
-  10%, 90% {
+  15%, 85% {
     width: 7%;
   }
   100% {
@@ -809,7 +811,7 @@ ng\:form {
     width: 0;
     left: 0;
   }
-  10%, 90% {
+  15%, 85% {
     width: 7%;
   }
   100% {
@@ -822,7 +824,7 @@ ng\:form {
     width: 0;
     left: 0;
   }
-  10%, 90% {
+  15%, 85% {
     width: 7%;
   }
   100% {
@@ -835,7 +837,7 @@ ng\:form {
     width: 0;
     left: 0;
   }
-  10%, 90% {
+  15%, 85% {
     width: 7%;
   }
   100% {
