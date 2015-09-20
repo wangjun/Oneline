@@ -1,10 +1,10 @@
 angular.module('Oneline.settingsControllers', [])
 .controller('settingsCtrl', ['$scope', '$window', 
     '$state', '$stateParams', 
-    'olTokenHelper', 'timelineCache', 'Auth', 
+    'olTokenHelper', 'timelineCache', 'Auth', 'Replicant',
     function($scope, $window, 
         $state, $stateParams, 
-        olTokenHelper, timelineCache, Auth){
+        olTokenHelper, timelineCache, Auth, Replicant){
 
 
     /**
@@ -54,4 +54,14 @@ angular.module('Oneline.settingsControllers', [])
         }
     }
 
+
+    /**
+     * 複製（tokenList 到移動端）
+     *
+     */
+    $scope.toggleControlCenter = function (replicant){
+        $scope.controlCenter === replicant
+            ? $scope.setControlCenter('')
+            : $scope.setControlCenter(replicant)
+    }
 }])

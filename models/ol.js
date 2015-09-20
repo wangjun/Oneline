@@ -30,6 +30,24 @@ var userSchema = new Schema({
     refreshToken : String
 })
 
+var replicantSchema = new Schema({
+    id           : {
+        type     : String,
+        unique   : true,
+        require  : true,
+        index    : true
+    },
+    token        : {
+        type     : String,
+        require  : true
+    },
+    createdAt    : {
+        type     : Date,
+        expires  : 60
+    }
+})
+
 module.exports = {
-    User: mongoose.model('User', userSchema)
+    User: mongoose.model('User', userSchema),
+    Replicant: mongoose.model('Replicant', replicantSchema)
 }

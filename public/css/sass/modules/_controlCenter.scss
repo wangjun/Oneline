@@ -1,0 +1,39 @@
+/* 底部控制中心 */
+.controlCenter {
+    position: absolute;
+    left: 40%;
+    bottom: 0;
+    width: 20%;
+    height: 0%;
+    background-color: $color-gray;
+
+    @media #{$phone-portrait}{
+        left: 25%;
+        width: 50%;
+    }
+
+    &--active {
+        height: 20%;
+    }
+
+    &__wrapper {
+        display: table;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.replicant {
+    font-size: 27px;
+    font-weight: $font-weight-bold;
+    text-align: center;
+    @include user-select(text);
+
+    &__deckard {
+
+    }
+    &__rachael {
+
+    }
+}

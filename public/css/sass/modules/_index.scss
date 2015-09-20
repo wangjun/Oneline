@@ -14,6 +14,7 @@
     }
 }
 
+/* 側邊菜單欄 */
 .menu {
     display: table;
     position: absolute;
@@ -35,7 +36,6 @@
         @media #{$phone-portrait}{
             left: 75%;
             width: 25%;
-            background-color: #59DE5D;
         }
     }
     &:hover &__button {
@@ -62,35 +62,41 @@
 }
 
 
-/* Status: Timeline */
-.status--timeline {
-    .oneline {
-        left: 33.3%;
-        width: 33.3%;
-        background-color: $color-gray;
+.status {
+    /* Status: Timeline */
+    &--timeline {
+        .oneline {
+            left: 33.3%;
+            width: 33.3%;
+            background-color: $color-gray;
 
-        @media #{$all-mobile-devices}{
-            left: 25%;
-            width: 50%;
+            @media #{$all-mobile-devices}{
+                left: 25%;
+                width: 50%;
+            }
+            @media #{$phone-portrait}{
+                left: 0%;
+                width: 100%;
+            }
         }
-        @media #{$phone-portrait}{
-            left: 0%;
-            width: 100%;
+
+        .menu {
+            width: 33.3%;
+
+            &--left {
+                left: 0%;
+            }
+            &--right {
+                left: 66.7%;
+            }
+
+            @media #{$all-mobile-devices}{
+                display: none;
+            }
         }
     }
-
-    .menu {
-        width: 33.3%;
-
-        &--left {
-            left: 0%;
-        }
-        &--right {
-            left: 66.7%;
-        }
-
-        @media #{$all-mobile-devices}{
-            display: none;
-        }
+    &--controlCenter {
+        height: 80%;
+        overflow: hidden;
     }
 }

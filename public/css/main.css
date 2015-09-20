@@ -293,6 +293,7 @@ ng\:form {
   }
 }
 
+/* 側邊菜單欄 */
 .menu {
   display: table;
   position: absolute;
@@ -316,7 +317,6 @@ ng\:form {
   .menu--right {
     left: 75%;
     width: 25%;
-    background-color: #59DE5D;
   }
 }
 .menu:hover .menu__button {
@@ -345,7 +345,9 @@ ng\:form {
   filter: grayscale(0%);
 }
 
-/* Status: Timeline */
+.status {
+  /* Status: Timeline */
+}
 .status--timeline .oneline {
   left: 33.3%;
   width: 33.3%;
@@ -376,6 +378,10 @@ ng\:form {
   .status--timeline .menu {
     display: none;
   }
+}
+.status--controlCenter {
+  height: 80%;
+  overflow: hidden;
 }
 
 .actions {
@@ -916,4 +922,64 @@ ng\:form {
 .social-icon--active {
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
+}
+
+.replicant-icon {
+  position: absolute;
+  left: 7px;
+  bottom: 4px;
+  cursor: pointer;
+}
+.replicant-icon--deckard {
+  display: inline-block;
+  height: 10px;
+}
+@media (max-device-width: 1024px), (max-width: 1024px) {
+  .replicant-icon--deckard {
+    display: none;
+  }
+}
+.replicant-icon--rachael {
+  display: none;
+}
+@media (max-device-width: 1024px), (max-width: 1024px) {
+  .replicant-icon--rachael {
+    display: inline-block;
+    height: 17px;
+  }
+}
+
+/* 底部控制中心 */
+.controlCenter {
+  position: absolute;
+  left: 40%;
+  bottom: 0;
+  width: 20%;
+  height: 0%;
+  background-color: #F1F1F1;
+}
+@media (max-device-width: 767px) and (orientation: portrait) {
+  .controlCenter {
+    left: 25%;
+    width: 50%;
+  }
+}
+.controlCenter--active {
+  height: 20%;
+}
+.controlCenter__wrapper {
+  display: table;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.replicant {
+  font-size: 27px;
+  font-weight: 600;
+  text-align: center;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }

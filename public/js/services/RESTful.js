@@ -36,3 +36,17 @@ angular.module('Oneline.RESTfulServices', [])
         }
     })
 }])
+.factory('Replicant', ['$resource', function($resource){
+    return $resource('/auth/replicant/:replicant', null, {
+        // Authorization
+        deckard: {
+            method: 'GET',
+            params: { replicant: 'deckard' }
+        },
+        // Authentication
+        rachael: {
+            method: 'POST',
+            params: { replicant: 'rachael' }
+        }
+    })
+}])

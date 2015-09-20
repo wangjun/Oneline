@@ -14,3 +14,27 @@
         @include filter(grayscale(0%));
     }
 }
+
+.replicant-icon {
+    position: absolute;
+    left: 7px;
+    bottom: 4px;
+    cursor: pointer;
+
+    &--deckard {
+        display: inline-block;
+        height: 10px;
+
+        @media #{$all-mobile-devices}{
+            display: none;
+        }
+    }
+    &--rachael {
+        display: none;
+
+        @media #{$all-mobile-devices}{
+            display: inline-block;
+            height: 17px;
+        }
+    }
+}

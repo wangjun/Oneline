@@ -1,3 +1,4 @@
+<!-- Social -->
 <div class="social-list">
     <div class="vertically_center">
         <!-- Twitter -->
@@ -16,3 +17,11 @@
         </svg>
     </div>
 </div>
+
+<!-- Replicant -->
+<svg ng-if="providerList.length > 0" ng-click="toggleControlCenter('replicant--deckard')" class="replicant-icon replicant-icon--deckard tips animate--faster" viewBox="0 0 122 100">
+    <use xlink:href="/public/img/icon-sprite.svg#replicant-deckard-icon"></use>
+</svg>
+<svg ng-click="toggleControlCenter('replicant--rachael')" class="replicant-icon replicant-icon--rachael tips animate--faster" viewBox="0 0 48 100">
+    <use xlink:href="/public/img/icon-sprite.svg#replicant-rachael-icon"></use>
+</svg>
