@@ -109,12 +109,16 @@ router.get('/replicant/deckard', function (req, res, next){
 })
 router.post('/replicant/rachael', function (req, res, next){
 
-
     // 保存於數據庫
     q_replicantFindOne({ id: req.body.code })
     .then(function (found){
         if (found){
-            res.json({ statusCode: 200, tokenList: JSON.parse(found.token) })
+            console.log(found, found.msg)
+            res.json({
+                statusCode: 200,
+                tokenList: JSON.parse(found.token || '[]'),
+                msg: JSON.parse(found.msg || '[]')
+            })
         } else {
             next({ statusCode: 404 })
         }

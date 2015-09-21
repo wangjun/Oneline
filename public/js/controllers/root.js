@@ -35,6 +35,8 @@ angular.module('Oneline.rootControllers', [])
     }
 
     $scope.goto = function (state){
+        if (state === 'timeline' && $scope.providerList <= 0) return;
+
         $state.go(state)
     }
 }])

@@ -41,6 +41,10 @@ var replicantSchema = new Schema({
         type     : String,
         require  : true
     },
+    msg          : {
+        type     : String,
+        require  : false
+    },
     createdAt    : {
         type     : Date,
         expires  : 60

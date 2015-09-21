@@ -4,7 +4,7 @@
             <use xlink:href="/public/img/icon-sprite.svg#instagram-eyeball-icon"></use>
         </svg>
     </a>
-    <img ng-if="::!item.videos" ng-src="{{::item.images.standard_resolution}}" alt="instagram-post-image">
+    <img ng-if="::!item.videos" ng-src="{{::item.images.standard_resolution}}">
 
     <ol-video ng-if="::item.videos" ol-src="::item.videos.standard_resolution" ol-poster="::item.images.standard_resolution"></ol-video>
 

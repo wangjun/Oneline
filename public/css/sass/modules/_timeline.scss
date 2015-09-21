@@ -40,7 +40,6 @@
     &__content {
         position: relative;
         top: -24px;
-        @include user-select(text);
     }
     // 文章內容
     &__text {

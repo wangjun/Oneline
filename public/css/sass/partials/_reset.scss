@@ -5,7 +5,6 @@ html {
     background-color: $color-white;
 }
 body {
-    @include user-select(none);
     @include font-smoothing;
     font-family: $font-family-base;
     font-size: $font-size-base;
@@ -13,7 +12,7 @@ body {
     line-height: $line-height-base;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;}
+}
 * {
     @include box-sizing(border-box);
     @include input-placeholder {
@@ -52,3 +51,12 @@ svg {
 }
 @include scrollbars(1px, $color-steel, transparent);
 
+input, button, select, textarea{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0px;
+
+    @include appearance(none);
+    @include border-radius(0px);
+}

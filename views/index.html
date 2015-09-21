@@ -21,7 +21,7 @@
 
     <div ng-include=" 'menu/left.html' "></div>
 
-    <div class="oneline overflow--y animate--general" ng-class="{'status--controlCenter': controlCenter !== ''}" ng-swipe-right="goto('settings')" ng-swipe-disable-mouse>
+    <div class="oneline overflow--y animate--general" ng-class="{'status--controlCenter': controlCenter !== ''}" ng-swipe-left="goto('timeline')" ng-swipe-right="goto('settings')" ng-swipe-disable-mouse>
         <ui-view></ui-view>
     </div>
 

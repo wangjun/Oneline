@@ -8,9 +8,16 @@
     background-color: $color-black;
 
     @media #{$phone-portrait}{
-        min-width: 0px;
+        left: 15%;
+        width: 70%;
+    }
+    @media #{$tablet}{
         left: 25%;
         width: 50%;
+    }
+    @media #{$tablet-landscape}{
+        left: 33.3%;
+        width: 33.3%;
     }
 }
 
@@ -32,11 +39,6 @@
     }
     &--right {
         left: 60%;
-
-        @media #{$phone-portrait}{
-            left: 75%;
-            width: 25%;
-        }
     }
     &:hover &__button {
         @include opacity(1);
@@ -59,6 +61,10 @@
             @include filter(grayscale(0%));
         }
     }
+
+    @media #{$all-mobile-devices}{
+        display: none;
+    }
 }
 
 
@@ -70,13 +76,17 @@
             width: 33.3%;
             background-color: $color-gray;
 
-            @media #{$all-mobile-devices}{
-                left: 25%;
-                width: 50%;
-            }
             @media #{$phone-portrait}{
                 left: 0%;
                 width: 100%;
+            }
+            @media #{$tablet}{
+                left: 15%;
+                width: 70%;
+            }
+            @media #{$tablet-landscape}{
+                left: 25%;
+                width: 50%;
             }
         }
 

@@ -37,7 +37,14 @@ router.get('/', function (req, res, next){
         q_userFindOne({id: 'weibo' + req.olPassports.weibo})
     ])
     .then(function (providerList){
-        var feedPromises = [];
+        var feedPromises = [],
+            _providerList = providerList.filter(function (provider){
+                return !!provider
+            })
+
+        if (_providerList.length < Object.keys(req.olPassports).length){
+            throw { statusCode: 401 }
+        }
 
         providerList.forEach(function (userInfo, index){
             if (!userInfo) return;
@@ -65,7 +72,14 @@ router.get('/:id/:count', function (req, res, next){
         q_userFindOne({id: 'weibo' + req.olPassports.weibo})
     ])
     .then(function (providerList){
-        var feedPromises = [];
+        var feedPromises = [],
+            _providerList = providerList.filter(function (provider){
+                return !!provider
+            })
+
+        if (_providerList.length < Object.keys(req.olPassports).length){
+            throw { statusCode: 401 }
+        }
 
         providerList.forEach(function (userInfo, index){
             if (!userInfo) return;

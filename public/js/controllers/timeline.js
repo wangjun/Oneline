@@ -8,7 +8,7 @@ angular.module('Oneline.timelineControllers', [])
     /**
      * 初始化
      *     1. 判斷是否需要跳轉到「設置頁面」
-     *     2. 設置 `isTimeline` 為 `true`
+     *     2. 設置 `isTimeline` & `isControlCenter`
      *     3. 初始化時間線
      */
     // 1
@@ -20,6 +20,7 @@ angular.module('Oneline.timelineControllers', [])
     }
     // 2
     $scope.setTimeline(true)
+    $scope.setControlCenter('')
     // 3
     $scope.timelineData = []
     olTimelineHelper.initTimelineSettings()
@@ -46,7 +47,7 @@ angular.module('Oneline.timelineControllers', [])
         olUI.setLoading('done', -1)
     })
     .catch(function (err){
-        olTimelineHelper.handleError(err, step)
+        olTimelineHelper.handleError(err)
     })
 
 
