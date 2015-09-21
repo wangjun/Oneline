@@ -17,6 +17,10 @@ angular.module('Oneline.tokenHelperServices', [])
         // 刪除 `addToken`
         store.remove('addToken')
     },
+    // 替換整個 tokenList
+    this.replaceTokenList = function (tokenList){
+        store.set('tokenList', tokenList)
+    },
     /* 刪除指定 provider 的 token */
     this.removeToken = function (provider){
         var tokenList = store.get('tokenList') || [];

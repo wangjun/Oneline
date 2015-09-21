@@ -1,4 +1,4 @@
-angular.module('Oneline.trimMediaLinkDirectives', [])
+angular.module('Oneline.olTextDirectives', [])
 .directive('trimMediaLink', ['$timeout', function ($timeout){
     return {
         restrict: 'A',
@@ -10,4 +10,9 @@ angular.module('Oneline.trimMediaLinkDirectives', [])
 
         }
     }
+}])
+.filter('html', ['$sce', function($sce) {
+    return function(str) {
+        return $sce.trustAsHtml(str);
+    };
 }])

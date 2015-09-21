@@ -14,11 +14,12 @@ var express      = require('express'),
 
 // global variables
 global.Q = require('q')
-global.User = require('./models/user').User
+global.User = require('./models/ol').User
 global.q_userFindOne = Q.nbind(User.findOne, User)
 global.q_userFindOneAndRemove = Q.nbind(User.findOneAndRemove, User)
 global.q_userFindOneAndUpdate = Q.nbind(User.findOneAndUpdate, User)
-
+global.Replicant = require('./models/ol').Replicant
+global.q_replicantFindOne = Q.nbind(Replicant.findOne, Replicant)
 
 // load dotenv
 require('dotenv').load()
@@ -86,7 +87,7 @@ app.set('view engine', 'jade')
 
 // 保護 endpoints
 var jwt = require('jsonwebtoken');
-app.use(['/timeline', '/actions', '/auth/revoke'], function (req, res, next){
+app.use(['/timeline', '/actions', '/auth/revoke', '/auth/replicant'], function (req, res, next){
     var tokenList = req.headers.authorization && JSON.parse(req.headers.authorization.split(' ')[1]) || [],
         validPassports = {};
 
@@ -118,9 +119,6 @@ app.all('/*', function (req, res, next){
 
 
 // Handing Error
-app.use(function (req, res){
-    res.status('404').sendFile(__dirname + '/views/404.min.html')
-})
 app.use(function (err, req, res, next){
     console.log(err, err.stack)
 
