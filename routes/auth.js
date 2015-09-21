@@ -113,7 +113,6 @@ router.post('/replicant/rachael', function (req, res, next){
     q_replicantFindOne({ id: req.body.code })
     .then(function (found){
         if (found){
-            console.log(found, found.msg)
             res.json({
                 statusCode: 200,
                 tokenList: JSON.parse(found.token || '[]'),
