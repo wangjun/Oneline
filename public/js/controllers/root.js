@@ -34,8 +34,12 @@ angular.module('Oneline.rootControllers', [])
         return $scope.providerList.indexOf(provider) >= 0
     }
 
-    $scope.goto = function (state){
+    $scope.goto = function (state, e){
         if (state === 'timeline' && $scope.providerList <= 0) return;
+
+        var target = e.target
+        if (target.tagName.toLowerCase() === 'img' 
+            && angular.element(target).parent().find('img').length > 1) return;
 
         $state.go(state)
     }

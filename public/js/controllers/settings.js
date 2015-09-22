@@ -64,4 +64,8 @@ angular.module('Oneline.settingsControllers', [])
             ? $scope.setControlCenter('')
             : $scope.setControlCenter(replicant)
     }
+    $scope.toggleActive = function (e){
+        var elem = angular.element(e.currentTarget);
+        elem.toggleClass('tips--active')
+    }
 }])
