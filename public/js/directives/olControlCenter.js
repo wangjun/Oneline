@@ -71,6 +71,9 @@ angular.module('Oneline.olControlCenterDirectives', [])
                     }
 
                     scope.setControlCenter('')
+                    scope.toggleActive({
+                        currentTarget: document.querySelector('.replicant-icon--rachael')
+                    })
                 }, function (err){
                     inputElem.addClass('replicant--rachael--errCode')
                     setTimeout(function (){

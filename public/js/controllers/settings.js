@@ -53,19 +53,4 @@ angular.module('Oneline.settingsControllers', [])
             })
         }
     }
-
-
-    /**
-     * 複製（tokenList 到移動端）
-     *
-     */
-    $scope.toggleControlCenter = function (replicant){
-        $scope.controlCenter === replicant
-            ? $scope.setControlCenter('')
-            : $scope.setControlCenter(replicant)
-    }
-    $scope.toggleActive = function (e){
-        var elem = angular.element(e.currentTarget);
-        elem.toggleClass('tips--active')
-    }
 }])

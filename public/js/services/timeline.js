@@ -57,6 +57,8 @@ angular.module('Oneline.timelineServices', [])
         retrieve_count = 50
         // 清空 `timelineCache`
         timelineCache.removeAll()
+        // 重置 Tab 標題
+        document.title = '｜'
     }
     /**
      * 「新／舊帖文」相關
@@ -255,14 +257,14 @@ angular.module('Oneline.timelineServices', [])
 
         return defer.promise;
     }
-    // 折疊「舊貼文」（大於 TIME_RANGE * 2）
+    // 折疊「舊貼文」（大於 TIME_RANGE * 1）
     this.removeOldPosts = function (timelineData, providerList){
         var now = Date.now(),
             cache = timelineData.filter(function (item){
-                return now - item.created_at < TIME_RANGE * 2
+                return now - item.created_at < TIME_RANGE
             });
 
-        time_pointer = now - TIME_RANGE * 2
+        time_pointer = now - TIME_RANGE
         this.updateOldPostsCount(providerList)
 
         return cache;

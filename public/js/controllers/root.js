@@ -43,4 +43,18 @@ angular.module('Oneline.rootControllers', [])
 
         $state.go(state)
     }
+
+    /**
+     * Control Center
+     *
+     */
+    $scope.toggleControlCenter = function (type){
+        $scope.controlCenter === type
+            ? $scope.setControlCenter('')
+            : $scope.setControlCenter(type)
+    }
+    $scope.toggleActive = function (e){
+        var elem = angular.element(e.currentTarget);
+        elem.toggleClass('tips--active')
+    }
 }])
