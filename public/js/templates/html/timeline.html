@@ -1,11 +1,11 @@
-<div ng-click="loadMore(1)" class="loadMore loadMore--new loadMore--initLoad loadMore--loading loadMore__count animate--faster" data-count>
+<div ng-click="loadMore(1)" class="loadMore loadMore--initLoad loadMore--loading loadMore__count animate--faster" data-count>
 </div>
 
 <div class="timeline" ng-repeat="item in timelineData | orderBy: '-created_at'" data-id="{{::item.id_str}}" data-date>
 
-    <div ng-class="::'timeline--' + item.provider" ng-include="item.provider + '/' + item.type + '.html'"></div>
+    <div ng-class="::'timeline--' + item.provider" ng-include="::item.provider + '/' + item.type + '.html'"></div>
 
 </div>
 
-<div ng-click="loadMore(-1)" class="loadMore loadMore--old loadMore--initLoad loadMore__count animate--faster" data-count>
+<div ng-click="loadMore(-1)" class="loadMore loadMore--initLoad loadMore__count animate--faster" data-count>
 </div>

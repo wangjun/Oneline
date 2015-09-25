@@ -3,33 +3,33 @@
     <!-- Twitter -->
     <div class="social-list">
         <div class="vertically_center">
-            <svg class="social-icon animate--faster tips" ng-class="{'social-icon--active tips--active': isAuth('twitter')}" ng-click="toggleAuth('twitter')" viewBox="0 0 300 300">
-                <use xlink:href="/public/img/icon-sprite.svg#twitter-icon"></use>
+            <svg class="social-icon animate--faster tips" ng-click="toggleAuth('twitter')" data-provider="twitter">
+                <use xlink:href="#twitter-icon"></use>
             </svg>
         </div>
     </div>
     <!-- Instagram -->
     <div class="social-list">
         <div class="vertically_center">
-            <svg class="social-icon animate--faster tips" ng-class="{'social-icon--active tips--active': isAuth('instagram')}" ng-click="toggleAuth('instagram')" viewBox="0 0 775 300">
-                <use xlink:href="/public/img/icon-sprite.svg#instagram-icon"></use>
+            <svg class="social-icon animate--faster tips" ng-click="toggleAuth('instagram')" data-provider="instagram">
+                <use xlink:href="#instagram-icon"></use>
             </svg>
         </div>
     </div>
     <!-- Weibo -->
     <div class="social-list">
         <div class="vertically_center">
-            <svg class="social-icon animate--faster tips" ng-class="{'social-icon--active tips--active': isAuth('weibo')}" ng-click="toggleAuth('weibo')" viewBox="0 0 300 300">
-                <use xlink:href="/public/img/icon-sprite.svg#weibo-icon"></use>
+            <svg class="social-icon animate--faster tips" ng-click="toggleAuth('weibo')" data-provider="weibo">
+                <use xlink:href="#weibo-icon"></use>
             </svg>
         </div>
     </div>
 </div>
 
 <!-- Replicant -->
-<svg ng-if="providerList.length > 0" ng-click="toggleActive($event);toggleControlCenter('replicant--deckard')" class="replicant-icon replicant-icon--deckard tips--deep animate--faster" viewBox="0 0 54 67">
-    <use xlink:href="/public/img/icon-sprite.svg#replicant-deckard-icon"></use>
+<svg ng-if="providerList.length > 0" ng-click="toggleActive($event);toggleControlCenter('replicant--deckard')" class="replicant-icon replicant-icon--deckard tips--deep animate--faster" viewBox="0 0 20 20">
+    <use xlink:href="#replicant-deckard-icon"></use>
 </svg>
-<svg ng-click="toggleActive($event);toggleControlCenter('replicant--rachael')" class="replicant-icon replicant-icon--rachael tips--deep animate--faster" viewBox="0 0 54 67">
-    <use xlink:href="/public/img/icon-sprite.svg#replicant-rachael-icon"></use>
+<svg ng-click="toggleActive($event);toggleControlCenter('replicant--rachael')" class="replicant-icon replicant-icon--rachael tips--deep animate--faster" viewBox="0 0 20 20">
+    <use xlink:href="#replicant-rachael-icon"></use>
 </svg>

@@ -1,5 +1,24 @@
 angular.module('Oneline.UIServices', [])
 .service('olUI', ['$filter', function($filter){
+    // 刷新社交網站圖標
+    this.updateSocialIcon = function (providerList){
+        var socialColor = { twitter: '#2AA9E0', instagram: '#3F5D87', weibo: '#E6162D' },
+            socialList  = ['twitter', 'instagram', 'weibo'];
+
+        socialList.forEach(function (provider){
+            var elem   = document.querySelectorAll('[data-provider="' + provider + '"]'),
+                m_elem = angular.element(elem[0]),
+                l_elem = angular.element(elem[1]);
+
+            if (providerList.indexOf(provider) >= 0){
+                m_elem.attr('fill', socialColor[provider])
+                l_elem.addClass('social-icon--active tips--active')
+            } else {
+                m_elem.attr('fill', '#FFF')
+                l_elem.removeClass('social-icon--active tips--active')
+            }
+        })
+    }
     // 設置是否為「正在加載」
     this.setLoading = function (type, step){
         var loadingElem = angular.element(document.getElementsByClassName('loadMore')[step === 1 ? 0 : 1]);
@@ -126,7 +145,6 @@ angular.module('Oneline.UIServices', [])
             attr_str = 'data-' + action;
         }
 
-        console.log(actionElem, attr_str)
         if (data || data === ''){
             actionElem.attr(attr_str, data)
         } else {

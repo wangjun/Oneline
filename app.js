@@ -68,7 +68,7 @@ app.use(helmet())
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }))
 app.use(helmet.contentSecurityPolicy({
     defaultSrc: ["'self'"],
-    // styleSrc: ["'self'", "'unsafe-inline'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
     // scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
     imgSrc: ["*"],
     mediaSrc: ["*"],

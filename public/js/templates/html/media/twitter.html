@@ -2,7 +2,7 @@
     <div ng-repeat="media in ::item.media" class="timeline__media--large">
         <a ng-if="::media.type === 'photo'" ng-href="{{::media.image_url}}:large" target="_blank">
             <svg class="timeline__media__jumpButton tips--deep animate--faster">
-                <use xlink:href="/public/img/icon-sprite.svg#twitter-eyeball-icon"></use>
+                <use xlink:href="#twitter-eyeball-icon"></use>
             </svg>
         </a>
         <img ng-if="::media.type === 'photo'" ng-src="{{::media.image_url}}" handle-image-error>

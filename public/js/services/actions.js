@@ -8,7 +8,6 @@ angular.module('Oneline.actionsServices', [])
 
         if (action === 'retweet' && method === 'destroy'){
             id = olUI.actionData(action, _id)
-            console.log(id)
         }
 
         return Action[method]({ action: action, provider: provider, id: id })

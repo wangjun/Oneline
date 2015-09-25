@@ -749,10 +749,10 @@ ng\:form {
 .loadMore:active {
   background-color: #CECECF;
 }
-.loadMore--new {
+.loadMore:first-child {
   z-index: 3;
 }
-.loadMore--old {
+.loadMore:last-child {
   z-index: 2;
 }
 .loadMore__count::before {
@@ -775,8 +775,14 @@ ng\:form {
   content: '';
   position: absolute;
   top: 19px;
+  left: 0;
+  width: 100%;
   height: 2px;
   background-color: #000;
+  -moz-transform-origin: left 50%;
+  -ms-transform-origin: left 50%;
+  -webkit-transform-origin: left 50%;
+  transform-origin: left 50%;
   -moz-border-radius: 1px;
   -webkit-border-radius: 1px;
   border-radius: 1px;
@@ -786,41 +792,50 @@ ng\:form {
 }
 @-moz-keyframes loadAnimate {
   0% {
-    width: 0;
-    left: 0;
+    -moz-transform: translateX(0) scaleX(0.07);
+    transform: translateX(0) scaleX(0.07);
   }
-  15%, 85% {
-    width: 7%;
+  90% {
+    -moz-transform: translateX(90%) scaleX(0.07);
+    transform: translateX(90%) scaleX(0.07);
   }
   100% {
-    width: 0;
-    left: 100%;
+    -moz-transform: translateX(100%) scaleX(0);
+    transform: translateX(100%) scaleX(0);
   }
 }
 @-webkit-keyframes loadAnimate {
   0% {
-    width: 0;
-    left: 0;
+    -webkit-transform: translateX(0) scaleX(0.07);
+    transform: translateX(0) scaleX(0.07);
   }
-  15%, 85% {
-    width: 7%;
+  90% {
+    -webkit-transform: translateX(90%) scaleX(0.07);
+    transform: translateX(90%) scaleX(0.07);
   }
   100% {
-    width: 0;
-    left: 100%;
+    -webkit-transform: translateX(100%) scaleX(0);
+    transform: translateX(100%) scaleX(0);
   }
 }
 @keyframes loadAnimate {
   0% {
-    width: 0;
-    left: 0;
+    -moz-transform: translateX(0) scaleX(0.07);
+    -ms-transform: translateX(0) scaleX(0.07);
+    -webkit-transform: translateX(0) scaleX(0.07);
+    transform: translateX(0) scaleX(0.07);
   }
-  15%, 85% {
-    width: 7%;
+  90% {
+    -moz-transform: translateX(90%) scaleX(0.07);
+    -ms-transform: translateX(90%) scaleX(0.07);
+    -webkit-transform: translateX(90%) scaleX(0.07);
+    transform: translateX(90%) scaleX(0.07);
   }
   100% {
-    width: 0;
-    left: 100%;
+    -moz-transform: translateX(100%) scaleX(0);
+    -ms-transform: translateX(100%) scaleX(0);
+    -webkit-transform: translateX(100%) scaleX(0);
+    transform: translateX(100%) scaleX(0);
   }
 }
 .loadMore--loading--fail {
@@ -833,41 +848,50 @@ ng\:form {
 }
 @-moz-keyframes loadAnimate--fail {
   0% {
-    width: 0;
-    left: 0;
+    -moz-transform: translateX(0) scaleX(0.07);
+    transform: translateX(0) scaleX(0.07);
   }
-  15%, 85% {
-    width: 7%;
+  90% {
+    -moz-transform: translateX(64%) scaleX(0.07);
+    transform: translateX(64%) scaleX(0.07);
   }
   100% {
-    width: 0;
-    left: 75%;
+    -moz-transform: translateX(75%) scaleX(0);
+    transform: translateX(75%) scaleX(0);
   }
 }
 @-webkit-keyframes loadAnimate--fail {
   0% {
-    width: 0;
-    left: 0;
+    -webkit-transform: translateX(0) scaleX(0.07);
+    transform: translateX(0) scaleX(0.07);
   }
-  15%, 85% {
-    width: 7%;
+  90% {
+    -webkit-transform: translateX(64%) scaleX(0.07);
+    transform: translateX(64%) scaleX(0.07);
   }
   100% {
-    width: 0;
-    left: 75%;
+    -webkit-transform: translateX(75%) scaleX(0);
+    transform: translateX(75%) scaleX(0);
   }
 }
 @keyframes loadAnimate--fail {
   0% {
-    width: 0;
-    left: 0;
+    -moz-transform: translateX(0) scaleX(0.07);
+    -ms-transform: translateX(0) scaleX(0.07);
+    -webkit-transform: translateX(0) scaleX(0.07);
+    transform: translateX(0) scaleX(0.07);
   }
-  15%, 85% {
-    width: 7%;
+  90% {
+    -moz-transform: translateX(64%) scaleX(0.07);
+    -ms-transform: translateX(64%) scaleX(0.07);
+    -webkit-transform: translateX(64%) scaleX(0.07);
+    transform: translateX(64%) scaleX(0.07);
   }
   100% {
-    width: 0;
-    left: 75%;
+    -moz-transform: translateX(75%) scaleX(0);
+    -ms-transform: translateX(75%) scaleX(0);
+    -webkit-transform: translateX(75%) scaleX(0);
+    transform: translateX(75%) scaleX(0);
   }
 }
 .loadMore--loading--fail::after {

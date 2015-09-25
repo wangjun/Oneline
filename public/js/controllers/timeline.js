@@ -1,46 +1,20 @@
 angular.module('Oneline.timelineControllers', [])
-.controller('timelineCtrl', ['$scope', '$q', '$state', 
-    'Timeline', 'olUI', 'olTokenHelper', 'olTimelineHelper', 'olActionsHelper', 'timelineCache',
-    function($scope, $q, $state, 
-        Timeline, olUI, olTokenHelper, olTimelineHelper, olActionsHelper, timelineCache){
+.controller('timelineCtrl', ['$scope', '$q', 
+    'Timeline', 'olUI', 'olTimelineHelper', 'olActionsHelper', 'timelineCache',
+    function($scope, $q, 
+        Timeline, olUI, olTimelineHelper, olActionsHelper, timelineCache){
 
 
     /**
-     * 初始化
-     *     1. 判斷是否需要跳轉到「設置頁面」
-     *     2. 設置 `isTimeline` & `isControlCenter`
-     *     3. 初始化時間線
+     * 初始化時間線
      */
-    // 1
-    if (!olTokenHelper.isValidToken()){
-        olTokenHelper.clearToken()
-        $scope.updateProviderList()
-        $state.go('settings')
-        return;
-    }
-    // 2
-    $scope.setTimeline(true)
-    $scope.setControlCenter('')
-    // 3
     $scope.timelineData = []
     olTimelineHelper.initTimelineSettings()
     olTimelineHelper.initLoad($scope.providerList)
     .then(function (){
         $scope.timelineData = olTimelineHelper.extractOldPosts($scope.providerList)
 
-        // 定時獲取「新貼文」
-        if (window.intervalLoad){
-            clearInterval(window.intervalLoad)
-        }
-        window.intervalLoad = setInterval(function (){
-            olTimelineHelper.loadNewPosts($scope.providerList)
-            .then(function (){
-                var newPostsLength = (timelineCache.get('newPosts') || []).length
-                // 設置提醒
-                olUI.setLoading('done', 1)
-                olUI.setPostsCount('newPosts', newPostsLength)
-            })
-        }, 1000 * 60 * 3)
+        registerAutoRefresh()
 
         // 結束加載動畫
         olUI.setLoading('done', 1)
@@ -55,7 +29,6 @@ angular.module('Oneline.timelineControllers', [])
      * 時間線操作
      *
      *  `scope.loadMore` 加載「新貼文」／「舊貼文」
-     *  `scope.resetCount` 重置未讀「新貼文」提醒
      */
     $scope.loadMore = function (step){
         if (olUI.isLoading(step)) return;
@@ -140,6 +113,28 @@ angular.module('Oneline.timelineControllers', [])
         })
         .finally(function (){
             olUI.setActionState(action, id, 'done')
+        })
+    }
+
+    // 定時獲取「新貼文」
+    function registerAutoRefresh(){
+        $scope.autoRefresh = setInterval(function (){
+            olUI.setLoading('start', 1)
+
+            olTimelineHelper.loadNewPosts($scope.providerList)
+            .then(function (){
+                var newPostsLength = (timelineCache.get('newPosts') || []).length
+                // 設置提醒
+                olUI.setLoading('done', 1)
+                olUI.setPostsCount('newPosts', newPostsLength)
+            })
+            .finally(function (){
+                olUI.setLoading('done', 1)
+            })
+        }, 1000 * 60 * 3)
+
+        $scope.$on('$destroy', function (){
+            clearInterval($scope.autoRefresh)
         })
     }
 }])

@@ -1,13 +1,13 @@
 <div class="menu menu--left animate--faster">
 
-    <div ng-if="isTimeline" class="vertically_center">
-        <a ui-sref="settings({ s: '1' })">
+    <div ng-show="isTimeline" class="vertically_center">
+        <a ui-sref="settings">
             <svg class="menu__button animate--faster" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <g fill="none">
                     <circle fill="#F1F1F1" cx="100" cy="100" r="100"/>
-                    <circle ng-attr-fill="{{ isAuth('twitter') ? '#2AA9E0' : '#FFF' }}" cx="100" cy="42.5" r="15"/>
-                    <circle ng-attr-fill="{{ isAuth('instagram') ? '#3F5D87' : '#FFF' }}" cx="100" cy="100" r="15"/>
-                    <circle ng-attr-fill="{{ isAuth('weibo') ? '#E6162D' : '#FFF' }}" cx="100" cy="157.5" r="15"/>
+                    <circle fill="#FFF" cx="100" cy="42.5" r="15" data-provider="twitter"/>
+                    <circle fill="#FFF" cx="100" cy="100" r="15" data-provider="instagram"/>
+                    <circle fill="#FFF" cx="100" cy="157.5" r="15" data-provider="weibo"/>
                 </g>
             </svg>
         </a>

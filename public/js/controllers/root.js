@@ -1,39 +1,32 @@
 angular.module('Oneline.rootControllers', [])
 .controller('rootController', [
-        '$scope', '$timeout', '$state', 'olTokenHelper',
-    function ($scope, $timeout, $state, olTokenHelper){
+        '$rootScope', '$scope', '$timeout', '$state',
+        'olTokenHelper', 'olUI', 'timelineCache',
+    function ($rootScope, $scope, $timeout, $state,
+        olTokenHelper, olUI, timelineCache){
 
 
     /**
      * 初始化
-     *     1. 初始化「社交網站列表」
-     *     2. 初始化 `isTimeline` & `isControlCenter` 的值
      */
-    // 1
     $scope.providerList = olTokenHelper.getProviderList()
-    // 2
     $scope.isTimeline = false
     $scope.controlCenter = ''
 
     // 刷新「社交網站列表」
     $scope.updateProviderList = function (){
+        var providerList = olTokenHelper.getProviderList();
+
         $timeout(function (){
-            $scope.providerList = olTokenHelper.getProviderList()
+            $scope.providerList = providerList
+            olUI.updateSocialIcon(providerList)
         })
-    }
-    // 設置當前是否為「時間線頁面」
-    $scope.setTimeline = function (value){
-        $scope.isTimeline = value
     }
     // 設置是否顯示「控制中心」
     $scope.setControlCenter = function (value){
         $scope.controlCenter = value
     }
-    // 驗證 provider 是否已授權
-    $scope.isAuth = function (provider){
-        return $scope.providerList.indexOf(provider) >= 0
-    }
-
+    // Router
     $scope.goto = function (state, e){
         if (state === 'timeline' && $scope.providerList <= 0) return;
 
@@ -49,12 +42,36 @@ angular.module('Oneline.rootControllers', [])
      *
      */
     $scope.toggleControlCenter = function (type){
-        $scope.controlCenter === type
-            ? $scope.setControlCenter('')
-            : $scope.setControlCenter(type)
+        $scope.controlCenter = $scope.controlCenter === type ? '' : type
     }
     $scope.toggleActive = function (e){
         var elem = angular.element(e.currentTarget);
         elem.toggleClass('tips--active')
     }
+
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams){
+        window.timelineCache = timelineCache
+        // * -> /
+        if (toState.name === 'timeline'){
+            if (!olTokenHelper.isValidToken()){
+                $state.go('settings')
+            } else {
+                $scope.isTimeline = true
+            }
+        }
+        // * -> /settings
+        else if (toState.name === 'settings'){
+            if (!olTokenHelper.isValidToken()){
+                olTokenHelper.clearToken()
+            }
+
+            $scope.isTimeline = false
+        }
+
+        document.title = '｜'
+        timelineCache.removeAll()
+        $scope.updateProviderList()
+        $scope.controlCenter = ''
+    })
 }])

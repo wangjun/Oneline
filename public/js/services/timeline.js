@@ -1,6 +1,6 @@
 angular.module('Oneline.timelineServices', [])
-.service('olTimelineHelper', ['$q', '$state', 'Timeline', 'timelineCache', 'olUI', 'olTokenHelper',
-    function($q, $state, Timeline, timelineCache, olUI, olTokenHelper){
+.service('olTimelineHelper', ['$q', '$state', 'Timeline', 'timelineCache', 'olUI',
+    function($q, $state, Timeline, timelineCache, olUI){
 
     var time_pointer   = Date.now();
     var retrieve_count = 90;
@@ -55,10 +55,6 @@ angular.module('Oneline.timelineServices', [])
     this.initTimelineSettings = function (){
         time_pointer = Date.now()
         retrieve_count = 50
-        // 清空 `timelineCache`
-        timelineCache.removeAll()
-        // 重置 Tab 標題
-        document.title = '｜'
     }
     /**
      * 「新／舊帖文」相關
@@ -302,7 +298,6 @@ angular.module('Oneline.timelineServices', [])
         }
 
         if (err.status === 401){
-            olTokenHelper.clearToken()
             $state.go('settings')
         } else if (err.status === 429){
             olUI.setLoading('fail', step)
