@@ -10,19 +10,19 @@ angular.module('Oneline.timelineControllers', [])
      */
     $scope.timelineData = []
     olTimelineHelper.initTimelineSettings()
-    olTimelineHelper.initLoad($scope.providerList)
-    .then(function (){
-        $scope.timelineData = olTimelineHelper.extractOldPosts($scope.providerList)
+    // olTimelineHelper.initLoad($scope.providerList)
+    // .then(function (){
+    //     $scope.timelineData = olTimelineHelper.extractOldPosts($scope.providerList)
 
-        registerAutoRefresh()
+    //     registerAutoRefresh()
 
-        // 結束加載動畫
-        olUI.setLoading('done', 1)
-        olUI.setLoading('done', -1)
-    })
-    .catch(function (err){
-        olTimelineHelper.handleError(err)
-    })
+    //     // 結束加載動畫
+    //     olUI.setLoading('done', 1)
+    //     olUI.setLoading('done', -1)
+    // })
+    // .catch(function (err){
+    //     olTimelineHelper.handleError(err)
+    // })
 
 
     /**

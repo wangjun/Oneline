@@ -1,24 +1,10 @@
 /* Status: Settings */
 .oneline {
+    @extend .settingsWidth;
     position: absolute;
-    left: 40%;
     top: 0%;
-    width: 20%;
     height: 100%;
     background-color: $color-black;
-
-    @media #{$phone-portrait}{
-        left: 15%;
-        width: 70%;
-    }
-    @media #{$tablet}{
-        left: 25%;
-        width: 50%;
-    }
-    @media #{$tablet-landscape}{
-        left: 33.3%;
-        width: 33.3%;
-    }
 }
 
 /* 側邊菜單欄 */
@@ -57,7 +43,8 @@
             @include filter(grayscale(0%));
         }
 
-        &:hover {
+        &:hover, &--active {
+            @include opacity(1);
             @include filter(grayscale(0%));
         }
     }
@@ -71,23 +58,9 @@
 .status {
     /* Status: Timeline */
     &--timeline {
-        .oneline {
-            left: 33.3%;
-            width: 33.3%;
+        .oneline, .controlCenter {
+            @extend .timelineWidth;
             background-color: $color-gray;
-
-            @media #{$phone-portrait}{
-                left: 0%;
-                width: 100%;
-            }
-            @media #{$tablet}{
-                left: 15%;
-                width: 70%;
-            }
-            @media #{$tablet-landscape}{
-                left: 25%;
-                width: 50%;
-            }
         }
 
         .menu {
@@ -105,8 +78,51 @@
             }
         }
     }
+    /* Status: controlCenter */
     &--controlCenter {
         height: 80%;
-        overflow: hidden;
+
+        &--deep {
+            height: 66.7%;
+        }
+    }
+}
+
+
+
+/**
+ * Base
+ *
+ */
+.settingsWidth {
+    left: 40%;
+    width: 20%;
+    @media #{$phone-portrait}{
+        left: 15%;
+        width: 70%;
+    }
+    @media #{$tablet}{
+        left: 25%;
+        width: 50%;
+    }
+    @media #{$tablet-landscape}{
+        left: 33.3%;
+        width: 33.3%;
+    }
+}
+.timelineWidth {
+    left: 33.3%;
+    width: 33.3%;
+    @media #{$phone-portrait}{
+        left: 0%;
+        width: 100%;
+    }
+    @media #{$tablet}{
+        left: 15%;
+        width: 70%;
+    }
+    @media #{$tablet-landscape}{
+        left: 25%;
+        width: 50%;
     }
 }

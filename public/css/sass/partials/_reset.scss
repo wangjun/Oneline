@@ -58,5 +58,12 @@ input, button, select, textarea{
     outline: 0px;
 
     @include appearance(none);
-    @include border-radius(0px);
+    @include border-radius(3px);
+}
+textarea {
+    display: block;
+    padding: 7px;
+    resize: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }

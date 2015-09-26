@@ -4,7 +4,7 @@
     </a>
     <div class="timeline__profile__fullname">
         <a ng-href="//instagram.com/{{::item.user.username}}" target="_blank">
-            <strong>{{::item.user.full_name}}</strong>
+            <strong ng-bind="::item.user.full_name"></strong>
         </a>
     </div>
 </div>
@@ -12,7 +12,7 @@
 <div class="timeline__content">
 
     <div ng-include=" 'media/instagram.html' "></div>
-    <p class="timeline__text" linkify="instagram">{{::item.text | html}}</p>
+    <p class="timeline__text" linkify="instagram" ng-bind="::item.text | html"></p>
 </div>
 
 <div ng-include=" 'actions/instagram.html' "></div>

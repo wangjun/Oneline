@@ -21,11 +21,11 @@
 
     <div ng-include=" 'menu/left.html' "></div>
 
-    <div class="oneline overflow--y animate--general" ng-class="{'status--controlCenter': controlCenter !== ''}" ng-swipe-left="goto('timeline', $event)" ng-swipe-right="goto('settings', $event)" ng-swipe-disable-mouse>
+    <div class="oneline overflow--y animate--general" ng-class="{ 'status--controlCenter': controlCenter.indexOf('replicant') >= 0, 'status--controlCenter--deep': controlCenter.indexOf('new') >= 0 }" ng-swipe-left="goto('timeline', $event)" ng-swipe-right="goto('settings', $event)" ng-swipe-disable-mouse>
         <ui-view></ui-view>
     </div>
 
-    <div ng-include=" 'controlCenter/wrapper.html' " class="controlCenter animate--general" ng-class="{'controlCenter--active': controlCenter !== ''}"></div>
+    <div ng-include=" 'controlCenter/wrapper.html' " class="controlCenter animate--general" ng-class="{ 'controlCenter--active': controlCenter.indexOf('replicant') >= 0, 'controlCenter--active--deep': controlCenter.indexOf('new') >= 0 }"></div>
 
     <div ng-include=" 'menu/right.html' "></div>
 
@@ -56,6 +56,12 @@
             <g fill="none">
                 <circle fill="#59DE5D" cx="100" cy="100" r="100"/>
                 <path d="M78 137.05l68.236-68.236c1.367-1.367 3.583-1.367 4.95 0s1.367 3.583 0 4.95l-70.711 70.711c-.683.683-1.579 1.025-2.475 1.025-.896 0-1.791-.342-2.475-1.025l-25.456-25.456c-1.367-1.367-1.367-3.583 0-4.95s3.583-1.367 4.95 0l22.981 22.981z" fill="#fff"/>
+            </g>
+        </symbol>
+        <symbol id="cancel-icon" viewBox="0 0 200 200">
+            <g fill="none">
+                <circle fill="#E6162D" cx="100" cy="100" r="100"/>
+                <path d="M100.356 103.184l-26.866 26.866c-.781.781-2.047.781-2.828 0-.781-.781-.781-2.047 0-2.828l26.866-26.866-27.578-27.578c-.781-.781-.781-2.047 0-2.828.781-.781 2.047-.781 2.828 0l27.578 27.578 26.866-26.866c.781-.781 2.047-.781 2.828 0 .781.781.781 2.047 0 2.828l-26.866 26.866 26.163 26.163c.781.781.781 2.047 0 2.828-.781.781-2.047.781-2.828 0l-26.163-26.163z" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
             </g>
         </symbol>
         <symbol id="play-icon" viewBox="0 0 100 100">
@@ -111,25 +117,23 @@
             </g>
         </symbol>
         <!-- Replicant -->
-        <symbol id="replicant-deckard-icon" viewBox="0 0 54 67" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="replicant-deckard-icon" viewBox="0 0 54 67">
             <g transform="translate(2)" fill="none">
                 <circle stroke="#FFF" stroke-width="3" cx="25" cy="40" r="25"/>
                 <path d="M25 30c8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15zm-3.498 20.191c1.932 3.346 5.065 3.345 6.997 0l5.994-10.382c1.932-3.346.364-6.059-3.498-6.059h-11.988c-3.864 0-5.43 2.714-3.498 6.059l5.994 10.382z" fill="#FFF"/>
             </g>
         </symbol>
-        <symbol id="replicant-rachael-icon" viewBox="0 0 54 67" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="replicant-rachael-icon" viewBox="0 0 54 67">
             <g transform="translate(2)" fill="none">
                 <path d="M25 30c8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15zm-3.498 5.809c1.932-3.346 5.065-3.345 6.997 0l5.994 10.382c1.932 3.346.364 6.059-3.498 6.059h-11.988c-3.864 0-5.43-2.714-3.498-6.059l5.994-10.382z" fill="#FFF"/>
                 <circle stroke="#FFF" stroke-width="3" cx="25" cy="40" r="25"/>
             </g>
         </symbol>
         <!-- Others -->
-        <symbol id="imgErr_icon" viewBox="0 0 529 530" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="newTweet-icon" viewBox="0 0 200 200">
             <g fill="none">
-                <path d="M51.245 150.775c-3.454-1.729-5.458-.098-4.476 3.638l.706 2.688c8.01 30.498-2.986 73.86-24.566 96.854l-.662.706c-2.643 2.816-1.649 5.288 2.193 5.52l136.636 8.237c9.376.565 23.953-2.031 32.554-5.798l21.279-9.319-13.768-18.801c-5.55-7.579-16.851-17.127-25.254-21.333l-124.642-62.392z" fill="#000"/>
-                <path d="M9.298 290.938c13.001 129.203 122.073 230.062 254.702 230.062 141.385 0 256-114.615 256-256s-114.615-256-256-256c-84.794 0-159.96 41.226-206.547 104.728" stroke="#000" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M361.259 190.733c-4.06-1.129-8.339-1.733-12.759-1.733-26.234 0-47.5 21.266-47.5 47.5 0 4.115.523 8.109 1.507 11.917" stroke="#000" stroke-width="17" stroke-linecap="round"/>
-                <path d="M213.468 406.97c13.141-16.776 37.347-28.026 65.032-28.026 30.37 0 56.552 13.538 68.536 33.056" stroke="#000" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle fill="#2AA9E0" cx="100" cy="100" r="100"/>
+                <path d="M143 57s-.108 5.596-6.828 11.407c-5.419 4.735-10.946 7.317-14.848 11.945 3.902.215 10.838-1.507 16.04-4.304-.867 2.475-1.626 4.197-3.251 6.457-4.877 6.564-9.971 8.932-18.316 11.514-4.769 1.507-7.803 5.488-7.803 5.488 5.094.215 10.079-.753 15.065-2.583-1.951 8.824-17.341 14.742-24.494 15.603 0 0 0 .108-.108.108-9.646 1.614-18.424 10.976-25.794 22.706-3.576 5.703-6.394 9.9-8.454 13.021-3.143 4.95-6.286 9.039-7.478 8.609-1.192-.43-1.084-4.52 1.517-11.191 1.409-3.659 8.128-19.154 19.508-35.834 14.631-21.737 36.307-46.38 65.244-52.944z" fill="#fff"/>
             </g>
         </symbol>
     </svg>

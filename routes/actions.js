@@ -33,12 +33,12 @@ router.all('/:action/:provider/:id', function (req, res, next){
             token      : found.token,
             tokenSecret: found.tokenSecret,
             id         : req.olId,
+            status     : req.body.status,
             method     : req.method.toLowerCase()
 
         })
     })
     .then(function (data){
-        console.log(data)
         res.json(data)
     })
     .fail(function (err){

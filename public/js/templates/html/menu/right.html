@@ -8,4 +8,10 @@
         </a>
     </div>
 
+    <div ng-if="isTimeline" class="vertically_center">
+        <svg class="menu__button animate--faster" ng-click="toggleControlCenter('newTweet')" toggle-class="menu__button--active" toggle-icon='#newTweet-icon, #cancel-icon'>
+            <use xlink:href="#newTweet-icon"></use>
+        </svg>
+    </div>
+
 </div>

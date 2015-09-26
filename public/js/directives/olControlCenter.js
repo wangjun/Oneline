@@ -1,4 +1,31 @@
 angular.module('Oneline.olControlCenterDirectives', [])
+.directive('toggleClass', function (){
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs){
+            elem.on('click', function (){
+                elem.toggleClass(attrs.toggleClass)
+            })
+        }
+    }
+})
+.directive('toggleIcon', function (){
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs){
+            elem.on('click', function (){
+                var iconList   = attrs.toggleIcon.split(', '),
+                    targetElem = elem.find('use'),
+                    targetIcon = iconList.indexOf(targetElem.attr('xlink:href')) == 0
+                                    ? iconList[1]
+                                    : iconList[0]
+
+                                    console.log(targetElem.attr('xlink:href'), targetIcon)
+                targetElem.attr('xlink:href', targetIcon)
+            })
+        }
+    }
+})
 .directive('replicantDeckard', ['Replicant', function (Replicant){
     return {
         restrict: 'A',
@@ -80,6 +107,49 @@ angular.module('Oneline.olControlCenterDirectives', [])
                         inputElem.removeClass('replicant--rachael--errCode')
                     }, 500)
                 })
+            })
+        }
+    }
+}])
+.directive('writeTweet', ['Action', 'olTokenHelper', function (Action, olTokenHelper){
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function (scope, elem, attrs){
+            var submitButton = elem.find('button'),
+                statusElem   = elem.find('textarea'),
+                counterElem  = elem.find('span'),
+                status       = '';
+
+
+            elem.bind('submit', function (e){
+                e.preventDefault()
+
+                console.log(status)
+                Action.update({ action: 'tweet', provider: 'twitter', id: 0 }, { status: status })
+                .$promise
+                .then(function (data){
+
+                }, function (err){
+
+                })
+            })
+
+            elem.bind('input', function (){
+                // 更新推文內容
+                status = statusElem.val()
+                // 更新剩餘字數
+                counterElem.html(140 - status.length)
+
+                // 動畫
+                submitButton.addClass('write__submit__button--typing')
+                setTimeout(function (){
+                    submitButton.removeClass('write__submit__button--typing')
+                }, 700)
+            })
+
+            elem.on('$destroy', function (){
+                elem.unbind()
             })
         }
     }

@@ -267,9 +267,17 @@ input, button, select, textarea {
   outline: 0px;
   -moz-appearance: none;
   -webkit-appearance: none;
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  border-radius: 0px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+textarea {
+  display: block;
+  padding: 7px;
+  resize: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* angular-csp */
@@ -286,29 +294,9 @@ ng\:form {
 /* Status: Settings */
 .oneline {
   position: absolute;
-  left: 40%;
   top: 0%;
-  width: 20%;
   height: 100%;
   background-color: #000;
-}
-@media (max-device-width: 767px) and (orientation: portrait) {
-  .oneline {
-    left: 15%;
-    width: 70%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .oneline {
-    left: 25%;
-    width: 50%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .oneline {
-    left: 33.3%;
-    width: 33.3%;
-  }
 }
 
 /* 側邊菜單欄 */
@@ -352,7 +340,9 @@ ng\:form {
     filter: grayscale(0%);
   }
 }
-.menu__button:hover {
+.menu__button:hover, .menu__button--active {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
 }
@@ -364,29 +354,10 @@ ng\:form {
 
 .status {
   /* Status: Timeline */
+  /* Status: controlCenter */
 }
-.status--timeline .oneline {
-  left: 33.3%;
-  width: 33.3%;
+.status--timeline .oneline, .status--timeline .controlCenter {
   background-color: #F1F1F1;
-}
-@media (max-device-width: 767px) and (orientation: portrait) {
-  .status--timeline .oneline {
-    left: 0%;
-    width: 100%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .status--timeline .oneline {
-    left: 15%;
-    width: 70%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .status--timeline .oneline {
-    left: 25%;
-    width: 50%;
-  }
 }
 .status--timeline .menu {
   width: 33.3%;
@@ -404,7 +375,59 @@ ng\:form {
 }
 .status--controlCenter {
   height: 80%;
-  overflow: hidden;
+}
+.status--controlCenter--deep {
+  height: 66.7%;
+}
+
+/**
+ * Base
+ *
+ */
+.settingsWidth, .oneline, .controlCenter {
+  left: 40%;
+  width: 20%;
+}
+@media (max-device-width: 767px) and (orientation: portrait) {
+  .settingsWidth, .oneline, .controlCenter {
+    left: 15%;
+    width: 70%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
+  .settingsWidth, .oneline, .controlCenter {
+    left: 25%;
+    width: 50%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .settingsWidth, .oneline, .controlCenter {
+    left: 33.3%;
+    width: 33.3%;
+  }
+}
+
+.timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+  left: 33.3%;
+  width: 33.3%;
+}
+@media (max-device-width: 767px) and (orientation: portrait) {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+    left: 0%;
+    width: 100%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+    left: 15%;
+    width: 70%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+    left: 25%;
+    width: 50%;
+  }
 }
 
 .actions {
@@ -1015,32 +1038,16 @@ ng\:form {
 /* 底部控制中心 */
 .controlCenter {
   position: absolute;
-  left: 40%;
   bottom: 0;
-  width: 20%;
   height: 0%;
   background-color: #F1F1F1;
-}
-@media (max-device-width: 767px) and (orientation: portrait) {
-  .controlCenter {
-    left: 15%;
-    width: 70%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .controlCenter {
-    left: 25%;
-    width: 50%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .controlCenter {
-    left: 33.3%;
-    width: 33.3%;
-  }
+  border-top: 1px solid #FFF;
 }
 .controlCenter--active {
   height: 20%;
+}
+.controlCenter--active--deep {
+  height: 33.3%;
 }
 .controlCenter__wrapper {
   display: table;
@@ -1075,7 +1082,6 @@ ng\:form {
 .replicant--rachael {
   width: 80%;
   height: 50px;
-  border-radius: 3px;
   font-size: 27px;
   line-height: 50px;
   text-align: center;
@@ -1172,4 +1178,79 @@ ng\:form {
     -webkit-transform: translateX(2px);
     transform: translateX(2px);
   }
+}
+.write__textarea {
+  margin: 0 auto;
+  width: 90%;
+  height: 20vh;
+  max-height: 20vh;
+  font-size: 14px;
+}
+.write__toolBar {
+  position: relative;
+  margin: 7px auto;
+  width: 90%;
+}
+.write__submit {
+  float: right;
+  font-size: 12px;
+}
+.write__submit__counter {
+  color: #666;
+  line-height: 28px;
+  vertical-align: top;
+}
+.write__submit__button {
+  margin-left: 7px;
+  width: 52px;
+  height: 28px;
+  background-color: #2AA9E0;
+  cursor: pointer;
+}
+.write__submit__button svg {
+  width: 27px;
+}
+.write__submit__button path {
+  -moz-animation: writingAnimate 0.3s infinite linear paused;
+  -webkit-animation: writingAnimate 0.3s infinite linear paused;
+  animation: writingAnimate 0.3s infinite linear paused;
+}
+@-moz-keyframes writingAnimate {
+  from {
+    -moz-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    transform: rotate(0deg) translateX(3px) rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    transform: rotate(360deg) translateX(3px) rotate(-360deg);
+  }
+}
+@-webkit-keyframes writingAnimate {
+  from {
+    -webkit-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    transform: rotate(0deg) translateX(3px) rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    transform: rotate(360deg) translateX(3px) rotate(-360deg);
+  }
+}
+@keyframes writingAnimate {
+  from {
+    -moz-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    -ms-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    -webkit-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    transform: rotate(0deg) translateX(3px) rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    -ms-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    -webkit-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    transform: rotate(360deg) translateX(3px) rotate(-360deg);
+  }
+}
+.write__submit__button--typing path {
+  -moz-animation-play-state: running;
+  -webkit-animation-play-state: running;
+  animation-play-state: running;
 }

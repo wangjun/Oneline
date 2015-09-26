@@ -6,10 +6,7 @@ angular.module('Oneline.olMediaDirectives', [])
             olPoster: '=',
             olSrc: '='
         },
-        template: '<video ng-attr-poster="{{olPoster}}" preload="none" loop webkit-playsinline="true"></video> \
-                   <svg class="timeline__media__playButton animate--faster"> \
-                       <use xlink:href="#play-icon"></use> \
-                   </svg>',
+        templateUrl: 'media/video.html',
         link: function (scope, elem, attrs){
             var video = elem.children()[0],
                 playIcon = angular.element(elem.children()[1]);

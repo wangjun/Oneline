@@ -1,27 +1,18 @@
 /* 底部控制中心 */
 .controlCenter {
+    @extend .settingsWidth;
     position: absolute;
-    left: 40%;
     bottom: 0;
-    width: 20%;
     height: 0%;
     background-color: $color-gray;
-
-    @media #{$phone-portrait}{
-        left: 15%;
-        width: 70%;
-    }
-    @media #{$tablet}{
-        left: 25%;
-        width: 50%;
-    }
-    @media #{$tablet-landscape}{
-        left: 33.3%;
-        width: 33.3%;
-    }
+    border-top: 1px solid $color-white;
 
     &--active {
         height: 20%;
+
+        &--deep {
+            height: 33.3%;
+        }
     }
 
     &__wrapper {
@@ -60,7 +51,6 @@
     &--rachael {
         width: 80%;
         height: 50px;
-        border-radius: 3px;
         font-size: 27px;
         line-height: 50px;
         text-align: center;
@@ -87,6 +77,60 @@
                 }
                 87.5% {
                     @include transform(translateX(2px));
+                }
+            }
+        }
+    }
+}
+
+.write {
+    &__textarea {
+        margin: 0 auto;
+        width: 90%;
+        height: 20vh;
+        max-height: 20vh;
+        font-size: $font-size-base;
+    }
+    &__toolBar {
+        position: relative;
+        margin: 7px auto;
+        width: 90%;
+    }
+
+    &__submit{
+        float: right;
+        font-size: $font-size-small;
+
+        &__counter {
+            color: $color-steel;
+            line-height: 28px;
+            vertical-align: top;
+        }
+
+        &__button {
+            margin-left: 7px;
+            width: 52px;
+            height: 28px;
+            background-color: $color-twitter;
+            cursor: pointer;
+
+            svg {
+                width: 27px;
+            }
+            path {
+                @include animation(writingAnimate .3s infinite linear paused);
+                @include keyframes(writingAnimate) {
+                    from {
+                        @include transform(rotate(0deg) translateX(3px) rotate(0deg));
+                    }
+                    to {
+                        @include transform(rotate(360deg) translateX(3px) rotate(-360deg));
+                    }
+                }
+            }
+            &--typing {
+                path {
+                    @include animation-play-state(running);
                 }
             }
         }
