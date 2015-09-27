@@ -56,9 +56,9 @@
         text-align: center;
 
         &--errCode {
-            @include animation(errCodeAnimate .5s ease-in-out);
+            @include animation(errFormAnimate .5s ease-in-out);
 
-            @include keyframes(errCodeAnimate) {
+            @include keyframes(errFormAnimate) {
                 0%, 100% {
                     background-color: $color-white;
                     @include transform(translateX(0));
@@ -90,6 +90,15 @@
         height: 20vh;
         max-height: 20vh;
         font-size: $font-size-base;
+
+        &:disabled {
+            color: $color-gray;
+            cursor: default;
+            @include user-select(none);
+        }
+        &--err {
+            @include animation(errFormAnimate .5s ease-in-out);
+        }
     }
     &__toolBar {
         position: relative;
@@ -97,41 +106,70 @@
         width: 90%;
     }
 
-    &__submit{
+    &__button {
         float: right;
-        font-size: $font-size-small;
+        position: relative;
+        width: 27px;
+        height: 27px;
+        background-color: transparent;
+        cursor: pointer;
 
-        &__counter {
-            color: $color-steel;
-            line-height: 28px;
-            vertical-align: top;
+        svg {
+            width: 27px;
+        }
+        path {
+            @include animation(writingAnimate .3s infinite linear paused);
+            @include keyframes(writingAnimate) {
+                from {
+                    @include transform(rotate(0deg) translateX(3px) rotate(0deg));
+                }
+                to {
+                    @include transform(rotate(360deg) translateX(3px) rotate(-360deg));
+                }
+            }
         }
 
-        &__button {
-            margin-left: 7px;
-            width: 52px;
-            height: 28px;
-            background-color: $color-twitter;
-            cursor: pointer;
+        &::before {
+            content: attr(data-count);
+            position: absolute;
+            color: $color-steel;
+            right: 28px;
+            bottom: 0;
+            font-size: 7px;
+        }
 
-            svg {
-                width: 27px;
-            }
+        &--typing {
             path {
-                @include animation(writingAnimate .3s infinite linear paused);
-                @include keyframes(writingAnimate) {
-                    from {
-                        @include transform(rotate(0deg) translateX(3px) rotate(0deg));
-                    }
-                    to {
-                        @include transform(rotate(360deg) translateX(3px) rotate(-360deg));
-                    }
+                @include animation-play-state(running);
+            }
+        }
+        &:disabled {
+            cursor: default;
+
+            path {
+                fill: $color-twitter-alpha;
+                @include animation-play-state(paused);
+            }
+            &::before {
+                color: $color-weibo;
+            }
+        }
+        &--sending {
+            @include animation(sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1));
+            @include keyframes(sendingAnimate) {
+                0%, 100% {
+                    @include transform(translateX(0));
+                }
+                50% {
+                    @include transform(translateX(-27px));
                 }
             }
-            &--typing {
-                path {
-                    @include animation-play-state(running);
-                }
+
+            path {
+                @include animation-play-state(running);
+            }
+            &::before {
+                content: '';
             }
         }
     }

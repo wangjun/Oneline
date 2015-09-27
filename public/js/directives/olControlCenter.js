@@ -20,7 +20,6 @@ angular.module('Oneline.olControlCenterDirectives', [])
                                     ? iconList[1]
                                     : iconList[0]
 
-                                    console.log(targetElem.attr('xlink:href'), targetIcon)
                 targetElem.attr('xlink:href', targetIcon)
             })
         }
@@ -111,40 +110,60 @@ angular.module('Oneline.olControlCenterDirectives', [])
         }
     }
 }])
-.directive('writeTweet', ['Action', 'olTokenHelper', function (Action, olTokenHelper){
+.directive('writeTweet', ['$timeout', 'Action', 'olTokenHelper', function ($timeout, Action, olTokenHelper){
     return {
         restrict: 'A',
         scope: false,
         link: function (scope, elem, attrs){
             var submitButton = elem.find('button'),
                 statusElem   = elem.find('textarea'),
-                counterElem  = elem.find('span'),
                 status       = '';
 
 
             elem.bind('submit', function (e){
                 e.preventDefault()
 
-                console.log(status)
+                statusElem.prop('disabled', true)
+                submitButton.addClass('write__button--sending')
                 Action.update({ action: 'tweet', provider: 'twitter', id: 0 }, { status: status })
                 .$promise
                 .then(function (data){
-
-                }, function (err){
-
+                    $timeout(function (){
+                        angular
+                        .element(document.querySelector('[js-newTweet]'))
+                        .triggerHandler('click')
+                    })
+                })
+                .catch(function (err){
+                    submitButton.prop('disabled', false)
+                    statusElem.addClass('write__textarea--err')
+                    setTimeout(function (){
+                        statusElem.removeClass('write__textarea--err')
+                    }, 500)
+                })
+                .finally(function (){
+                    statusElem.prop('disabled', false)
+                    submitButton.removeClass('write__button--sending')
                 })
             })
 
             elem.bind('input', function (){
                 // 更新推文內容
-                status = statusElem.val()
+                status = statusElem.val().trim()
+                // 超字提醒
+                var statusLength = status.length
+                if (statusLength > 140 || statusLength === 0){
+                    submitButton.prop('disabled', true)
+                } else {
+                    submitButton.prop('disabled', false)
+                }
                 // 更新剩餘字數
-                counterElem.html(140 - status.length)
+                submitButton.attr('data-count', statusLength > 0 ? statusLength : '')
 
                 // 動畫
-                submitButton.addClass('write__submit__button--typing')
+                submitButton.addClass('write__button--typing')
                 setTimeout(function (){
-                    submitButton.removeClass('write__submit__button--typing')
+                    submitButton.removeClass('write__button--typing')
                 }, 700)
             })
 

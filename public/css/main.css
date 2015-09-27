@@ -375,6 +375,8 @@ ng\:form {
 }
 .status--controlCenter {
   height: 80%;
+  -webkit-filter: brightness(0.3);
+  filter: brightness(0.3);
 }
 .status--controlCenter--deep {
   height: 66.7%;
@@ -1087,11 +1089,11 @@ ng\:form {
   text-align: center;
 }
 .replicant--rachael--errCode {
-  -moz-animation: errCodeAnimate 0.5s ease-in-out;
-  -webkit-animation: errCodeAnimate 0.5s ease-in-out;
-  animation: errCodeAnimate 0.5s ease-in-out;
+  -moz-animation: errFormAnimate 0.5s ease-in-out;
+  -webkit-animation: errFormAnimate 0.5s ease-in-out;
+  animation: errFormAnimate 0.5s ease-in-out;
 }
-@-moz-keyframes errCodeAnimate {
+@-moz-keyframes errFormAnimate {
   0%, 100% {
     background-color: #FFF;
     -moz-transform: translateX(0);
@@ -1117,7 +1119,7 @@ ng\:form {
     transform: translateX(2px);
   }
 }
-@-webkit-keyframes errCodeAnimate {
+@-webkit-keyframes errFormAnimate {
   0%, 100% {
     background-color: #FFF;
     -webkit-transform: translateX(0);
@@ -1143,7 +1145,7 @@ ng\:form {
     transform: translateX(2px);
   }
 }
-@keyframes errCodeAnimate {
+@keyframes errFormAnimate {
   0%, 100% {
     background-color: #FFF;
     -moz-transform: translateX(0);
@@ -1186,31 +1188,36 @@ ng\:form {
   max-height: 20vh;
   font-size: 14px;
 }
+.write__textarea:disabled {
+  color: #F1F1F1;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.write__textarea--err {
+  -moz-animation: errFormAnimate 0.5s ease-in-out;
+  -webkit-animation: errFormAnimate 0.5s ease-in-out;
+  animation: errFormAnimate 0.5s ease-in-out;
+}
 .write__toolBar {
   position: relative;
   margin: 7px auto;
   width: 90%;
 }
-.write__submit {
+.write__button {
   float: right;
-  font-size: 12px;
-}
-.write__submit__counter {
-  color: #666;
-  line-height: 28px;
-  vertical-align: top;
-}
-.write__submit__button {
-  margin-left: 7px;
-  width: 52px;
-  height: 28px;
-  background-color: #2AA9E0;
+  position: relative;
+  width: 27px;
+  height: 27px;
+  background-color: transparent;
   cursor: pointer;
 }
-.write__submit__button svg {
+.write__button svg {
   width: 27px;
 }
-.write__submit__button path {
+.write__button path {
   -moz-animation: writingAnimate 0.3s infinite linear paused;
   -webkit-animation: writingAnimate 0.3s infinite linear paused;
   animation: writingAnimate 0.3s infinite linear paused;
@@ -1249,8 +1256,75 @@ ng\:form {
     transform: rotate(360deg) translateX(3px) rotate(-360deg);
   }
 }
-.write__submit__button--typing path {
+.write__button::before {
+  content: attr(data-count);
+  position: absolute;
+  color: #666;
+  right: 28px;
+  bottom: 0;
+  font-size: 7px;
+}
+.write__button--typing path {
   -moz-animation-play-state: running;
   -webkit-animation-play-state: running;
   animation-play-state: running;
+}
+.write__button:disabled {
+  cursor: default;
+}
+.write__button:disabled path {
+  fill: rgba(42, 169, 224, 0.3);
+  -moz-animation-play-state: paused;
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+}
+.write__button:disabled::before {
+  color: #E6162D;
+}
+.write__button--sending {
+  -moz-animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+  -webkit-animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+  animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+}
+@-moz-keyframes sendingAnimate {
+  0%, 100% {
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -moz-transform: translateX(-27px);
+    transform: translateX(-27px);
+  }
+}
+@-webkit-keyframes sendingAnimate {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(-27px);
+    transform: translateX(-27px);
+  }
+}
+@keyframes sendingAnimate {
+  0%, 100% {
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -moz-transform: translateX(-27px);
+    -ms-transform: translateX(-27px);
+    -webkit-transform: translateX(-27px);
+    transform: translateX(-27px);
+  }
+}
+.write__button--sending path {
+  -moz-animation-play-state: running;
+  -webkit-animation-play-state: running;
+  animation-play-state: running;
+}
+.write__button--sending::before {
+  content: '';
 }

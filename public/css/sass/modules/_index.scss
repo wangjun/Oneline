@@ -81,6 +81,7 @@
     /* Status: controlCenter */
     &--controlCenter {
         height: 80%;
+        @include filter(brightness(0.3));
 
         &--deep {
             height: 66.7%;
