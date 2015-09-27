@@ -267,9 +267,17 @@ input, button, select, textarea {
   outline: 0px;
   -moz-appearance: none;
   -webkit-appearance: none;
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  border-radius: 0px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+textarea {
+  display: block;
+  padding: 7px;
+  resize: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* angular-csp */
@@ -286,29 +294,9 @@ ng\:form {
 /* Status: Settings */
 .oneline {
   position: absolute;
-  left: 40%;
   top: 0%;
-  width: 20%;
   height: 100%;
   background-color: #000;
-}
-@media (max-device-width: 767px) and (orientation: portrait) {
-  .oneline {
-    left: 15%;
-    width: 70%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .oneline {
-    left: 25%;
-    width: 50%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .oneline {
-    left: 33.3%;
-    width: 33.3%;
-  }
 }
 
 /* 側邊菜單欄 */
@@ -352,7 +340,9 @@ ng\:form {
     filter: grayscale(0%);
   }
 }
-.menu__button:hover {
+.menu__button:hover, .menu__button--active {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
 }
@@ -364,29 +354,10 @@ ng\:form {
 
 .status {
   /* Status: Timeline */
+  /* Status: controlCenter */
 }
-.status--timeline .oneline {
-  left: 33.3%;
-  width: 33.3%;
+.status--timeline .oneline, .status--timeline .controlCenter {
   background-color: #F1F1F1;
-}
-@media (max-device-width: 767px) and (orientation: portrait) {
-  .status--timeline .oneline {
-    left: 0%;
-    width: 100%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .status--timeline .oneline {
-    left: 15%;
-    width: 70%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .status--timeline .oneline {
-    left: 25%;
-    width: 50%;
-  }
 }
 .status--timeline .menu {
   width: 33.3%;
@@ -404,7 +375,61 @@ ng\:form {
 }
 .status--controlCenter {
   height: 80%;
-  overflow: hidden;
+  -webkit-filter: brightness(0.3);
+  filter: brightness(0.3);
+}
+.status--controlCenter--deep {
+  height: 66.7%;
+}
+
+/**
+ * Base
+ *
+ */
+.settingsWidth, .oneline, .controlCenter {
+  left: 40%;
+  width: 20%;
+}
+@media (max-device-width: 767px) and (orientation: portrait) {
+  .settingsWidth, .oneline, .controlCenter {
+    left: 15%;
+    width: 70%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
+  .settingsWidth, .oneline, .controlCenter {
+    left: 25%;
+    width: 50%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .settingsWidth, .oneline, .controlCenter {
+    left: 33.3%;
+    width: 33.3%;
+  }
+}
+
+.timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+  left: 33.3%;
+  width: 33.3%;
+}
+@media (max-device-width: 767px) and (orientation: portrait) {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+    left: 0%;
+    width: 100%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+    left: 15%;
+    width: 70%;
+  }
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+    left: 25%;
+    width: 50%;
+  }
 }
 
 .actions {
@@ -1015,32 +1040,16 @@ ng\:form {
 /* 底部控制中心 */
 .controlCenter {
   position: absolute;
-  left: 40%;
   bottom: 0;
-  width: 20%;
   height: 0%;
   background-color: #F1F1F1;
-}
-@media (max-device-width: 767px) and (orientation: portrait) {
-  .controlCenter {
-    left: 15%;
-    width: 70%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .controlCenter {
-    left: 25%;
-    width: 50%;
-  }
-}
-@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .controlCenter {
-    left: 33.3%;
-    width: 33.3%;
-  }
+  border-top: 1px solid #FFF;
 }
 .controlCenter--active {
   height: 20%;
+}
+.controlCenter--active--deep {
+  height: 33.3%;
 }
 .controlCenter__wrapper {
   display: table;
@@ -1075,17 +1084,16 @@ ng\:form {
 .replicant--rachael {
   width: 80%;
   height: 50px;
-  border-radius: 3px;
   font-size: 27px;
   line-height: 50px;
   text-align: center;
 }
 .replicant--rachael--errCode {
-  -moz-animation: errCodeAnimate 0.5s ease-in-out;
-  -webkit-animation: errCodeAnimate 0.5s ease-in-out;
-  animation: errCodeAnimate 0.5s ease-in-out;
+  -moz-animation: errFormAnimate 0.5s ease-in-out;
+  -webkit-animation: errFormAnimate 0.5s ease-in-out;
+  animation: errFormAnimate 0.5s ease-in-out;
 }
-@-moz-keyframes errCodeAnimate {
+@-moz-keyframes errFormAnimate {
   0%, 100% {
     background-color: #FFF;
     -moz-transform: translateX(0);
@@ -1111,7 +1119,7 @@ ng\:form {
     transform: translateX(2px);
   }
 }
-@-webkit-keyframes errCodeAnimate {
+@-webkit-keyframes errFormAnimate {
   0%, 100% {
     background-color: #FFF;
     -webkit-transform: translateX(0);
@@ -1137,7 +1145,7 @@ ng\:form {
     transform: translateX(2px);
   }
 }
-@keyframes errCodeAnimate {
+@keyframes errFormAnimate {
   0%, 100% {
     background-color: #FFF;
     -moz-transform: translateX(0);
@@ -1172,4 +1180,151 @@ ng\:form {
     -webkit-transform: translateX(2px);
     transform: translateX(2px);
   }
+}
+.write__textarea {
+  margin: 0 auto;
+  width: 90%;
+  height: 20vh;
+  max-height: 20vh;
+  font-size: 14px;
+}
+.write__textarea:disabled {
+  color: #F1F1F1;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.write__textarea--err {
+  -moz-animation: errFormAnimate 0.5s ease-in-out;
+  -webkit-animation: errFormAnimate 0.5s ease-in-out;
+  animation: errFormAnimate 0.5s ease-in-out;
+}
+.write__toolBar {
+  position: relative;
+  margin: 7px auto;
+  width: 90%;
+}
+.write__button {
+  float: right;
+  position: relative;
+  width: 27px;
+  height: 27px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.write__button svg {
+  width: 27px;
+}
+.write__button path {
+  -moz-animation: writingAnimate 0.3s infinite linear paused;
+  -webkit-animation: writingAnimate 0.3s infinite linear paused;
+  animation: writingAnimate 0.3s infinite linear paused;
+}
+@-moz-keyframes writingAnimate {
+  from {
+    -moz-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    transform: rotate(0deg) translateX(3px) rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    transform: rotate(360deg) translateX(3px) rotate(-360deg);
+  }
+}
+@-webkit-keyframes writingAnimate {
+  from {
+    -webkit-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    transform: rotate(0deg) translateX(3px) rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    transform: rotate(360deg) translateX(3px) rotate(-360deg);
+  }
+}
+@keyframes writingAnimate {
+  from {
+    -moz-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    -ms-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    -webkit-transform: rotate(0deg) translateX(3px) rotate(0deg);
+    transform: rotate(0deg) translateX(3px) rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    -ms-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    -webkit-transform: rotate(360deg) translateX(3px) rotate(-360deg);
+    transform: rotate(360deg) translateX(3px) rotate(-360deg);
+  }
+}
+.write__button::before {
+  content: attr(data-count);
+  position: absolute;
+  color: #666;
+  right: 28px;
+  bottom: 0;
+  font-size: 7px;
+}
+.write__button--typing path {
+  -moz-animation-play-state: running;
+  -webkit-animation-play-state: running;
+  animation-play-state: running;
+}
+.write__button:disabled {
+  cursor: default;
+}
+.write__button:disabled path {
+  fill: rgba(42, 169, 224, 0.3);
+  -moz-animation-play-state: paused;
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+}
+.write__button:disabled::before {
+  color: #E6162D;
+}
+.write__button--sending {
+  -moz-animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+  -webkit-animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+  animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+}
+@-moz-keyframes sendingAnimate {
+  0%, 100% {
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -moz-transform: translateX(-27px);
+    transform: translateX(-27px);
+  }
+}
+@-webkit-keyframes sendingAnimate {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(-27px);
+    transform: translateX(-27px);
+  }
+}
+@keyframes sendingAnimate {
+  0%, 100% {
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -moz-transform: translateX(-27px);
+    -ms-transform: translateX(-27px);
+    -webkit-transform: translateX(-27px);
+    transform: translateX(-27px);
+  }
+}
+.write__button--sending path {
+  -moz-animation-play-state: running;
+  -webkit-animation-play-state: running;
+  animation-play-state: running;
+}
+.write__button--sending::before {
+  content: '';
 }

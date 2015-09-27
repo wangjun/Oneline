@@ -4,7 +4,7 @@
     </a>
     <div class="timeline__profile__fullname">
         <a ng-href="//instagram.com/{{::item.user.username}}" target="_blank">
-            <strong>{{::item.user.full_name}}</strong>
+            <strong ng-bind="::item.user.full_name"></strong>
         </a>
     </div>
 </div>

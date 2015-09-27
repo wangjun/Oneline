@@ -1,27 +1,18 @@
 /* 底部控制中心 */
 .controlCenter {
+    @extend .settingsWidth;
     position: absolute;
-    left: 40%;
     bottom: 0;
-    width: 20%;
     height: 0%;
     background-color: $color-gray;
-
-    @media #{$phone-portrait}{
-        left: 15%;
-        width: 70%;
-    }
-    @media #{$tablet}{
-        left: 25%;
-        width: 50%;
-    }
-    @media #{$tablet-landscape}{
-        left: 33.3%;
-        width: 33.3%;
-    }
+    border-top: 1px solid $color-white;
 
     &--active {
         height: 20%;
+
+        &--deep {
+            height: 33.3%;
+        }
     }
 
     &__wrapper {
@@ -60,15 +51,14 @@
     &--rachael {
         width: 80%;
         height: 50px;
-        border-radius: 3px;
         font-size: 27px;
         line-height: 50px;
         text-align: center;
 
         &--errCode {
-            @include animation(errCodeAnimate .5s ease-in-out);
+            @include animation(errFormAnimate .5s ease-in-out);
 
-            @include keyframes(errCodeAnimate) {
+            @include keyframes(errFormAnimate) {
                 0%, 100% {
                     background-color: $color-white;
                     @include transform(translateX(0));
@@ -88,6 +78,98 @@
                 87.5% {
                     @include transform(translateX(2px));
                 }
+            }
+        }
+    }
+}
+
+.write {
+    &__textarea {
+        margin: 0 auto;
+        width: 90%;
+        height: 20vh;
+        max-height: 20vh;
+        font-size: $font-size-base;
+
+        &:disabled {
+            color: $color-gray;
+            cursor: default;
+            @include user-select(none);
+        }
+        &--err {
+            @include animation(errFormAnimate .5s ease-in-out);
+        }
+    }
+    &__toolBar {
+        position: relative;
+        margin: 7px auto;
+        width: 90%;
+    }
+
+    &__button {
+        float: right;
+        position: relative;
+        width: 27px;
+        height: 27px;
+        background-color: transparent;
+        cursor: pointer;
+
+        svg {
+            width: 27px;
+        }
+        path {
+            @include animation(writingAnimate .3s infinite linear paused);
+            @include keyframes(writingAnimate) {
+                from {
+                    @include transform(rotate(0deg) translateX(3px) rotate(0deg));
+                }
+                to {
+                    @include transform(rotate(360deg) translateX(3px) rotate(-360deg));
+                }
+            }
+        }
+
+        &::before {
+            content: attr(data-count);
+            position: absolute;
+            color: $color-steel;
+            right: 28px;
+            bottom: 0;
+            font-size: 7px;
+        }
+
+        &--typing {
+            path {
+                @include animation-play-state(running);
+            }
+        }
+        &:disabled {
+            cursor: default;
+
+            path {
+                fill: $color-twitter-alpha;
+                @include animation-play-state(paused);
+            }
+            &::before {
+                color: $color-weibo;
+            }
+        }
+        &--sending {
+            @include animation(sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1));
+            @include keyframes(sendingAnimate) {
+                0%, 100% {
+                    @include transform(translateX(0));
+                }
+                50% {
+                    @include transform(translateX(-27px));
+                }
+            }
+
+            path {
+                @include animation-play-state(running);
+            }
+            &::before {
+                content: '';
             }
         }
     }

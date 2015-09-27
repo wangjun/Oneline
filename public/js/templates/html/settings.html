@@ -27,9 +27,9 @@
 </div>
 
 <!-- Replicant -->
-<svg ng-if="providerList.length > 0" ng-click="toggleActive($event);toggleControlCenter('replicant--deckard')" class="replicant-icon replicant-icon--deckard tips--deep animate--faster" viewBox="0 0 20 20">
+<svg ng-if="providerList.length > 0" ng-click="toggleControlCenter('replicant--deckard')" class="replicant-icon replicant-icon--deckard tips--deep animate--faster" viewBox="0 0 20 20" toggle-class="tips--active">
     <use xlink:href="#replicant-deckard-icon"></use>
 </svg>
-<svg ng-click="toggleActive($event);toggleControlCenter('replicant--rachael')" class="replicant-icon replicant-icon--rachael tips--deep animate--faster" viewBox="0 0 20 20">
+<svg ng-click="toggleControlCenter('replicant--rachael')" class="replicant-icon replicant-icon--rachael tips--deep animate--faster" viewBox="0 0 20 20" toggle-class="tips--active">
     <use xlink:href="#replicant-rachael-icon"></use>
 </svg>

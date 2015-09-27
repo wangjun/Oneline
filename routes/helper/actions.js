@@ -15,16 +15,20 @@ module.exports = {
         var q_twit = Q.nbind(T.post, T);
 
         // Init
-        var tOpts = { id: opts.id }, action_str;
+        var tOpts = {}, action_str;
 
         if (action === 'like'){
 
             action_str = 'favorites/' + (opts.method === 'put' ? 'create' : 'destroy')
-            extend(tOpts, { include_entities: false })
+            extend(tOpts, { id: opts.id, include_entities: false })
         } else if (action === 'retweet'){
 
             action_str = 'statuses/' + (opts.method === 'put' ? 'retweet' : 'destroy')
-            extend(tOpts, { trim_user: true })
+            extend(tOpts, { id: opts.id, trim_user: true })
+        } else if (action === 'tweet'){
+
+            action_str = 'statuses/update'
+            extend(tOpts, { status: opts.status })
         }
 
         return q_twit(action_str, tOpts)
@@ -33,6 +37,8 @@ module.exports = {
                 return { statusCode: 200 }
             } else if (action === 'retweet'){
                 return { statusCode: 200, id_str: data[0].id_str }
+            } else if (action === 'tweet'){
+                return { statusCode: 200 }
             }
         })
     },

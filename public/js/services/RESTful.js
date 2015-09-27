@@ -24,6 +24,9 @@ angular.module('Oneline.RESTfulServices', [])
         },
         destroy: {
             method: 'DELETE'
+        },
+        update: {
+            method: 'POST'
         }
     })
 
