@@ -70,7 +70,7 @@
                     @include transform(translateX(5px));
                 }
                 50% {
-                    background-color: #CB1B45;
+                    background-color: $color-weibo;
                 }
                 62.5% {
                     @include transform(translateX(-3px));
@@ -105,71 +105,114 @@
         margin: 7px auto;
         width: 90%;
     }
-
-    &__button {
-        float: right;
+    &__btn {
         position: relative;
         width: 27px;
         height: 27px;
         background-color: transparent;
         cursor: pointer;
 
-        svg {
+        &--geo {
+            float: left;
+
+            svg {
+                width: 12px;
+                height: 17px;
+            }
+        }
+        &--media {
+            float: left;
+
+            svg {
+                width: 18px;
+                height: 15px;
+            }
+        }
+        &--send {
+            float: right;
+
+            svg {
+                width: 27px;
+            }
+
+            path {
+                @include animation(writingAnimate .3s infinite linear paused);
+                @include keyframes(writingAnimate) {
+                    from {
+                        @include transform(rotate(0deg) translateX(3px) rotate(0deg));
+                    }
+                    to {
+                        @include transform(rotate(360deg) translateX(3px) rotate(-360deg));
+                    }
+                }
+            }
+
+            &::before {
+                content: attr(data-count);
+                position: absolute;
+                color: $color-steel;
+                right: 28px;
+                bottom: 0;
+                font-size: 7px;
+            }
+
+            &--typing {
+                path {
+                    @include animation-play-state(running);
+                }
+            }
+            &:disabled {
+                cursor: default;
+
+                path {
+                    fill: $color-twitter-alpha;
+                    @include animation-play-state(paused);
+                }
+                &::before {
+                    color: $color-weibo;
+                }
+            }
+            &--sending {
+                @include animation(sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1));
+                @include keyframes(sendingAnimate) {
+                    0%, 100% {
+                        @include transform(translateX(0));
+                    }
+                    50% {
+                        @include transform(translateX(-27px));
+                    }
+                }
+
+                path {
+                    @include animation-play-state(running);
+                }
+                &::before {
+                    content: '';
+                }
+            }
+        }
+    }
+    &__previews {
+        position: absolute;
+        bottom: -7px;
+        left: calc(50% - 54px - 9px);
+
+        &__item {
+            float: left;
+            display: inline-block;
+            margin-right: 3px;
             width: 27px;
-        }
-        path {
-            @include animation(writingAnimate .3s infinite linear paused);
-            @include keyframes(writingAnimate) {
-                from {
-                    @include transform(rotate(0deg) translateX(3px) rotate(0deg));
-                }
-                to {
-                    @include transform(rotate(360deg) translateX(3px) rotate(-360deg));
-                }
-            }
-        }
+            height: 27px;
+            overflow: hidden;
+            cursor: pointer;
+            @include border-radius(3px);
 
-        &::before {
-            content: attr(data-count);
-            position: absolute;
-            color: $color-steel;
-            right: 28px;
-            bottom: 0;
-            font-size: 7px;
-        }
-
-        &--typing {
-            path {
-                @include animation-play-state(running);
-            }
-        }
-        &:disabled {
-            cursor: default;
-
-            path {
-                fill: $color-twitter-alpha;
-                @include animation-play-state(paused);
-            }
-            &::before {
-                color: $color-weibo;
-            }
-        }
-        &--sending {
-            @include animation(sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1));
-            @include keyframes(sendingAnimate) {
-                0%, 100% {
-                    @include transform(translateX(0));
-                }
-                50% {
-                    @include transform(translateX(-27px));
-                }
+            img {
+                width: 27px;
             }
 
-            path {
-                @include animation-play-state(running);
-            }
-            &::before {
-                content: '';
+            &:hover {
+                @include transform(translateY(-7px));
             }
         }
     }

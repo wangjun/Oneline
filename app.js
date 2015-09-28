@@ -52,7 +52,7 @@ app.set('trust proxy', true)
 
 // Middleware
 app.use(compress())
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: 5120000 }))
 app.use(cookieParser())
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
@@ -87,7 +87,7 @@ app.set('view engine', 'jade')
 
 // 保護 endpoints
 var jwt = require('jsonwebtoken');
-app.use(['/timeline', '/actions', '/auth/revoke', '/auth/replicant'], function (req, res, next){
+app.use(['/timeline', '/actions', '/auth/revoke', '/auth/replicant', '/upload'], function (req, res, next){
     var tokenList = req.headers.authorization && JSON.parse(req.headers.authorization.split(' ')[1]) || [],
         validPassports = {};
 
@@ -112,6 +112,7 @@ app.use(['/timeline', '/actions', '/auth/revoke', '/auth/replicant'], function (
 app.use('/auth', require('./routes/auth'))
 app.use('/timeline', require('./routes/timeline'))
 app.use('/actions', require('./routes/actions'))
+app.use('/upload', require('./routes/upload'))
 app.use('/public', express.static('public'))
 app.all('/*', function (req, res, next){
     res.sendFile(__dirname + '/views/index.min.html')

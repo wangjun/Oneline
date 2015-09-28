@@ -60,6 +60,19 @@ angular.module('Oneline', [
         })
 
     weiboEmotifyProvider.setEmotionsURL('/public/dist/emotions_v1.min.json')
+
+    /**
+     * Extending jQLite
+     *
+     */
+    angular.element.prototype.addClassTemporarily = function (className, delay){
+        var elem = this;
+
+        elem.addClass(className)
+        setTimeout(function (){
+            elem.removeClass(className)
+        }, delay)
+    }
 }])
 .factory('timelineCache', ['$cacheFactory', function($cacheFactory){
     return $cacheFactory('timelineCache')

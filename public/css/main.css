@@ -129,7 +129,116 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3;
 }
-
+.tips--inprocess {
+  -moz-animation: inprocessAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+  -webkit-animation: inprocessAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+  animation: inprocessAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
+}
+@-moz-keyframes inprocessAnimate {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes inprocessAnimate {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes inprocessAnimate {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.tips--error {
+  -moz-animation: tipsErrAnimate 0.5s ease-in-out;
+  -webkit-animation: tipsErrAnimate 0.5s ease-in-out;
+  animation: tipsErrAnimate 0.5s ease-in-out;
+}
+@-moz-keyframes tipsErrAnimate {
+  0%, 100% {
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+  12.5% {
+    -moz-transform: translateX(-4px);
+    transform: translateX(-4px);
+  }
+  37.5% {
+    -moz-transform: translateX(4px);
+    transform: translateX(4px);
+  }
+  62.5% {
+    -moz-transform: translateX(-2px);
+    transform: translateX(-2px);
+  }
+  87.5% {
+    -moz-transform: translateX(2px);
+    transform: translateX(2px);
+  }
+}
+@-webkit-keyframes tipsErrAnimate {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  12.5% {
+    -webkit-transform: translateX(-4px);
+    transform: translateX(-4px);
+  }
+  37.5% {
+    -webkit-transform: translateX(4px);
+    transform: translateX(4px);
+  }
+  62.5% {
+    -webkit-transform: translateX(-2px);
+    transform: translateX(-2px);
+  }
+  87.5% {
+    -webkit-transform: translateX(2px);
+    transform: translateX(2px);
+  }
+}
+@keyframes tipsErrAnimate {
+  0%, 100% {
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  12.5% {
+    -moz-transform: translateX(-4px);
+    -ms-transform: translateX(-4px);
+    -webkit-transform: translateX(-4px);
+    transform: translateX(-4px);
+  }
+  37.5% {
+    -moz-transform: translateX(4px);
+    -ms-transform: translateX(4px);
+    -webkit-transform: translateX(4px);
+    transform: translateX(4px);
+  }
+  62.5% {
+    -moz-transform: translateX(-2px);
+    -ms-transform: translateX(-2px);
+    -webkit-transform: translateX(-2px);
+    transform: translateX(-2px);
+  }
+  87.5% {
+    -moz-transform: translateX(2px);
+    -ms-transform: translateX(2px);
+    -webkit-transform: translateX(2px);
+    transform: translateX(2px);
+  }
+}
 .cursor--pointer {
   cursor: pointer;
 }
@@ -1108,7 +1217,7 @@ ng\:form {
     transform: translateX(5px);
   }
   50% {
-    background-color: #CB1B45;
+    background-color: #E6162D;
   }
   62.5% {
     -moz-transform: translateX(-3px);
@@ -1134,7 +1243,7 @@ ng\:form {
     transform: translateX(5px);
   }
   50% {
-    background-color: #CB1B45;
+    background-color: #E6162D;
   }
   62.5% {
     -webkit-transform: translateX(-3px);
@@ -1166,7 +1275,7 @@ ng\:form {
     transform: translateX(5px);
   }
   50% {
-    background-color: #CB1B45;
+    background-color: #E6162D;
   }
   62.5% {
     -moz-transform: translateX(-3px);
@@ -1206,18 +1315,34 @@ ng\:form {
   margin: 7px auto;
   width: 90%;
 }
-.write__button {
-  float: right;
+.write__btn {
   position: relative;
   width: 27px;
   height: 27px;
   background-color: transparent;
   cursor: pointer;
 }
-.write__button svg {
+.write__btn--geo {
+  float: left;
+}
+.write__btn--geo svg {
+  width: 12px;
+  height: 17px;
+}
+.write__btn--media {
+  float: left;
+}
+.write__btn--media svg {
+  width: 18px;
+  height: 15px;
+}
+.write__btn--send {
+  float: right;
+}
+.write__btn--send svg {
   width: 27px;
 }
-.write__button path {
+.write__btn--send path {
   -moz-animation: writingAnimate 0.3s infinite linear paused;
   -webkit-animation: writingAnimate 0.3s infinite linear paused;
   animation: writingAnimate 0.3s infinite linear paused;
@@ -1256,7 +1381,7 @@ ng\:form {
     transform: rotate(360deg) translateX(3px) rotate(-360deg);
   }
 }
-.write__button::before {
+.write__btn--send::before {
   content: attr(data-count);
   position: absolute;
   color: #666;
@@ -1264,24 +1389,24 @@ ng\:form {
   bottom: 0;
   font-size: 7px;
 }
-.write__button--typing path {
+.write__btn--send--typing path {
   -moz-animation-play-state: running;
   -webkit-animation-play-state: running;
   animation-play-state: running;
 }
-.write__button:disabled {
+.write__btn--send:disabled {
   cursor: default;
 }
-.write__button:disabled path {
+.write__btn--send:disabled path {
   fill: rgba(42, 169, 224, 0.3);
   -moz-animation-play-state: paused;
   -webkit-animation-play-state: paused;
   animation-play-state: paused;
 }
-.write__button:disabled::before {
+.write__btn--send:disabled::before {
   color: #E6162D;
 }
-.write__button--sending {
+.write__btn--send--sending {
   -moz-animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
   -webkit-animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
   animation: sendingAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1);
@@ -1320,11 +1445,37 @@ ng\:form {
     transform: translateX(-27px);
   }
 }
-.write__button--sending path {
+.write__btn--send--sending path {
   -moz-animation-play-state: running;
   -webkit-animation-play-state: running;
   animation-play-state: running;
 }
-.write__button--sending::before {
+.write__btn--send--sending::before {
   content: '';
+}
+.write__previews {
+  position: absolute;
+  bottom: -7px;
+  left: calc(50% - 54px - 9px);
+}
+.write__previews__item {
+  float: left;
+  display: inline-block;
+  margin-right: 3px;
+  width: 27px;
+  height: 27px;
+  overflow: hidden;
+  cursor: pointer;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.write__previews__item img {
+  width: 27px;
+}
+.write__previews__item:hover {
+  -moz-transform: translateY(-7px);
+  -ms-transform: translateY(-7px);
+  -webkit-transform: translateY(-7px);
+  transform: translateY(-7px);
 }

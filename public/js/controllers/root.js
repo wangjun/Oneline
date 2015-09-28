@@ -45,9 +45,7 @@ angular.module('Oneline.rootControllers', [])
         $scope.controlCenter = $scope.controlCenter === type ? '' : type
     }
 
-
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams){
-        window.timelineCache = timelineCache
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams){
         // * -> /
         if (toState.name === 'timeline'){
             if (!olTokenHelper.isValidToken()){
@@ -61,7 +59,6 @@ angular.module('Oneline.rootControllers', [])
             if (!olTokenHelper.isValidToken()){
                 olTokenHelper.clearToken()
             }
-
             $scope.isTimeline = false
         }
 

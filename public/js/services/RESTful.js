@@ -53,3 +53,13 @@ angular.module('Oneline.RESTfulServices', [])
         }
     })
 }])
+.factory('Media', ['$resource', function($resource){
+    return $resource('/upload/:provider', null, {
+        // Upload
+        upload: {
+            method: 'POST',
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }
+    })
+}])

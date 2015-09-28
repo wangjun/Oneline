@@ -33,7 +33,7 @@ router.all('/:action/:provider/:id', function (req, res, next){
             token      : found.token,
             tokenSecret: found.tokenSecret,
             id         : req.olId,
-            status     : req.body.status,
+            params     : req.body.params,
             method     : req.method.toLowerCase()
 
         })

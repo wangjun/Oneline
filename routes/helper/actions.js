@@ -28,7 +28,12 @@ module.exports = {
         } else if (action === 'tweet'){
 
             action_str = 'statuses/update'
-            extend(tOpts, { status: opts.status })
+            extend(tOpts, {
+                status: opts.params.status,
+                lat: opts.params.geo.lat,
+                long: opts.params.geo.long,
+                media_ids: opts.params.media_ids
+            })
         }
 
         return q_twit(action_str, tOpts)

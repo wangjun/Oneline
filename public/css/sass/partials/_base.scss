@@ -140,6 +140,38 @@ $tablet-landscape: '(min-device-width : 768px) and (max-device-width : 1024px) a
             @include opacity(.3);
         }
     }
+    &--inprocess {
+        @include animation(inprocessAnimate 1.7s infinite cubic-bezier(0.4, 0, 1, 1));
+        @include keyframes(inprocessAnimate) {
+            0%, 100% {
+                @include opacity(.3);
+            }
+            50% {
+                @include opacity(1);
+            }
+        }
+    }
+    &--error {
+        @include animation(tipsErrAnimate .5s ease-in-out);
+
+        @include keyframes(tipsErrAnimate) {
+            0%, 100% {
+                @include transform(translateX(0));
+            }
+            12.5% {
+                @include transform(translateX(-4px));
+            }
+            37.5% {
+                @include transform(translateX(4px));
+            }
+            62.5% {
+                @include transform(translateX(-2px));
+            }
+            87.5% {
+                @include transform(translateX(2px));
+            }
+        }
+    }
 }
 .cursor {
     &--pointer {
