@@ -17,7 +17,6 @@ module.exports = {
 
         return q_twit('media/upload', { media_data: b64content })
         .then(function (data){
-            fs.writeFileSync(process.env.PWD + '/ignore/uploadFileRes.json', JSON.stringify(data, null, 4))
             return { statusCode: 200, media_id: data[0].media_id_string }
         })
     }

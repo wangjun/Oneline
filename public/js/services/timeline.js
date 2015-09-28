@@ -1,6 +1,6 @@
 angular.module('Oneline.timelineServices', [])
-.service('olTimelineHelper', ['$q', '$state', 'Timeline', 'timelineCache', 'olUI',
-    function($q, $state, Timeline, timelineCache, olUI){
+.service('olTimelineHelper', ['$q', '$state', 'Timeline', 'timelineCache', 'olUI', 'olTokenHelper',
+    function($q, $state, Timeline, timelineCache, olUI, olTokenHelper){
 
     var time_pointer   = Date.now();
     var retrieve_count = 90;
@@ -298,6 +298,7 @@ angular.module('Oneline.timelineServices', [])
         }
 
         if (err.status === 401){
+            olTokenHelper.clearToken()
             $state.go('settings')
         } else if (err.status === 429){
             olUI.setLoading('fail', step)
