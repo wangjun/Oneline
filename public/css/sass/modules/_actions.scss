@@ -1,8 +1,6 @@
 .actions {
-    display: inline-block;
     position: relative;
-    padding-right: 7px;
-    text-align: center;
+    padding-right: 3px;
 
     &__button {
         display: inline-block;
@@ -35,11 +33,14 @@
     }
     &__count {
         display: inline-block;
-        font-size: 11px;
-        color: #89A;
+        height: 28px;
+        vertical-align: middle;
 
         &::after {
-            content: attr(data-count)
+            content: attr(data-count);
+            line-height: 28px;
+            font-size: 10px;
+            color: #89A;
         }
     }
 }

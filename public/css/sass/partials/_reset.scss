@@ -45,6 +45,7 @@ h6 {
 a, a:visited {
     color: inherit;
     text-decoration: none;
+    outline: none;
 }
 svg {
     @include user-select(none);
@@ -66,4 +67,14 @@ textarea {
     resize: none;
     white-space: pre-wrap;
     word-wrap: break-word;
+    font-family: inherit;
+    font-size: inherit;
+}
+button {
+    background-color: transparent;
+    cursor: pointer;
+}
+img, video {
+    border: none;
+    outline: none;
 }

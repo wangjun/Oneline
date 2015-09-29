@@ -92,8 +92,8 @@
         font-size: $font-size-base;
 
         &:disabled {
-            color: $color-gray;
-            cursor: default;
+            background-color: $color-gray;
+            cursor: not-allowed;
             @include user-select(none);
         }
         &--err {
@@ -109,8 +109,6 @@
         position: relative;
         width: 27px;
         height: 27px;
-        background-color: transparent;
-        cursor: pointer;
 
         &--geo {
             float: left;
@@ -122,10 +120,15 @@
         }
         &--media {
             float: left;
+            display: inline-block;
+            line-height: 24px;
+            text-align: center;
+            cursor: pointer;
 
             svg {
-                width: 18px;
-                height: 15px;
+                width: 17px;
+                height: 14px;
+                vertical-align: middle;
             }
         }
         &--send {
@@ -136,7 +139,8 @@
             }
 
             path {
-                @include animation(writingAnimate .3s infinite linear paused);
+                @include animation(writingAnimate .3s infinite linear);
+                @include animation-play-state(paused);
                 @include keyframes(writingAnimate) {
                     from {
                         @include transform(rotate(0deg) translateX(3px) rotate(0deg));
@@ -162,7 +166,7 @@
                 }
             }
             &:disabled {
-                cursor: default;
+                cursor: not-allowed;
 
                 path {
                     fill: $color-twitter-alpha;
@@ -194,8 +198,9 @@
     }
     &__previews {
         position: absolute;
-        bottom: -7px;
+        bottom: 0px;
         left: calc(50% - 54px - 9px);
+        @include transform(translateY(7px));
 
         &__item {
             float: left;
@@ -205,7 +210,7 @@
             height: 27px;
             overflow: hidden;
             cursor: pointer;
-            @include border-radius(3px);
+            @include border-radius(3px 3px 0 0);
 
             img {
                 width: 27px;

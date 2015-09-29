@@ -27,7 +27,6 @@
     display: block;
     margin: 0 auto;
     width: 33.3%;
-    cursor: pointer;
     @include filter(grayscale(100%));
 
     &--active {
@@ -39,7 +38,6 @@
     position: absolute;
     left: 7px;
     bottom: 4px;
-    cursor: pointer;
 
     &--deckard {
         display: inline-block;

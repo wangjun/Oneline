@@ -339,6 +339,7 @@ h6 {
 a, a:visited {
   color: inherit;
   text-decoration: none;
+  outline: none;
 }
 
 svg {
@@ -387,6 +388,18 @@ textarea {
   resize: none;
   white-space: pre-wrap;
   word-wrap: break-word;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+img, video {
+  border: none;
+  outline: none;
 }
 
 /* angular-csp */
@@ -406,6 +419,8 @@ ng\:form {
   top: 0%;
   height: 100%;
   background-color: #000;
+  -webkit-filter: brightness(1);
+  filter: brightness(1);
 }
 
 /* 側邊菜單欄 */
@@ -482,13 +497,12 @@ ng\:form {
     display: none;
   }
 }
-.status--controlCenter {
+.status--controlCenter .oneline {
   height: 80%;
+}
+.status--controlCenter--deep .oneline, .status--controlCenter .oneline .social-wrapper {
   -webkit-filter: brightness(0.3);
   filter: brightness(0.3);
-}
-.status--controlCenter--deep {
-  height: 66.7%;
 }
 
 /**
@@ -542,10 +556,8 @@ ng\:form {
 }
 
 .actions {
-  display: inline-block;
   position: relative;
-  padding-right: 7px;
-  text-align: center;
+  padding-right: 3px;
 }
 .actions__button {
   display: inline-block;
@@ -605,11 +617,14 @@ ng\:form {
 }
 .actions__count {
   display: inline-block;
-  font-size: 11px;
-  color: #89A;
+  height: 28px;
+  vertical-align: middle;
 }
 .actions__count::after {
   content: attr(data-count);
+  line-height: 28px;
+  font-size: 10px;
+  color: #89A;
 }
 
 .timeline--quote .actions__button {
@@ -823,8 +838,10 @@ ng\:form {
   right: -21px;
   width: 19px;
   height: 16px;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg"><g fill="#B2B2B2"><path d="M10.84 10.653c-.053-.07-.127-.105-.221-.105h-5.092v-3.655h1.697c.153 0 .286-.06.398-.181.112-.121.168-.263.168-.428 0-.152-.044-.282-.133-.39l-2.829-3.655c-.112-.139-.256-.209-.433-.209s-.321.07-.433.209l-2.829 3.655c-.089.108-.133.238-.133.39 0 .165.056.308.168.428.112.121.245.181.398.181h1.697v5.711l.009.11.027.109.049.076.079.067.119.019h8.487c.077 0 .143-.03.199-.09.056-.06.084-.132.084-.214 0-.064-.021-.13-.062-.2l-1.415-1.827zM17.409 8.112h-1.697v-5.711l-.009-.11-.026-.109-.049-.076-.08-.067-.119-.019h-8.487c-.077 0-.143.03-.199.09-.056.06-.084.132-.084.214 0 .07.02.133.062.19l1.414 1.827c.053.076.127.114.221.114h5.092v3.654h-1.697c-.153 0-.286.06-.398.181-.112.121-.168.264-.168.428 0 .152.044.282.133.39l2.829 3.654c.118.146.262.219.433.219.171 0 .315-.073.433-.219l2.829-3.654c.088-.108.133-.238.133-.39 0-.165-.056-.308-.168-.428-.112-.12-.245-.181-.398-.181z"/></g></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg"><g fill="black"><path d="M10.84 10.653c-.053-.07-.127-.105-.221-.105h-5.092v-3.655h1.697c.153 0 .286-.06.398-.181.112-.121.168-.263.168-.428 0-.152-.044-.282-.133-.39l-2.829-3.655c-.112-.139-.256-.209-.433-.209s-.321.07-.433.209l-2.829 3.655c-.089.108-.133.238-.133.39 0 .165.056.308.168.428.112.121.245.181.398.181h1.697v5.711l.009.11.027.109.049.076.079.067.119.019h8.487c.077 0 .143-.03.199-.09.056-.06.084-.132.084-.214 0-.064-.021-.13-.062-.2l-1.415-1.827zM17.409 8.112h-1.697v-5.711l-.009-.11-.026-.109-.049-.076-.08-.067-.119-.019h-8.487c-.077 0-.143.03-.199.09-.056.06-.084.132-.084.214 0 .07.02.133.062.19l1.414 1.827c.053.076.127.114.221.114h5.092v3.654h-1.697c-.153 0-.286.06-.398.181-.112.121-.168.264-.168.428 0 .152.044.282.133.39l2.829 3.654c.118.146.262.219.433.219.171 0 .315-.073.433-.219l2.829-3.654c.088-.108.133-.238.133-.39 0-.165-.056-.308-.168-.428-.112-.12-.245-.181-.398-.181z"/></g></svg>');
   background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  opacity: 0.3;
   -moz-transform: scale(0.7);
   -ms-transform: scale(0.7);
   -webkit-transform: scale(0.7);
@@ -872,16 +889,15 @@ ng\:form {
 
 /* Load more button */
 .loadMore {
+  display: block;
+  width: calc(100% - 14px);
   height: 40px;
   margin: 10px 7px;
   border: 1px solid #F1F1F1;
-  cursor: pointer;
+  font-size: 14px;
 }
 .loadMore:hover {
   border: 1px solid #CECECF;
-}
-.loadMore:active {
-  background-color: #CECECF;
 }
 .loadMore:first-child {
   z-index: 3;
@@ -902,7 +918,6 @@ ng\:form {
 .loadMore--initLoad {
   position: absolute;
   top: calc(50% - 20px);
-  width: calc(100% - 14px);
   cursor: default;
 }
 .loadMore--loading::before {
@@ -1112,7 +1127,6 @@ ng\:form {
   display: block;
   margin: 0 auto;
   width: 33.3%;
-  cursor: pointer;
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
@@ -1125,7 +1139,6 @@ ng\:form {
   position: absolute;
   left: 7px;
   bottom: 4px;
-  cursor: pointer;
 }
 .replicant-icon--deckard {
   display: inline-block;
@@ -1298,8 +1311,8 @@ ng\:form {
   font-size: 14px;
 }
 .write__textarea:disabled {
-  color: #F1F1F1;
-  cursor: default;
+  background-color: #F1F1F1;
+  cursor: not-allowed;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1319,8 +1332,6 @@ ng\:form {
   position: relative;
   width: 27px;
   height: 27px;
-  background-color: transparent;
-  cursor: pointer;
 }
 .write__btn--geo {
   float: left;
@@ -1331,10 +1342,15 @@ ng\:form {
 }
 .write__btn--media {
   float: left;
+  display: inline-block;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
 }
 .write__btn--media svg {
-  width: 18px;
-  height: 15px;
+  width: 17px;
+  height: 14px;
+  vertical-align: middle;
 }
 .write__btn--send {
   float: right;
@@ -1343,9 +1359,12 @@ ng\:form {
   width: 27px;
 }
 .write__btn--send path {
-  -moz-animation: writingAnimate 0.3s infinite linear paused;
-  -webkit-animation: writingAnimate 0.3s infinite linear paused;
-  animation: writingAnimate 0.3s infinite linear paused;
+  -moz-animation: writingAnimate 0.3s infinite linear;
+  -webkit-animation: writingAnimate 0.3s infinite linear;
+  animation: writingAnimate 0.3s infinite linear;
+  -moz-animation-play-state: paused;
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
 }
 @-moz-keyframes writingAnimate {
   from {
@@ -1395,7 +1414,7 @@ ng\:form {
   animation-play-state: running;
 }
 .write__btn--send:disabled {
-  cursor: default;
+  cursor: not-allowed;
 }
 .write__btn--send:disabled path {
   fill: rgba(42, 169, 224, 0.3);
@@ -1455,8 +1474,12 @@ ng\:form {
 }
 .write__previews {
   position: absolute;
-  bottom: -7px;
+  bottom: 0px;
   left: calc(50% - 54px - 9px);
+  -moz-transform: translateY(7px);
+  -ms-transform: translateY(7px);
+  -webkit-transform: translateY(7px);
+  transform: translateY(7px);
 }
 .write__previews__item {
   float: left;
@@ -1466,9 +1489,9 @@ ng\:form {
   height: 27px;
   overflow: hidden;
   cursor: pointer;
-  -moz-border-radius: 3px;
+  -moz-border-radius: 3px 3px 0 0;
   -webkit-border-radius: 3px;
-  border-radius: 3px;
+  border-radius: 3px 3px 0 0;
 }
 .write__previews__item img {
   width: 27px;

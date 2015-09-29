@@ -5,6 +5,7 @@
     top: 0%;
     height: 100%;
     background-color: $color-black;
+    @include filter(brightness(1));
 }
 
 /* 側邊菜單欄 */
@@ -80,11 +81,11 @@
     }
     /* Status: controlCenter */
     &--controlCenter {
-        height: 80%;
-        @include filter(brightness(0.3));
-
-        &--deep {
-            height: 66.7%;
+        .oneline {
+            height: 80%;
+        }
+        &--deep .oneline, .oneline .social-wrapper, {
+            @include filter(brightness(0.3));
         }
     }
 }

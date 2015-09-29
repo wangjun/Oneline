@@ -118,8 +118,13 @@ angular.module('Oneline.olControlCenterDirectives', [])
             var submitButton = angular.element(document.querySelector('.write__btn--send')),
                 statusElem   = elem.find('textarea');
 
-            var status    = '';
-            elem.on('submit', function (e){
+            setTimeout(function (){
+                elem.find('textarea')[0].focus()
+            }, 700)
+
+            var status = '';
+            elem
+            .on('submit', function (e){
                 e.preventDefault()
 
                 var geo = elem.find('geo-picker').data('geo');
@@ -150,7 +155,7 @@ angular.module('Oneline.olControlCenterDirectives', [])
                     submitButton.removeClass('write__btn--send--sending')
                 })
             })
-            elem.on('input', function (){
+            .on('input', function (){
                 // 更新推文內容
                 status = statusElem.val().trim()
                 // 超字提醒
@@ -166,8 +171,7 @@ angular.module('Oneline.olControlCenterDirectives', [])
                 // 動畫
                 submitButton.addClassTemporarily('write__btn--send--typing', 700)
             })
-
-            elem.on('$destroy', function (){
+            .on('$destroy', function (){
                 elem.off()
             })
 
@@ -179,15 +183,20 @@ angular.module('Oneline.olControlCenterDirectives', [])
         restrict: 'E',
         templateUrl: 'controlCenter/write/geoPicker.html',
         link: function (scope, elem, attrs){
-            var geoPickerBtn = elem.find('button');
+            var geoPickerBtn = elem.find('button'),
+                submitButton = angular.element(document.querySelector('.write__btn--send')),
+                statusElem   = angular.element(document.querySelector('.write__textarea'));
 
             geoPickerBtn.on('click', function (){
                 if (geoPickerBtn.hasClass('tips--active')){
-                    elem.data('geo', {})
+                    elem.removeData('geo')
 
                     geoPickerBtn.removeClass('tips--active tips--inprocess')
                 } else {
                     geoPickerBtn.addClass('tips--inprocess')
+                    submitButton.prop('disabled', true)
+                    statusElem.prop('disabled', true)
+
                     $window.navigator.geolocation.getCurrentPosition(function (pos){
 
                         elem.data('geo', {
@@ -197,9 +206,13 @@ angular.module('Oneline.olControlCenterDirectives', [])
 
                         geoPickerBtn.addClass('tips--active')
                         geoPickerBtn.removeClass('tips--inprocess')
+                        submitButton.prop('disabled', false)
+                        statusElem.prop('disabled', false)
                     }, function (err){
                         geoPickerBtn.removeClass('tips--inprocess')
                         geoPickerBtn.addClassTemporarily('tips--error', 500)
+                        submitButton.prop('disabled', false)
+                        statusElem.prop('disabled', false)
                     }, { maximumAge: 60000, timeout: 7000 })
                 }
             })
@@ -215,11 +228,16 @@ angular.module('Oneline.olControlCenterDirectives', [])
         restrict: 'E',
         templateUrl: 'controlCenter/write/mediaUpload.html',
         link: function (scope, elem, attrs){
-            var uploadBtn = elem.find('input');
+            var uploadBtn = elem.find('input'),
+                submitButton = angular.element(document.querySelector('.write__btn--send')),
+                statusElem   = angular.element(document.querySelector('.write__textarea'));
 
             uploadBtn.on('change', function (){
                 var fd   = new FormData(),
                     file = uploadBtn[0].files[0];
+
+                submitButton.prop('disabled', true)
+                statusElem.prop('disabled', true)
 
                 // Preview
                 var fakeId = Date.now()
@@ -240,6 +258,12 @@ angular.module('Oneline.olControlCenterDirectives', [])
                 .catch(function (err){
                     removeImagePreview(fakeId)
                 })
+                .finally(function (){
+                    submitButton.prop('disabled', false)
+                    statusElem.prop('disabled', false)
+                })
+                uploadBtn[0].value = ''
+
             })
 
             uploadBtn.on('$destroy', function (){
@@ -288,7 +312,10 @@ angular.module('Oneline.olControlCenterDirectives', [])
                         index     = media_ids.indexOf(media_id);
 
                     media_ids.splice(index, 1)
-                    elem.data('media_ids', media_ids)
+                    media_ids.length <= 0
+                        ? elem.removeData('media_ids')
+                        : elem.data('media_ids', media_ids)
+
                     previewItem.remove()
 
                     if (document.querySelectorAll('.write__previews__item').length < 4){

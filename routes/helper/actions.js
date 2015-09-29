@@ -30,10 +30,15 @@ module.exports = {
             action_str = 'statuses/update'
             extend(tOpts, {
                 status: opts.params.status,
-                lat: opts.params.geo.lat,
-                long: opts.params.geo.long,
                 media_ids: opts.params.media_ids
             })
+
+            if (opts.params.geo){
+                extend(tOpts, {
+                    lat: opts.params.geo.lat,
+                    long: opts.params.geo.long
+                })
+            }
         }
 
         return q_twit(action_str, tOpts)

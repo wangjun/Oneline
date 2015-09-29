@@ -292,8 +292,8 @@ angular.module('Oneline.timelineServices', [])
     }
     this.handleError = function (err, step){
         console.log(err)
-        if (!err){
-            olUI.setLoading('fail', step)
+        if (!step){
+            olUI.setLoading('fail', 1)
             return;
         }
 

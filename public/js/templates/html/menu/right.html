@@ -2,16 +2,21 @@
 
     <div ng-if="!isTimeline" class="vertically_center">
         <a ui-sref="timeline">
-            <svg ng-show="providerList.length > 0" class="menu__button animate--faster">
-                <use xlink:href="#ok-icon"></use>
+            <svg ng-show="providerList.length > 0" class="menu__button animate--faster" viewBox="0 0 200 200">
+                <g fill="none">
+                    <circle fill="#59DE5D" cx="100" cy="100" r="100"/>
+                    <path d="M78 137.05l68.236-68.236c1.367-1.367 3.583-1.367 4.95 0s1.367 3.583 0 4.95l-70.711 70.711c-.683.683-1.579 1.025-2.475 1.025-.896 0-1.791-.342-2.475-1.025l-25.456-25.456c-1.367-1.367-1.367-3.583 0-4.95s3.583-1.367 4.95 0l22.981 22.981z" fill="#fff"/>
+                </g>
             </svg>
         </a>
     </div>
 
-    <div ng-if="isTimeline" class="vertically_center">
-        <svg class="menu__button animate--faster" ng-click="toggleControlCenter('newTweet')" toggle-class="menu__button--active" toggle-icon='#newTweet-icon, #cancel-icon' js-newTweet>
-            <use xlink:href="#newTweet-icon"></use>
-        </svg>
+    <div ng-if="isTimeline && providerList.indexOf('twitter') >= 0" class="vertically_center">
+        <button class="menu__button animate--faster" ng-click="toggleControlCenter('newTweet')" toggle-class="menu__button--active" toggle-icon='#newTweet-icon, #cancel-icon' js-newTweet type="button">
+            <svg viewBox="0 0 200 200">
+                <use xlink:href="#newTweet-icon"></use>
+            </svg>
+        </button>
     </div>
 
 </div>
