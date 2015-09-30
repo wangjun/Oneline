@@ -1,20 +1,20 @@
 <span class="cursor--pointer">
     <button class="actions tips--deep tips--frozen" ng-if="::item.favorite_count > 0" type="button">
         <svg class="actions__button" ng-class="::{'button--active': item.favorited}">
-            <use xlink:href="#like-icon"></use>
+            <use xlink:href="/public/img/icon-sprites.svg#favorite"></use>
         </svg>
         <span class="actions__count" ng-attr-data-count="{{::item.favorite_count > 0 ? item.favorite_count : ''}}"></span>
     </button>
     <button class="actions tips--deep tips--frozen" ng-if="::item.reply_count > 0"  type="button">
         <svg class="actions__button">
-            <use xlink:href="#reply-icon"></use>
+            <use xlink:href="/public/img/icon-sprites.svg#reply">
         </svg>
         <span class="actions__count" ng-attr-data-count="{{::item.reply_count > 0 ? item.reply_count : ''}}"></span>
     </button>
     <button class="actions tips--deep" type="button">
         <a ng-href="{{::item.link}}" target="_blank">
             <svg class="actions__button">
-                <use xlink:href="#source-icon"></use>
+                <use xlink:href="/public/img/icon-sprites.svg#source"></use>
             </svg>
         </a>
     </button>

@@ -14,13 +14,14 @@ angular.module('Oneline.olControlCenterDirectives', [])
         restrict: 'A',
         link: function (scope, elem, attrs){
             elem.on('click', function (){
-                var iconList   = attrs.toggleIcon.split(','),
+                var prefix     = '/public/img/icon-sprites.svg#',
+                    iconList   = attrs.toggleIcon.split(','),
                     targetElem = elem.find('use'),
-                    targetIcon = iconList.indexOf(targetElem.attr('xlink:href')) == 0
+                    targetIcon = iconList.indexOf(targetElem.attr('xlink:href').replace(prefix, '')) == 0
                                     ? iconList[1].trim()
                                     : iconList[0].trim();
 
-                targetElem.attr('xlink:href', targetIcon)
+                targetElem.attr('xlink:href', prefix + targetIcon)
             })
         }
     }

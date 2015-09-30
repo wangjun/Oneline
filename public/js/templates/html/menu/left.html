@@ -1,15 +1,17 @@
 <div class="menu menu--left animate--faster">
 
     <div ng-show="isTimeline" class="vertically_center">
-        <a ui-sref="settings">
-            <svg class="menu__button animate--faster" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <g fill="none">
-                    <circle fill="#F1F1F1" cx="100" cy="100" r="100"/>
-                    <circle fill="#FFF" cx="100" cy="42.5" r="15" data-provider="twitter"/>
-                    <circle fill="#FFF" cx="100" cy="100" r="15" data-provider="instagram"/>
-                    <circle fill="#FFF" cx="100" cy="157.5" r="15" data-provider="weibo"/>
-                </g>
-            </svg>
+        <a href="/settings">
+            <button class="menu__button animate--faster" type="button">
+                <svg viewBox="0 0 200 200">
+                    <g fill="none">
+                        <circle fill="#F1F1F1" cx="100" cy="100" r="100"/>
+                        <circle fill="#FFF" cx="100" cy="42.5" r="15" data-provider="twitter"/>
+                        <circle fill="#FFF" cx="100" cy="100" r="15" data-provider="instagram"/>
+                        <circle fill="#FFF" cx="100" cy="157.5" r="15" data-provider="weibo"/>
+                    </g>
+                </svg>
+            </button>
         </a>
     </div>
 

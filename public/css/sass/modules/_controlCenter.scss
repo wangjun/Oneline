@@ -90,6 +90,7 @@
         height: 20vh;
         max-height: 20vh;
         font-size: $font-size-base;
+        background-color: $color-white;
 
         &:disabled {
             background-color: $color-gray;
@@ -136,17 +137,14 @@
 
             svg {
                 width: 27px;
-            }
-
-            path {
                 @include animation(writingAnimate .3s infinite linear);
                 @include animation-play-state(paused);
                 @include keyframes(writingAnimate) {
                     from {
-                        @include transform(rotate(0deg) translateX(3px) rotate(0deg));
+                        @include transform(rotate(0deg) translateX(1px) rotate(0deg));
                     }
                     to {
-                        @include transform(rotate(360deg) translateX(3px) rotate(-360deg));
+                        @include transform(rotate(360deg) translateX(1px) rotate(-360deg));
                     }
                 }
             }
@@ -161,15 +159,15 @@
             }
 
             &--typing {
-                path {
+                svg {
                     @include animation-play-state(running);
                 }
             }
             &:disabled {
                 cursor: not-allowed;
 
-                path {
-                    fill: $color-twitter-alpha;
+                svg {
+                    @include filter(grayscale(100%));
                     @include animation-play-state(paused);
                 }
                 &::before {
@@ -187,7 +185,7 @@
                     }
                 }
 
-                path {
+                svg {
                     @include animation-play-state(running);
                 }
                 &::before {

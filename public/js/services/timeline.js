@@ -292,10 +292,10 @@ angular.module('Oneline.timelineServices', [])
     }
     this.handleError = function (err, step){
         console.log(err)
-        if (!step){
-            olUI.setLoading('fail', 1)
-            return;
-        }
+        if (!err) return;
+
+        var _step = step;
+        step = _step ? _step : 1
 
         if (err.status === 401){
             olTokenHelper.clearToken()
@@ -305,7 +305,7 @@ angular.module('Oneline.timelineServices', [])
             var safeTime = new Date(err.data.reset * 1000).toLocaleTimeString('en-GB').substring(0, 5)
             olUI.setPostsCount('newPosts', safeTime)
         } else {
-            olUI.setLoading('done', step)
+            _step ? olUI.setLoading('done', step) : null
         }
     }
 }])

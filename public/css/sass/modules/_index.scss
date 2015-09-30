@@ -6,6 +6,7 @@
     height: 100%;
     background-color: $color-black;
     @include filter(brightness(1));
+    @include transform(translate3d(0, 0, 0));
 }
 
 /* 側邊菜單欄 */
@@ -32,12 +33,14 @@
     }
 
     &__button {
-        width: 70px;
-        height: 70px;
         cursor: pointer;
-
         @include opacity(0);
         @include filter(grayscale(100%));
+
+        svg {
+            width: 70px;
+            height: 70px;
+        }
 
         @media #{$all-mobile-devices}{
             @include opacity(1);
