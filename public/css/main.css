@@ -734,6 +734,12 @@ ng\:form {
   -webkit-border-radius: 1px;
   border-radius: 1px;
 }
+@media (max-device-width: 1024px), (max-width: 1024px) {
+  .timeline__media--thumb img {
+    width: calc(100% / 9 - 3px);
+    margin-right: 3px;
+  }
+}
 .timeline__media--small img {
   width: calc(100% / 9 - 7px);
   margin-right: 7px;

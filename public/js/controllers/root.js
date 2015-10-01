@@ -27,14 +27,24 @@ angular.module('Oneline.rootControllers', [])
         $scope.controlCenter = value
     }
     // Router
-    $scope.goto = function (state, e){
-        if (state === 'timeline' && $scope.providerList <= 0) return;
+    $scope.goto = function (direction, e){
+        var currentState = $state.current.name;
+        // R -> L
+        if (direction === 'left'){
+            if ($scope.providerList <= 0) return;
 
-        var target = e.target
-        if (target.tagName.toLowerCase() === 'img' 
-            && angular.element(target).parent().find('img').length > 1) return;
-
-        $state.go(state)
+            currentState === 'settings'
+                ? $state.go('timeline')
+                : $scope.toggleControlCenter('newTweet')
+        }
+        // L -> R
+        else {
+            currentState === 'timeline'
+                ? $scope.controlCenter === 'newTweet'
+                    ? $scope.toggleControlCenter('newTweet')
+                    : $state.go('settings')
+                : null
+        }
     }
 
     /**

@@ -87,6 +87,11 @@
                 margin-right: 7px;
                 cursor: zoom-in;
                 @include border-radius(1px);
+
+                @media #{$all-mobile-devices}{
+                    width: calc(100% / 9 - 3px);
+                    margin-right: 3px;
+                }
             }
         }
         // 小圖（小於縮略圖）
