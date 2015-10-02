@@ -14,9 +14,12 @@ var paths = {
         'public/js/templates/*.js'
     ],
     js_libs: [
-        'public/js/libs/angular.min.js',
+        // 'public/js/libs/angular.min.js',
+        'public/js/libs/ol-angular.js',
         'public/js/libs/*.js',
-        '!public/js/libs/*.map'
+        '!public/js/libs/*.map',
+        '!public/js/libs/angular.min.js'
+        // '!public/js/libs/ol-angular.js'
     ],
     css_ol: 'public/css/main.css',
     html_index: [

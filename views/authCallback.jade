@@ -30,31 +30,46 @@ html
         link(ref='icon', type='image/x-icon', href='public/img/favicon.ico')
         link(ref='shortcut icon', href='public/img/favicon.ico')
         link(ref='apple-touch-icon', sizes='192x192', href='public/img/favicon.png')
-        title ｜
+        title ｜ #{provider.substr(0, 1).toUpperCase() + provider.substr(1)}
         link(rel='stylesheet', href='/public/dist/oneline.min.css')
     body
         div(class='oneline overflow--y')
             div.social-list.social-list--one
                 div.vertically_center
-                    if socialIcon === 'twitter'
+                    if provider === 'twitter'
                         svg(
                             data-token=token
                             class='social-icon animate--general'
                             viewBox='0 0 300 300'
                         )
                             use(xlink:href="/public/img/icon-sprites.svg#twitter")
-                    else if socialIcon === 'instagram'
+                    else if provider === 'instagram'
                         svg(
                             data-token=token
                             class='social-icon animate--general'
                             viewBox='0 0 775 300'
                         )
                             use(xlink:href="/public/img/icon-sprites.svg#instagram")
-                    else if socialIcon === 'weibo'
+                    else if provider === 'weibo'
                         svg(
                             data-token=token
                             class='social-icon animate--general'
                             viewBox='0 0 300 300'
                         )
                             use(xlink:href="/public/img/icon-sprites.svg#weibo")
-        script(type='text/javascript', src='/public/dist/authCallback.js')
+        script(type='text/javascript').
+            (function (){
+
+                var socialIcon = document.getElementsByClassName('social-icon')[0]
+                    token = socialIcon.getAttribute('data-token');
+
+                // Cross-tab Communication
+                localStorage.setItem('addToken', token)
+
+                setTimeout(function (){
+                    socialIcon.setAttribute('class', socialIcon.getAttribute('class') + ' social-icon--active')
+                    setTimeout(function (){
+                        window.close()
+                    }, 1000)
+                }, 500)
+            })()

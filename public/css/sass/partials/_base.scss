@@ -42,6 +42,7 @@ $font-weight-bold: 600;
 
 // Base Color
 $color-black: #000;
+$color-black-alpha: rgba(0, 0, 0, .5);
 $color-white: #FFF;
 $color-gray: #F1F1F1;
 $color-gray-drak: #CECECF;
@@ -89,15 +90,14 @@ $tablet-landscape: '(min-device-width : 768px) and (max-device-width : 1024px) a
         @include transition(all .3s ease-in-out);
     }
     &--general, &--faster {
-        &.ng-enter,
-        &.ng-leave.ng-leave-active {
-          opacity:0;
+        &.ol-enter, &.ol-leave.ol-leave--active {
+            @include opacity(0);
         }
-        &.ng-leave,
-        &.ng-enter.ng-enter-active {
-          opacity:1;
+        &.ol-leave, &.ol-enter.ol-enter--active {
+            @include opacity(1);
         }
     }
+
 }
 .overflow {
     &--x {

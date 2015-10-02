@@ -78,10 +78,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-.animate--general.ng-enter, .animate--general.ng-leave.ng-leave-active, .animate--faster.ng-enter, .animate--faster.ng-leave.ng-leave-active {
+.animate--general.ol-enter, .animate--general.ol-leave.ol-leave--active, .animate--faster.ol-enter, .animate--faster.ol-leave.ol-leave--active {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
 }
-.animate--general.ng-leave, .animate--general.ng-enter.ng-enter-active, .animate--faster.ng-leave, .animate--faster.ng-enter.ng-enter-active {
+.animate--general.ol-leave, .animate--general.ol-enter.ol-enter--active, .animate--faster.ol-leave, .animate--faster.ol-enter.ol-enter--active {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;
 }
 
@@ -428,6 +430,7 @@ ng\:form {
   -ms-transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+  z-index: 1;
 }
 
 /* 側邊菜單欄 */
@@ -479,6 +482,9 @@ ng\:form {
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
 }
+.menu__button--inactive {
+  display: none;
+}
 @media (max-device-width: 1024px), (max-width: 1024px) {
   .menu {
     display: none;
@@ -487,7 +493,6 @@ ng\:form {
 
 .status {
   /* Status: Timeline */
-  /* Status: controlCenter */
 }
 .status--timeline .oneline, .status--timeline .controlCenter {
   background-color: #F1F1F1;
@@ -506,59 +511,52 @@ ng\:form {
     display: none;
   }
 }
-.status--controlCenter .oneline {
-  height: 80%;
-}
-.status--controlCenter--deep .oneline, .status--controlCenter .oneline .social-wrapper {
-  -webkit-filter: brightness(0.3);
-  filter: brightness(0.3);
-}
 
 /**
  * Base
  *
  */
-.settingsWidth, .oneline, .controlCenter {
+.settingsWidth, .oneline, .controlCenter, .cancelMask {
   left: 40%;
   width: 20%;
 }
 @media (max-device-width: 767px) and (orientation: portrait) {
-  .settingsWidth, .oneline, .controlCenter {
+  .settingsWidth, .oneline, .controlCenter, .cancelMask {
     left: 15%;
     width: 70%;
   }
 }
 @media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .settingsWidth, .oneline, .controlCenter {
+  .settingsWidth, .oneline, .controlCenter, .cancelMask {
     left: 25%;
     width: 50%;
   }
 }
 @media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .settingsWidth, .oneline, .controlCenter {
+  .settingsWidth, .oneline, .controlCenter, .cancelMask {
     left: 33.3%;
     width: 33.3%;
   }
 }
 
-.timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+.timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter, .status--timeline .cancelMask {
   left: 33.3%;
   width: 33.3%;
 }
 @media (max-device-width: 767px) and (orientation: portrait) {
-  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter, .status--timeline .cancelMask {
     left: 0%;
     width: 100%;
   }
 }
 @media (min-device-width: 768px) and (max-device-width: 1024px), (min-width: 768px) and (max-width: 1024px) {
-  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter, .status--timeline .cancelMask {
     left: 15%;
     width: 70%;
   }
 }
 @media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape), (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter {
+  .timelineWidth, .status--timeline .oneline, .status--timeline .controlCenter, .status--timeline .cancelMask {
     left: 25%;
     width: 50%;
   }
@@ -1180,7 +1178,7 @@ ng\:form {
   bottom: 0;
   height: 0%;
   background-color: #F1F1F1;
-  border-top: 1px solid #FFF;
+  z-index: 5;
 }
 .controlCenter--active {
   height: 20%;
@@ -1193,6 +1191,16 @@ ng\:form {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+.cancelMask {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  text-align: center;
+  z-index: 4;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .replicant {

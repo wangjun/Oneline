@@ -1,4 +1,60 @@
 angular.module('Oneline.UIServices', [])
+.service('olAnimate', ['$q', function($q){
+    this.enter = function (element, parent, after, options){
+        return $q(function (resolve, reject){
+
+            angular.forEach(element, function (elem){
+                elem = angular.element(elem)
+
+                var delay = elem.hasClass('animate--general')
+                                ? 700
+                                : elem.hasClass('animate--faster')
+                                    ? 300
+                                    : 0
+
+                elem.addClassTemporarily('ol-enter', delay)
+                setTimeout(function (){
+                    elem.addClassTemporarily('ol-enter--active', delay)
+                })
+            })
+
+            resolve()
+        })
+    },
+    this.leave = function (element, options){
+
+        return $q(function (resolve, reject){
+            var noAnimate = 0;
+
+            angular.forEach(element, function (elem){
+                elem = angular.element(elem)
+
+                if (elem.hasClass('animate--general') || elem.hasClass('animate--faster')){
+                    var delay = elem.hasClass('animate--general')
+                                    ? 700
+                                    : elem.hasClass('animate--faster')
+                                        ? 300
+                                        : 0
+
+                    elem.addClass('ol-leave')
+                    setTimeout(function (){
+                        elem.addClass('ol-leave--active')
+                    })
+
+                    setTimeout(function (){
+                        elem.removeClass('ol-leave--active ol-leave')
+
+                        resolve()
+                    }, delay)
+                } else {
+                    noAnimate++
+                }
+            })
+
+            if (element.length === noAnimate){ resolve() }
+        })
+    }
+}])
 .service('olUI', ['$filter', function($filter){
     // 刷新社交網站圖標
     this.updateSocialIcon = function (providerList){

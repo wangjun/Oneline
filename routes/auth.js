@@ -35,7 +35,7 @@ router.get('/:provider/callback', function (req, res, next){
         expiresInMinutes: 60 * 24 * 7
     })
 
-    res.render('authCallback', { socialIcon: req.olProvider, token: token })
+    res.render('authCallback', { provider: req.olProvider, token: token })
 })
 
 

@@ -7,6 +7,7 @@
     background-color: $color-black;
     @include filter(brightness(1));
     @include transform(translate3d(0, 0, 0));
+    z-index: 1;
 }
 
 /* 側邊菜單欄 */
@@ -51,6 +52,9 @@
             @include opacity(1);
             @include filter(grayscale(0%));
         }
+        &--inactive {
+            display: none;
+        }
     }
 
     @media #{$all-mobile-devices}{
@@ -66,6 +70,9 @@
             @extend .timelineWidth;
             background-color: $color-gray;
         }
+        .cancelMask {
+            @extend .timelineWidth;
+        }
 
         .menu {
             width: 33.3%;
@@ -80,15 +87,6 @@
             @media #{$all-mobile-devices}{
                 display: none;
             }
-        }
-    }
-    /* Status: controlCenter */
-    &--controlCenter {
-        .oneline {
-            height: 80%;
-        }
-        &--deep .oneline, .oneline .social-wrapper, {
-            @include filter(brightness(0.3));
         }
     }
 }

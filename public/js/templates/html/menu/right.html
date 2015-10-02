@@ -10,8 +10,8 @@
         </a>
     </div>
 
-    <div ng-if="isTimeline && providerList.indexOf('twitter') >= 0" class="vertically_center">
-        <button class="menu__button animate--faster" ng-click="toggleControlCenter('newTweet')" toggle-class="menu__button--active" toggle-icon='newTweet, cancel' js-newTweet type="button">
+    <div ng-if="isTimeline && providerList.indexOf('twitter') >= 0 && !controlCenter" class="vertically_center">
+        <button class="menu__button animate--faster" ng-click="toggleControlCenter('newTweet')" js-newTweet type="button">
             <svg viewBox="0 0 200 200">
                <use xlink:href="/public/img/icon-sprites.svg#newTweet"></use>
             </svg>

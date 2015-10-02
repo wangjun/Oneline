@@ -1,31 +1,4 @@
 angular.module('Oneline.olControlCenterDirectives', [])
-.directive('toggleClass', function (){
-    return {
-        restrict: 'A',
-        link: function (scope, elem, attrs){
-            elem.on('click', function (){
-                elem.toggleClass(attrs.toggleClass)
-            })
-        }
-    }
-})
-.directive('toggleIcon', function (){
-    return {
-        restrict: 'A',
-        link: function (scope, elem, attrs){
-            elem.on('click', function (){
-                var prefix     = '/public/img/icon-sprites.svg#',
-                    iconList   = attrs.toggleIcon.split(','),
-                    targetElem = elem.find('use'),
-                    targetIcon = iconList.indexOf(targetElem.attr('xlink:href').replace(prefix, '')) == 0
-                                    ? iconList[1].trim()
-                                    : iconList[0].trim();
-
-                targetElem.attr('xlink:href', prefix + targetIcon)
-            })
-        }
-    }
-})
 .directive('replicantDeckard', ['Replicant', function (Replicant){
     return {
         restrict: 'A',
@@ -140,14 +113,10 @@ angular.module('Oneline.olControlCenterDirectives', [])
                     id: 0
                 }, { params: {status: status, geo: geo, media_ids: media_ids } })
                 .$promise
-                .then(function (data){
-                    $timeout(function (){
-                        angular
-                        .element(document.querySelector('[js-newTweet]'))
-                        .triggerHandler('click')
-                    })
+                .then(function (){
+                    scope.setControlCenter('')
                 })
-                .catch(function (err){
+                .catch(function (){
                     submitButton.prop('disabled', false)
                     statusElem.addClassTemporarily('write__textarea--err', 500)
                 })
@@ -175,7 +144,6 @@ angular.module('Oneline.olControlCenterDirectives', [])
             .on('$destroy', function (){
                 elem.off()
             })
-
         }
     }
 }])

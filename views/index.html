@@ -16,7 +16,7 @@
     <title>｜</title>
     <link rel="stylesheet" href="/public/dist/oneline.min.css">
 </head>
-<body ng-controller="rootController" ng-class="{'status--timeline': isTimeline, 'status--controlCenter': controlCenter.indexOf('replicant') >= 0, 'status--controlCenter--deep': controlCenter.indexOf('new') >= 0}">
+<body ng-controller="rootController" ng-class="{'status--timeline': isTimeline}">
 
     <img style="display:none" src="/public/img/icon-sprites.svg" alt="CacheIt!">
 
@@ -26,6 +26,7 @@
         <ui-view></ui-view>
     </div>
 
+    <div ng-if="controlCenter" class="cancelMask animate--general" ng-click="setControlCenter('')"></div>
     <div ng-include=" 'controlCenter/wrapper.html' " class="controlCenter animate--general" ng-class="{ 'controlCenter--active': controlCenter.indexOf('replicant') >= 0, 'controlCenter--active--deep': controlCenter.indexOf('new') >= 0 }"></div>
 
     <div ng-include=" 'menu/right.html' "></div>
