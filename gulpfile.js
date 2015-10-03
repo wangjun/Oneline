@@ -16,6 +16,7 @@ var paths = {
     js_libs: [
         // 'public/js/libs/angular.min.js',
         'public/js/libs/ol-angular.js',
+        'public/js/libs/html2canvas.min.js',
         'public/js/libs/*.js',
         '!public/js/libs/*.map',
         '!public/js/libs/angular.min.js'

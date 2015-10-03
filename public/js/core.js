@@ -60,7 +60,11 @@ angular.module('Oneline', [
         })
 
     weiboEmotifyProvider.setEmotionsURL('/public/dist/emotions_v1.min.json')
-
+}])
+.factory('timelineCache', ['$cacheFactory', function($cacheFactory){
+    return $cacheFactory('timelineCache')
+}])
+.run(['$q', function ($q){
     /**
      * Extending jQLite
      *
@@ -72,8 +76,14 @@ angular.module('Oneline', [
         setTimeout(function (){
             elem.removeClass(className)
         }, delay)
+
+        return this;
     }
-}])
-.factory('timelineCache', ['$cacheFactory', function($cacheFactory){
-    return $cacheFactory('timelineCache')
+    angular.element.prototype.delay = function (time){
+        return $q(function (resolve, reject){
+            setTimeout(function (){
+                resolve()
+            }, time)
+        })
+    }
 }])

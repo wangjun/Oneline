@@ -12,8 +12,10 @@ angular.module('Oneline.UIServices', [])
                                     ? 300
                                     : 0
 
-                elem.addClassTemporarily('ol-enter', delay)
-                setTimeout(function (){
+                elem
+                .addClassTemporarily('ol-enter', delay)
+                .delay(70)
+                .then(function (){
                     elem.addClassTemporarily('ol-enter--active', delay)
                 })
             })
@@ -36,16 +38,19 @@ angular.module('Oneline.UIServices', [])
                                         ? 300
                                         : 0
 
-                    elem.addClass('ol-leave')
-                    setTimeout(function (){
-                        elem.addClass('ol-leave--active')
+                    elem
+                    .addClass('ol-leave')
+                    .delay(70)
+                    .then(function (){
+                        elem
+                        .addClass('ol-leave--active')
+                        .delay(delay)
+                        .then(function (){
+                            elem.removeClass('ol-leave--active ol-leave')
+
+                            resolve()
+                        })
                     })
-
-                    setTimeout(function (){
-                        elem.removeClass('ol-leave--active ol-leave')
-
-                        resolve()
-                    }, delay)
                 } else {
                     noAnimate++
                 }
@@ -162,12 +167,15 @@ angular.module('Oneline.UIServices', [])
                 actionElem.removeClass('actions__button--wait')
                 break;
             case 'active':
-                actionElem.addClass('actions__button--active')
+                actionElem.addClass('actions__button--' + action + '--active')
                 actionElem.parent().addClass('tips--active')
                 break;
             case 'inactive':
-                actionElem.removeClass('actions__button--active')
+                actionElem.removeClass('actions__button--' + action + '--active')
                 actionElem.parent().removeClass('tips--active')
+                break;
+            case 'frozen':
+                actionElem.parent().addClass('tips--frozen')
                 break;
         }
     }
@@ -175,7 +183,7 @@ angular.module('Oneline.UIServices', [])
     this.isActionActive = function (action, id){
         var actionElem = getActionElem(action, id);
 
-        return actionElem.hasClass('actions__button--active')
+        return actionElem.hasClass('actions__button--' + action + '--active')
     }
     // 判斷是否正在處理中
     this.isActionWait = function (action, id){

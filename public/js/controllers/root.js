@@ -35,24 +35,16 @@ angular.module('Oneline.rootControllers', [])
 
             currentState === 'settings'
                 ? $state.go('timeline')
-                : $scope.toggleControlCenter('newTweet')
+                : $scope.setControlCenter('write-tweet')
         }
         // L -> R
         else {
             currentState === 'timeline'
-                ? $scope.controlCenter === 'newTweet'
-                    ? $scope.toggleControlCenter('newTweet')
+                ? $scope.controlCenter === 'write-tweet'
+                    ? $scope.setControlCenter('')
                     : $state.go('settings')
                 : null
         }
-    }
-
-    /**
-     * Control Center
-     *
-     */
-    $scope.toggleControlCenter = function (type){
-        $scope.controlCenter = $scope.controlCenter === type ? '' : type
     }
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams){

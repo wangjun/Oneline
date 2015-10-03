@@ -17,35 +17,41 @@ module.exports = {
         // Init
         var tOpts = {}, action_str;
 
-        if (action === 'like'){
-
-            action_str = 'favorites/' + (opts.method === 'put' ? 'create' : 'destroy')
-            extend(tOpts, { id: opts.id, include_entities: false })
-        } else if (action === 'retweet'){
-
-            action_str = 'statuses/' + (opts.method === 'put' ? 'retweet' : 'destroy')
-            extend(tOpts, { id: opts.id, trim_user: true })
-        } else if (action === 'tweet'){
-
-            action_str = 'statuses/update'
-            extend(tOpts, {
-                status: opts.params.status,
-                media_ids: opts.params.media_ids
-            })
-
-            if (opts.params.geo){
+        switch (action){
+            case 'like':
+                action_str = 'favorites/' + (opts.method === 'put' ? 'create' : 'destroy')
+                extend(tOpts, { id: opts.id, include_entities: false })
+                break;
+            case 'retweet':
+                action_str = 'statuses/' + ((opts.method === 'put' || opts.method === 'post')
+                                                ? 'retweet'
+                                                : 'destroy')
+                extend(tOpts, { id: opts.id, trim_user: true })
+                break;
+            case 'reply':
+                extend(tOpts, { in_reply_to_status_id: opts.id })
+            case 'quote':
+            case 'tweet':
+                action_str = 'statuses/update'
                 extend(tOpts, {
-                    lat: opts.params.geo.lat,
-                    long: opts.params.geo.long
+                    status: opts.params.status,
+                    media_ids: opts.params.media_ids,
+                    trim_user: true
                 })
-            }
+                if (opts.params.geo){
+                    extend(tOpts, {
+                        lat: opts.params.geo.lat,
+                        long: opts.params.geo.long
+                    })
+                }
+                break;
         }
 
         return q_twit(action_str, tOpts)
         .then(function (data){
             if (action === 'like'){
                 return { statusCode: 200 }
-            } else if (action === 'retweet'){
+            } else if (action === 'retweet' || action === 'quote'){
                 return { statusCode: 200, id_str: data[0].id_str }
             } else if (action === 'tweet'){
                 return { statusCode: 200 }

@@ -4,12 +4,10 @@
 
     &__button {
         display: inline-block;
-        width: 17px;
-        height: 28px;
+        height: 17px;
         margin: 0 auto;
         vertical-align: middle;
-
-        @include filter(grayscale(100%));
+        fill: $color-steel;
 
         &--wait {
             cursor: default;
@@ -24,11 +22,25 @@
                 }
             }
         }
-        &--active {        
-            @include filter(grayscale(0%));        
+        &--like {
+            &--active {
+                fill: $color-weibo;
+            }
         }
         &--retweet {
-            width: 20px;
+            &--active {
+                fill: $color-twitter;
+            }
+        }
+        &--reply {
+            &--active {
+                fill: #3caf36;
+            }
+        }
+        &--star {
+            &--active {
+                fill: #FFE33B;
+            }
         }
     }
     &__count {

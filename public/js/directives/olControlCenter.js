@@ -81,39 +81,87 @@ angular.module('Oneline.olControlCenterDirectives', [])
         }
     }
 }])
-.directive('writeTweet', ['$timeout', 'Action', 
-    function ($timeout, Action){
+.directive('write', ['Action', 'olUI',
+    function (Action, olUI){
 
     return {
         restrict: 'A',
         scope: false,
         link: function (scope, elem, attrs){
+            var _info       = scope.controlCenter.split(':'),
+                _type       = _info[0].split('-')[1],
+                __type      = '',
+                _limitCount = _type === 'tweet' || _type === 'reply'
+                                    ? 140
+                                    : _type === 'retweet'
+                                        ? 116
+                                        : null
 
-            var submitButton = angular.element(document.querySelector('.write__btn--send')),
-                statusElem   = elem.find('textarea');
+            var button       = elem.find('button'),
+                submitButton = button.eq(button.length - 1),
+                statusElem   = elem.find('textarea'),
+                wrapperElem  = angular.element(document.querySelector('.controlCenter__wrapper'));
+            /**
+             * 初始化
+             *
+             */
+            // 添加 `@username` 前綴
+            if (_type === 'reply'){
+                statusElem.val('@' + _info[2] + ' ')
 
-            setTimeout(function (){
-                elem.find('textarea')[0].focus()
-            }, 700)
+                wrapperElem
+                .addClass('controlCenter__wrapper--reply')
+            }
+            // 允許直接提交 -> 「轉推」
+            else if (_type === 'retweet'){
+                statusElem.prop('required', false)
+                submitButton.prop('disabled', false)
+
+                wrapperElem
+                .addClass('controlCenter__wrapper--retweet')
+            }
 
             var status = '';
             elem
             .on('submit', function (e){
                 e.preventDefault()
 
-                var geo = elem.find('geo-picker').data('geo');
-                var media_ids = elem.find('media-upload').data('media_ids');
+                var params = {
+                    status: status,
+                    geo   : elem.find('geo-picker').data('geo'),
+                    media_ids: elem.find('media-upload').data('media_ids')
+                }
+
+                if (_type === 'retweet' && status.length > 0){
+                    __type = 'quote'
+
+                    angular.extend(params, {
+                        status: status + ' https://twitter.com/' + _info[2] + '/status/' + _info[1]
+                    })
+                }
 
                 statusElem.prop('disabled', true)
                 submitButton.addClass('write__btn--send--sending')
 
                 Action.update({
-                    action: 'tweet',
+                    action: __type || _type,
                     provider: 'twitter',
-                    id: 0
-                }, { params: {status: status, geo: geo, media_ids: media_ids } })
+                    id: _info[1] || 0
+                }, { params: params })
                 .$promise
-                .then(function (){
+                .then(function (data){
+
+                    if (_type === 'retweet'){
+                        olUI.setActionState('retweet', _info[1], 'active')
+                        olUI.actionData('retweet', _info[1], data.id_str)
+
+                        // TODO
+                        if (__type === 'quote'){
+                            // 凍結
+                            olUI.setActionState('retweet', _info[1], 'frozen')
+                        }
+                    }
+
                     scope.setControlCenter('')
                 })
                 .catch(function (){
@@ -130,7 +178,7 @@ angular.module('Oneline.olControlCenterDirectives', [])
                 status = statusElem.val().trim()
                 // 超字提醒
                 var statusLength = status.length
-                if (statusLength > 140 || statusLength === 0){
+                if (statusLength > _limitCount || statusLength === 0){
                     submitButton.prop('disabled', true)
                 } else {
                     submitButton.prop('disabled', false)
@@ -143,6 +191,7 @@ angular.module('Oneline.olControlCenterDirectives', [])
             })
             .on('$destroy', function (){
                 elem.off()
+                wrapperElem.removeClass('controlCenter__wrapper--reply controlCenter__wrapper--retweet')
             })
         }
     }
@@ -152,9 +201,7 @@ angular.module('Oneline.olControlCenterDirectives', [])
         restrict: 'E',
         templateUrl: 'controlCenter/write/geoPicker.html',
         link: function (scope, elem, attrs){
-            var geoPickerBtn = elem.find('button'),
-                submitButton = angular.element(document.querySelector('.write__btn--send')),
-                statusElem   = angular.element(document.querySelector('.write__textarea'));
+            var geoPickerBtn = elem.find('button');
 
             geoPickerBtn.on('click', function (){
                 if (geoPickerBtn.hasClass('tips--active')){
@@ -163,8 +210,6 @@ angular.module('Oneline.olControlCenterDirectives', [])
                     geoPickerBtn.removeClass('tips--active tips--inprocess')
                 } else {
                     geoPickerBtn.addClass('tips--inprocess')
-                    submitButton.prop('disabled', true)
-                    statusElem.prop('disabled', true)
 
                     $window.navigator.geolocation.getCurrentPosition(function (pos){
 
@@ -175,13 +220,9 @@ angular.module('Oneline.olControlCenterDirectives', [])
 
                         geoPickerBtn.addClass('tips--active')
                         geoPickerBtn.removeClass('tips--inprocess')
-                        submitButton.prop('disabled', false)
-                        statusElem.prop('disabled', false)
                     }, function (err){
                         geoPickerBtn.removeClass('tips--inprocess')
                         geoPickerBtn.addClassTemporarily('tips--error', 500)
-                        submitButton.prop('disabled', false)
-                        statusElem.prop('disabled', false)
                     }, { maximumAge: 60000, timeout: 7000 })
                 }
             })
@@ -197,16 +238,11 @@ angular.module('Oneline.olControlCenterDirectives', [])
         restrict: 'E',
         templateUrl: 'controlCenter/write/mediaUpload.html',
         link: function (scope, elem, attrs){
-            var uploadBtn = elem.find('input'),
-                submitButton = angular.element(document.querySelector('.write__btn--send')),
-                statusElem   = angular.element(document.querySelector('.write__textarea'));
+            var uploadBtn = elem.find('input');
 
             uploadBtn.on('change', function (){
                 var fd   = new FormData(),
                     file = uploadBtn[0].files[0];
-
-                submitButton.prop('disabled', true)
-                statusElem.prop('disabled', true)
 
                 // Preview
                 var fakeId = Date.now()
@@ -226,10 +262,6 @@ angular.module('Oneline.olControlCenterDirectives', [])
                 })
                 .catch(function (err){
                     removeImagePreview(fakeId)
-                })
-                .finally(function (){
-                    submitButton.prop('disabled', false)
-                    statusElem.prop('disabled', false)
                 })
                 uploadBtn[0].value = ''
 

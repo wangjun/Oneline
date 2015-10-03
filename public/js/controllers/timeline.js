@@ -98,11 +98,25 @@ angular.module('Oneline.timelineControllers', [])
      *
      *
      */
-    $scope.toggleAction = function (action, provider, id){
+    $scope.toggleAction = function (action, item){
+        var provider = item.provider,
+            id       = item.id_str;
+
         // 過濾重複（或凍結的）請求
         if (olUI.isActionWait(action, id) || olUI.isActionFrozen(action, id)) return;
 
         var isActive = olUI.isActionActive(action, id);
+
+        // 處理「轉推」與「回覆」
+        if (provider === 'twitter' 
+            && (
+                (action === 'retweet' && !isActive) || action === 'reply')
+            )
+        {
+
+            $scope.setControlCenter('write-'+ action + ':' + id + ':' + item.user.screen_name)
+            return;
+        }
         // 更改樣式
         olUI.setActionState(action, id, 'wait')
         olUI.setActionState(action, id, isActive ? 'inactive' : 'active')
