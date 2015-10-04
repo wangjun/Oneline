@@ -253,50 +253,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   cursor: -webkit-image-set(url(data:image/gif;base64,R0lGODlhMAAwAPMAAAAAABMTEyoqKlVVVWFhYWpqam1tbW5ubnV1dampqbS0tLW1tbu7u8DAwPv7+wAAACH5BAEAAA8AIf8LSW1hZ2VNYWdpY2sHZ2FtbWE9MQAsAAAAADAAMAAABJDwyUmrvTjrzbunzfKNXgMABKlmy4mucEW4aWzPZ23D+LvztB8wJ1z1dMXPMUlaMpXBp8cp5VCrmisWo91aul4KOCwZk81htLeHIF8cglPAbTG4DHSK/TTIT/YAfX4PgIJ+By6GeYh8gw+MgY6QinSTkomXjYOWm5idmoeefoWZkZ+moaB5DKJ+rKiOCwmOeREAOw==) 2x), e-resize;
 }
 
-.button--inactive {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
-  opacity: 0.7;
-}
-.button--inactive:hover {
-  -webkit-filter: grayscale(0%);
-  filter: grayscale(0%);
-  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
-  opacity: 1;
-}
-.button--active {
-  -webkit-filter: grayscale(0%);
-  filter: grayscale(0%);
-  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
-  opacity: 1;
-}
-
-.backgroundIcon--retweet, .timeline--retweet__profile__avatar::after, .controlCenter__wrapper--retweet::before {
-  width: 19px;
-  height: 16px;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg"><g fill="black"><path d="M10.84 10.653c-.053-.07-.127-.105-.221-.105h-5.092v-3.655h1.697c.153 0 .286-.06.398-.181.112-.121.168-.263.168-.428 0-.152-.044-.282-.133-.39l-2.829-3.655c-.112-.139-.256-.209-.433-.209s-.321.07-.433.209l-2.829 3.655c-.089.108-.133.238-.133.39 0 .165.056.308.168.428.112.121.245.181.398.181h1.697v5.711l.009.11.027.109.049.076.079.067.119.019h8.487c.077 0 .143-.03.199-.09.056-.06.084-.132.084-.214 0-.064-.021-.13-.062-.2l-1.415-1.827zM17.409 8.112h-1.697v-5.711l-.009-.11-.026-.109-.049-.076-.08-.067-.119-.019h-8.487c-.077 0-.143.03-.199.09-.056.06-.084.132-.084.214 0 .07.02.133.062.19l1.414 1.827c.053.076.127.114.221.114h5.092v3.654h-1.697c-.153 0-.286.06-.398.181-.112.121-.168.264-.168.428 0 .152.044.282.133.39l2.829 3.654c.118.146.262.219.433.219.171 0 .315-.073.433-.219l2.829-3.654c.088-.108.133-.238.133-.39 0-.165-.056-.308-.168-.428-.112-.12-.245-.181-.398-.181z"/></g></svg>');
-  background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
-  opacity: 0.3;
-  -moz-transform: scale(0.7);
-  -ms-transform: scale(0.7);
-  -webkit-transform: scale(0.7);
-  transform: scale(0.7);
-}
-.backgroundIcon--reply, .controlCenter__wrapper--reply::before {
-  width: 16px;
-  height: 16px;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M11.75 3c4.832 0 8.75 3.397 8.75 7.587 0 4.19-3.918 7.587-8.75 7.587-.464 0-.92-.032-1.364-.092-1.88 2.006-4.05 2.365-6.219 2.418v-.491c1.171-.612 2.115-1.728 2.115-3.003 0-.178-.013-.353-.037-.523-1.979-1.391-3.244-3.515-3.244-5.896 0-4.19 3.918-7.587 8.75-7.587zm9.406 17.006c0 1.093.662 2.049 1.677 2.574v.421c-1.88-.045-3.605-.354-5.234-2.073-.385.052-.78.079-1.182.079-1.74 0-3.343-.503-4.623-1.348 2.637-.01 5.127-.915 7.015-2.552.952-.825 1.702-1.793 2.232-2.878.561-1.15.845-2.375.845-3.641 0-.204-.008-.407-.023-.609 1.323 1.171 2.138 2.766 2.138 4.525 0 2.041-1.097 3.862-2.812 5.054-.021.146-.032.296-.032.449z"/></svg>');
-  background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
-  opacity: 0.3;
-  -moz-transform: scale(0.7);
-  -ms-transform: scale(0.7);
-  -webkit-transform: scale(0.7);
-  transform: scale(0.7);
-}
-
 html {
   height: 100%;
   overflow: hidden;
@@ -590,6 +546,7 @@ ng\:form {
 .actions {
   position: relative;
   padding-right: 3px;
+  height: 28px;
 }
 .actions__button {
   display: inline-block;
@@ -678,6 +635,7 @@ ng\:form {
   margin: 36px 7px;
   padding: 0 10px;
   background-color: #FFF;
+  cursor: default;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -716,6 +674,7 @@ ng\:form {
   margin-top: 17px;
   word-wrap: break-word;
   white-space: pre-wrap;
+  cursor: text;
 }
 .timeline__text img {
   width: 1.5em;
@@ -785,6 +744,18 @@ ng\:form {
   }
 }
 .timeline__media--inactive {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+.timeline__media--active {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+}
+.timeline__media--hide {
   display: none;
 }
 .timeline__media--loading {
@@ -877,6 +848,16 @@ ng\:form {
   position: absolute;
   top: 4px;
   right: -21px;
+  width: 19px;
+  height: 16px;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg"><g fill="black"><path d="M10.84 10.653c-.053-.07-.127-.105-.221-.105h-5.092v-3.655h1.697c.153 0 .286-.06.398-.181.112-.121.168-.263.168-.428 0-.152-.044-.282-.133-.39l-2.829-3.655c-.112-.139-.256-.209-.433-.209s-.321.07-.433.209l-2.829 3.655c-.089.108-.133.238-.133.39 0 .165.056.308.168.428.112.121.245.181.398.181h1.697v5.711l.009.11.027.109.049.076.079.067.119.019h8.487c.077 0 .143-.03.199-.09.056-.06.084-.132.084-.214 0-.064-.021-.13-.062-.2l-1.415-1.827zM17.409 8.112h-1.697v-5.711l-.009-.11-.026-.109-.049-.076-.08-.067-.119-.019h-8.487c-.077 0-.143.03-.199.09-.056.06-.084.132-.084.214 0 .07.02.133.062.19l1.414 1.827c.053.076.127.114.221.114h5.092v3.654h-1.697c-.153 0-.286.06-.398.181-.112.121-.168.264-.168.428 0 .152.044.282.133.39l2.829 3.654c.118.146.262.219.433.219.171 0 .315-.073.433-.219l2.829-3.654c.088-.108.133-.238.133-.39 0-.165-.056-.308-.168-.428-.112-.12-.245-.181-.398-.181z"/></g></svg>');
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  opacity: 0.3;
+  -moz-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  -webkit-transform: scale(0.7);
+  transform: scale(0.7);
 }
 .timeline--twitter .timeline__profile__avatar {
   border-color: #2AA9E0;
@@ -926,6 +907,7 @@ ng\:form {
   margin: 10px 7px;
   border: 1px solid #F1F1F1;
   font-size: 14px;
+  cursor: pointer;
 }
 .loadMore:hover {
   border: 1px solid #CECECF;
@@ -1210,21 +1192,19 @@ ng\:form {
   width: 100%;
   height: 100%;
 }
-.controlCenter__wrapper--retweet::before, .controlCenter__wrapper--reply::before {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 3px;
-}
 
 .cancelMask {
   position: absolute;
   top: 0;
   height: 100%;
-  text-align: center;
   z-index: 4;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.cancelMask__wrapper {
+  position: absolute;
+  width: 100%;
+  height: 66.7%;
 }
 
 .replicant {

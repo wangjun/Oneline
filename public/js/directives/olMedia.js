@@ -40,12 +40,12 @@ angular.module('Oneline.olMediaDirectives', [])
                     jump_elem      = wrapper_large.find('a');
 
                 // 設置小圖樣式
-                img_thumb.removeClass('button--active')
-                img_thumb.addClass('button--inactive')
-                elem.addClass('button--active timeline__media--loading')
+                img_thumb.removeClass('timeline__media--active')
+                img_thumb.addClass('timeline__media--inactive')
+                elem.addClass('timeline__media--active timeline__media--loading')
                 wrapper_thumb.addClass('timeline__media--small')
                 // 設置大圖樣式
-                wrapper_large.removeClass('timeline__media--inactive')
+                wrapper_large.removeClass('timeline__media--hide')
                 img_large.attr('src', attrs.src.replace(/square|small/, 'bmiddle'))
                 // 設置外鏈
                 jump_elem.attr('href', attrs.src.replace(/square|small/, 'large'))
@@ -103,8 +103,8 @@ angular.module('Oneline.olMediaDirectives', [])
                     // 設置外鏈
                     elem.next().attr('href', urlList[index].replace('bmiddle', 'large'))
                     // 設置小圖樣式
-                    img_thumb.removeClass('button--active timeline__media--loading')
-                    target.addClass('button--active timeline__media--loading')
+                    img_thumb.removeClass('timeline__media--active timeline__media--loading')
+                    target.addClass('timeline__media--active timeline__media--loading')
                     // 大圖加載完畢
                     elem.on('load', function (){
                         // 設置小圖樣式

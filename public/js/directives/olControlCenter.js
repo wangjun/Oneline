@@ -81,14 +81,15 @@ angular.module('Oneline.olControlCenterDirectives', [])
         }
     }
 }])
-.directive('write', ['Action', 'olUI',
-    function (Action, olUI){
+.directive('write', ['$window', 'Action', 'olUI',
+    function ($window, Action, olUI){
 
     return {
         restrict: 'A',
         scope: false,
         link: function (scope, elem, attrs){
             var _info       = scope.controlCenter.split(':'),
+                _id         = _info[1],
                 _type       = _info[0].split('-')[1],
                 __type      = '',
                 _limitCount = _type === 'tweet' || _type === 'reply'
@@ -97,30 +98,52 @@ angular.module('Oneline.olControlCenterDirectives', [])
                                         ? 116
                                         : null
 
-            var button       = elem.find('button'),
-                submitButton = button.eq(button.length - 1),
+            var _window      = angular.element($window),
+                _button      = elem.find('button'),
+                submitButton = _button.eq(_button.length - 1),
                 statusElem   = elem.find('textarea'),
-                wrapperElem  = angular.element(document.querySelector('.controlCenter__wrapper'));
+                typeButton;
+
             /**
              * 初始化
              *
              */
             // 添加 `@username` 前綴
-            if (_type === 'reply'){
-                statusElem.val('@' + _info[2] + ' ')
+            if (_type === 'reply' || _type === 'retweet'){
 
-                wrapperElem
-                .addClass('controlCenter__wrapper--reply')
+                if (_type === 'reply'){
+                    statusElem.val('@' + _info[2] + ' ')
+                } else if (_type === 'retweet'){
+                    // 允許直接提交 -> 「轉推」
+                    statusElem.prop('required', false)
+                    submitButton.prop('disabled', false)
+                }
+                // 預覽「源推」
+                angular.element(document.querySelector('.cancelMask__wrapper'))
+                .children()
+                .append(
+                    angular.element(document.querySelector('[data-id="' + _id + '"]'))
+                    .clone()
+                    .removeClass('divider--top divider--bottom')
+                );
+                // 取消（除「來源」外）「其他操作」按鈕 hover 態提醒
+                angular.element(
+                    document.querySelector('.cancelMask__wrapper').querySelectorAll('button.tips--deep')
+                ).addClass('tips--frozen');
+
+                angular.element(document.querySelector('.cancelMask__wrapper [data-source]'))
+                .parent()
+                .removeClass('tips--frozen');
+
+                // 「回覆」／「轉推」提醒
+                typeButton = angular.element(document.querySelector('.cancelMask__wrapper [data-' + _type + ']'));
+                typeButton.parent().removeClass('tips--deep tips--frozen')
             }
-            // 允許直接提交 -> 「轉推」
-            else if (_type === 'retweet'){
-                statusElem.prop('required', false)
-                submitButton.prop('disabled', false)
 
-                wrapperElem
-                .addClass('controlCenter__wrapper--retweet')
-            }
-
+            /**
+             * 監聽事件
+             *
+             */
             var status = '';
             elem
             .on('submit', function (e){
@@ -136,7 +159,7 @@ angular.module('Oneline.olControlCenterDirectives', [])
                     __type = 'quote'
 
                     angular.extend(params, {
-                        status: status + ' https://twitter.com/' + _info[2] + '/status/' + _info[1]
+                        status: status + ' https://twitter.com/' + _info[2] + '/status/' + _id
                     })
                 }
 
@@ -146,19 +169,19 @@ angular.module('Oneline.olControlCenterDirectives', [])
                 Action.update({
                     action: __type || _type,
                     provider: 'twitter',
-                    id: _info[1] || 0
+                    id: _id || 0
                 }, { params: params })
                 .$promise
                 .then(function (data){
 
                     if (_type === 'retweet'){
-                        olUI.setActionState('retweet', _info[1], 'active')
-                        olUI.actionData('retweet', _info[1], data.id_str)
+                        olUI.setActionState('retweet', _id, 'active')
+                        olUI.actionData('retweet', _id, data.id_str)
 
                         // TODO
                         if (__type === 'quote'){
                             // 凍結
-                            olUI.setActionState('retweet', _info[1], 'frozen')
+                            olUI.setActionState('retweet', _id, 'frozen')
                         }
                     }
 
@@ -188,10 +211,19 @@ angular.module('Oneline.olControlCenterDirectives', [])
 
                 // 動畫
                 submitButton.addClassTemporarily('write__btn--send--typing', 700)
+                typeButton ? typeButton.addClassTemporarily('actions__button--' + _type + '--active', 300) : null
             })
             .on('$destroy', function (){
                 elem.off()
-                wrapperElem.removeClass('controlCenter__wrapper--reply controlCenter__wrapper--retweet')
+                _window.off()
+            });
+            // 按 Esc 鍵取消操作
+            _window.on('keydown', function (e){
+                if (e.keyCode === 27){
+                    scope.$apply(function (){
+                        scope.setControlCenter('')
+                    })
+                }
             })
         }
     }

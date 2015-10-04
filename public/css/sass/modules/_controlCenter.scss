@@ -20,25 +20,6 @@
         position: absolute;
         width: 100%;
         height: 100%;
-
-        &--retweet, &--reply {
-            &::before {
-                content: '';
-                position: absolute;
-                top: 3px;
-                left: 3px;
-            }
-        }
-        &--retweet {
-            &::before {
-                @extend .backgroundIcon--retweet;
-            }
-        }
-        &--reply {
-            &::before {
-                @extend .backgroundIcon--reply;
-            }
-        }
     }
 }
 .cancelMask {
@@ -46,10 +27,15 @@
     position: absolute;
     top: 0;
     height: 100%;
-    text-align: center;
     z-index: 4;
     cursor: pointer;
     background-color: $color-black-alpha;
+
+    &__wrapper {
+        position: absolute;
+        width: 100%;
+        height: 66.7%;
+    }
 }
 
 .replicant {

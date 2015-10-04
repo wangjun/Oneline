@@ -11,11 +11,11 @@
         </svg>
         <span class="actions__count" ng-attr-data-count="{{::item.reply_count > 0 ? item.reply_count : ''}}"></span>
     </button>
-    <button class="actions tips--deep" type="button">
-        <a ng-href="{{::item.link}}" target="_blank">
-            <svg class="actions__button" viewBox="0 0 26 26">
+    <a ng-href="{{::item.link}}" target="_blank">
+        <button class="actions tips--deep" type="button">
+            <svg class="actions__button" viewBox="0 0 26 26" data-source>
                 <use xlink:href="/public/img/icon-sprites.svg#source"></use>
             </svg>
-        </a>
-    </button>
+        </button>
+    </a>
 </span>
