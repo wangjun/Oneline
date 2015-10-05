@@ -40,7 +40,7 @@ angular.module('Oneline.rootControllers', [])
         // L -> R
         else {
             currentState === 'timeline'
-                ? $scope.controlCenter === 'write-tweet'
+                ? $scope.controlCenter.indexOf('write') >= 0
                     ? $scope.setControlCenter('')
                     : $state.go('settings')
                 : null

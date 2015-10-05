@@ -16,13 +16,13 @@
     <title>｜</title>
     <link rel="stylesheet" href="/public/dist/oneline.min.css">
 </head>
-<body ng-controller="rootController" ng-class="{'status--timeline': isTimeline}">
+<body ng-controller="rootController" ng-class="{'status--timeline': isTimeline}" ng-swipe-left="goto('left')" ng-swipe-right="goto('right')" ng-swipe-disable-mouse>
 
     <img style="display:none" src="/public/img/icon-sprites.svg" alt="CacheIt!">
 
     <div ng-include=" 'menu/left.html' "></div>
 
-    <div class="oneline overflow--y animate--general" ng-swipe-left="goto('left')" ng-swipe-right="goto('right')" ng-swipe-disable-mouse>
+    <div class="oneline overflow--y animate--general">
         <ui-view></ui-view>
     </div>
 
